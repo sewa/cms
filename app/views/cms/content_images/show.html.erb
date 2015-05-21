@@ -1,0 +1,24 @@
+
+<div class='toolbar'>
+  <ul class='actions'>
+    <li>
+      <%= button_link_to t('edit'), :action => 'edit', :id => @picture %>
+    </li>
+  </ul>
+  <br class='clear' />
+</div>
+
+<table>
+  <% for attr in @picture.content_attributes %>
+  <tr>
+    <td><%= attr.key %></td>
+    <td><%= attr.value %></td>
+  </tr>
+  <% end %>
+</table>
+
+<%= @picture.body.to_s.html_safe %>
+
+<% if @picture.children.count > 0 %>
+  <%= render 'list', :content_nodes => @picture.children %>
+<% end %>

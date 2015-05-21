@@ -1,0 +1,35 @@
+
+de:
+  time:
+    formats:
+      time: '%H:%M'
+      full: '%d.%m.%Y, %H:%M'
+      date: '%d.%m.%Y'
+      min: '%M'
+      hour: '%H'
+
+  date:
+    formats:
+      long: '%A, %d. %B'
+      long_sentence: '%A, den %d %B'
+      day_abbr: '%a'
+      day: '%A'
+      month: '%M'
+
+  images: Bilder
+  pages: Seiten
+  cms: CMS
+  logout: Logout
+  create_page: Seite erstellen
+  back_to_index: Zurück zur Übersicht
+  show: Anzeigen
+  edit: Bearbeiten
+  delete: Löschen
+  create: Erstellen
+  new_sub_page: Neue Unterseite erstellen
+  show_sub_pages: Unterseiten anzeigen
+  new_content_node: Neue Seite erstellen
+  new_content_category: Neue Kategorie erstellen
+  new_content_image: Neues Bild erstellen
+
+  really_delete: Wirklich löschen?

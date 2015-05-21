@@ -1,0 +1,9 @@
+<div class="columns small-12">
+  <%= simple_form_for @content_image do |f| %>
+    <fieldset>
+      <legend><%= t :new_image %></legend>
+      <%= render 'cms/content_images/form', :f => f %>
+    </fieldset>
+    <%= render 'cms/shared/form_buttons', cancel: content_images_path, f: f %>
+  <% end %>
+</div>

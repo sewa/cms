@@ -1,0 +1,8 @@
+
+<%= f.field_container attribute.key do %>
+  <% if @content_node.class == JobOffer %>
+    <%= f.label :store_id, t('admin.content_nodes.job_offer.store_placeholder') %><br />
+    <%= f.select :store_id, stores_for_select, { include_blank: true }, :class => 'select2', :style => 'width: 300px', :placeholder => t('admin.content_nodes.job_offer.store_placeholder') %>
+  <% end %>
+<% end %>
+

@@ -1,0 +1,15 @@
+
+<%= f.input attribute.key %>
+
+<% if attribute.value.present? %>
+  <%= image_tag attribute.value.image.url, :class => 'thumb', :width => 75 %>
+<% else %>
+  <%= image_tag "noimage/small.jpg", :class => 'thumb', :width => 75 %>
+<% end %>
+
+<%= f.hidden_field attribute.key, :value => attribute.value ? attribute.value.id : nil, :id => attribute.key %>
+
+<% if attribute.value.present? %>
+  <a href="#" class="remove-image"><%= t 'remove_image' %></a> |
+<% end %>
+<%#= link_to t('choose_image'), dialog_admin_content_images_path, :class => 'choose-image' %>

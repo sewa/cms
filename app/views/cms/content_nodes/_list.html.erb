@@ -1,0 +1,41 @@
+<table width="100%" class="content-nodes index">
+  <thead>
+    <tr>
+      <th><%= t("title") %></th>
+      <th><%= t("type") %></th>
+      <th><%= t("name") %></th>
+      <th><%= t("access") %></th>
+      <th><%= t("updated_at") %></th>
+      <th width="192"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% content_nodes.each do |node| %>
+      <tr id="<%= dom_id node %>">
+        <td>
+          <% if node.all_children.count > 0 %>
+            <%= link_to node.title, action: 'show', id: node %>
+          <% else %>
+            <%= link_to node.title, action: 'edit', id: node %>
+          <% end %>
+        </td>
+        <td><%= t(node.type) %></td>
+        <td><%= node.name %></td>
+        <td><%= t(node.access) %></td>
+        <td><%= l node.updated_at, format: :full %></td>
+        <td class="actions">
+          <ul id="drop" class="small f-dropdown" data-dropdown-content>
+            <%= render 'cms/content_nodes/options', options: content_node_options, parent_id: node.id %>
+          </ul>
+          <% if node.all_children.count > 0 %>
+            <%= link_to t(:show_sub_pages), content_node_path(node), class: 'button tiny single radius' %>
+          <% end %>
+          <%= link_to t(:edit), edit_content_node_path(node), class: 'button tiny single radius'  %>
+          <%= link_to t(:show), node.path, class: 'button tiny radius' %>
+          <%= link_to t(:delete), content_node_path(node), 'data-confirm': t(:really_delete), method: :delete, class: 'button tiny radius' %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

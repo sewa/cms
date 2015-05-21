@@ -1,0 +1,14 @@
+<div class="left columns small-4">
+  <%= f.input :image, as: :file %>
+  <%= f.input :caption %>
+  <%= f.input :alt %>
+  <%= f.input :href %>
+  <%= f.input :tags %>
+  <%= f.input :text, as: :text %>
+</div>
+
+<% if @content_image.persisted? %>
+  <div class="left">
+    <%= image_tag @content_image.image.url(:rotator), class: "image" %>
+  </div>
+<% end %>

@@ -1,0 +1,28 @@
+<%= f.hidden_field :parent_id %>
+<%= f.hidden_field :type %>
+
+<fieldset>
+  <legend><%= t(:metadata) %></legend>
+  <%= f.input :title %>
+  <%= f.input :name %>
+  <%= f.input :template do %>
+    <%= f.select :template, template_options %>
+  <% end %>
+  <%= f.input :page_title %>
+  <%= f.input :keywords %>
+  <%= f.input :description, as: :text %>
+  <%= f.input :url %>
+  <%= f.input :redirect %>
+  <%= f.input :access do %>
+    <%= f.select :access, [[t('public'), 'public'], [t('private'), 'private']] %>
+  <% end %>
+</fieldset>
+
+<fieldset>
+  <legend><%= t(:attributes) %></legend>
+  <% for attribute in @content_node.content_attribute_list %>
+    <div class="row">
+      <%= render 'cms/content_attributes/' + attribute.type_name + '_field', :f => f, :attribute => attribute %>
+    </div>
+  <% end %>
+</fieldset>

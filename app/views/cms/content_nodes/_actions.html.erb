@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="columns small-12">
+    <br>
+    <div class="right">
+      <%= link_to t(:back_to_index), content_nodes_path, class: 'button small radius secondary' %>
+      <button href="#" data-dropdown="content-nodes-drop" aria-controls="content-nodes-drop" aria-expanded="false" class="button dropdown radius small">
+        <% if params[:id].present? %>
+          <%= t(:new_sub_page) %>
+        <% else %>
+          <%= t(:new_content_node) %>
+        <% end %>
+      </button>
+      <ul id="content-nodes-drop" data-dropdown-content class="f-dropdown" aria-hidden="true">
+        <%= render 'cms/content_nodes/options', options: content_node_options, parent_id: params[:id] %>
+      </ul>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,9 @@
+<%= render 'cms/content_nodes/actions' %>
+
+<div class="row">
+  <div class="columns small-12 small-centered">
+    <% if @content_node.all_children.count > 0 %>
+      <%= render 'cms/content_nodes/list', content_nodes: @content_node.all_children %>
+    <% end %>
+  </div>
+</div>

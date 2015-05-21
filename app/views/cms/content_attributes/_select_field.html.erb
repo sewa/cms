@@ -1,0 +1,3 @@
+<%= f.input attribute.key do %>
+  <%= f.select attribute.key, (@content_node.respond_to?(:select_values) ? @content_node.select_values : []) %>
+<% end %>

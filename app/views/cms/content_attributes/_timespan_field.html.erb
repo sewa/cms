@@ -1,0 +1,11 @@
+<%= f.field_container attribute.key do %>
+  <%= f.label attribute.key, t(attribute.key) %><br />
+  <div style="display: inline-block">
+    <%= label_tag 'From', t(:delivery_from) %><br />
+    <%= text_field_tag 'content_node[' + attribute.key + '][start]', (attribute.value[:start].strftime('%H:%M') unless attribute.value.nil?), :class => 'timepicker start', :data => { 'attribute-key' => attribute.key } %>
+  </div>
+  <div style="display: inline-block">
+    <%= label_tag 'To', t(:delivery_to) %><br />
+    <%= text_field_tag 'content_node[' + attribute.key + '][end]', (attribute.value[:end].strftime('%H:%M') unless attribute.value.nil?), :class => 'timepicker end', :data => { 'attribute-key' => attribute.key } %>
+  </div>
+<% end %>

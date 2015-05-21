@@ -1,0 +1,15 @@
+<div id="<%= attribute.key %>">
+  <%= f.label attribute.key, t(attribute.key) %><br />
+
+  <%# = link_to t('add_image'), dialog_admin_content_images_path, :class => 'add-image' %>
+
+  <ul class="image-list">
+  </ul>
+
+  <%= f.hidden_field attribute.key, :value => attribute.value.compact.map {|i| { :caption => i.caption, :src => i.image.url(:mini), :id => i.id } }.to_json, :class => 'field' %>
+
+  <script type="text/javascript">
+    $(function() { new ImageList('<%= attribute.key %>'); });
+  </script>
+
+</div>

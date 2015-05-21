@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+
+    <%= stylesheet_link_tag    "cms/application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= javascript_include_tag "cms/application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <nav class="top-bar" data-topbar role="navigation">
+      <ul class="title-area">
+        <li class="name">
+          <h1>
+            <%= link_to t(:cms), content_nodes_path %>
+          </h1>
+        </li>
+      </ul>
+      <section class="top-bar-section">
+        <ul class="right">
+          <li class="has-form">
+            <%= link_to t(:logout), content_nodes_path, class: 'button' %>
+          </li>
+        </ul>
+        <ul class="left">
+          <li>
+            <%= link_to t(:pages), content_nodes_path %>
+          </li>
+          <li class="active">
+            <%= link_to t(:categories), content_categories_path %>
+          </li>
+          <li>
+            <%= link_to t(:images), content_images_path %>
+          </li>
+          <li>
+          </li>
+        </ul>
+      </section>
+    </nav>
+
+    <%= yield %>
+
+  </body>
+</html>

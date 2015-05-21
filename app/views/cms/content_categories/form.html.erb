@@ -1,0 +1,9 @@
+<div class="columns small-8 small-centered">
+  <%= simple_form_for @content_category, wrapper: :horizontal_form do |f| %>
+    <fieldset>
+      <legend><%= t :new_category %></legend>
+      <%= render 'cms/content_categories/form', :f => f %>
+    </fieldset>
+    <%= render 'cms/shared/form_buttons', f: f %>
+  <% end %>
+</div>

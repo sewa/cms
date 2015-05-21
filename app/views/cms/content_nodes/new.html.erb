@@ -1,0 +1,6 @@
+<div class="columns small-8 small-centered">
+  <%= simple_form_for @content_node, as: :content_node, url: content_nodes_url, wrapper: :horizontal_form do |f| %>
+    <%= render 'cms/content_nodes/form', f: f %>
+    <%= render 'cms/shared/form_buttons', cancel: content_nodes_path, f: f %>
+  <% end %>
+</div>

@@ -1,0 +1,6 @@
+<div class="attribute">
+  <label><%= t attribute.key %></label></br>
+  <% if attribute.value %>
+    <%= image_tag attribute.value.image.url, :width => 200 %>
+  <% end %>
+</div>
