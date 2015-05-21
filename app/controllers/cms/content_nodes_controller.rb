@@ -17,8 +17,6 @@ module Cms
         # @content_node.create_version!(current_user)
         redirect_to content_nodes_path
       else
-        pp create_params
-        pp @content_node.errors
         render action: :new
       end
     end

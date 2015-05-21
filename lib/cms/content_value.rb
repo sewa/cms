@@ -43,10 +43,10 @@ module Cms
     class Reference < ActiveRecord::Base
       self.table_name = 'content_value_reference'
       include Validation
-      validates :type, presence: true
+      validates :scope, presence: true
 
       def value
-        type.constantize.find_by_id(read_attribute(:value))
+        scope.constantize.find_by_id(read_attribute(:value))
       end
     end
 

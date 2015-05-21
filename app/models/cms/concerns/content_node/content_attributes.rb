@@ -11,6 +11,7 @@ module Cms
           has_many :content_attributes, autosave: true, dependent: :destroy
 
           after_initialize :load_attributes
+          # todo: implement this -> before_validate :skip_empty_attributes
 
         end
 

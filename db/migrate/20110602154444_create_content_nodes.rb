@@ -57,7 +57,7 @@ class CreateContentNodes < ActiveRecord::Migration
 
     create_table :content_value_reference do |t|
       t.integer :value, null: false
-      t.string :type, null: false
+      t.string :scope, null: false
     end
 
     create_table :content_categories do |t|

@@ -20,26 +20,14 @@ module Cms
 
     class << self
       # specifies the type of the content_value
-      def content_type(type, reference_scope = nil)
-        @reference_scope ||= reference_scope
+      def content_type(type, scope = nil)
+        @scope ||= scope
         belongs_to :content_value, class_name: "Cms::ContentValue::#{type.to_s.classify}", dependent: :destroy, autosave: true
       end
 
-      def reference_scope
-        @reference_scope
+      def scope
+        @scope
       end
-    end
-
-    alias_method :orig_valid?, :valid?
-    def valid?(context = nil)
-      ret = orig_valid?
-      return ret if content_value.blank?
-      unless content_value.valid?
-        content_value.errors.each do |key, error|
-          errors.add key, error
-        end
-      end
-      ret && errors.empty?
     end
 
     protected
@@ -49,8 +37,8 @@ module Cms
       unless value.nil?
         cv = (content_value || build_content_value)
         cv.value = value
-        if cv.respond_to?(:type) && self.class.reference_scope
-          cv.type = self.class.reference_scope
+        if cv.respond_to?(:scope) && self.class.scope
+          cv.scope = self.class.scope
         end
       end
     end

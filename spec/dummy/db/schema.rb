@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20131120084440) do
 
   create_table "content_value_reference", force: :cascade do |t|
     t.integer "value", null: false
-    t.string  "type",  null: false
+    t.string  "scope", null: false
   end
 
   create_table "content_value_string", force: :cascade do |t|
