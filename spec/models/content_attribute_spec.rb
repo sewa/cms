@@ -5,6 +5,10 @@ RSpec.describe Cms::ContentAttribute do
 
   let(:content_node) { create(:content_node) }
 
+  class TestText < Cms::ContentAttribute
+    content_type :text
+  end
+
   class Test < Cms::ContentAttribute
     content_type :integer
   end
@@ -36,18 +40,17 @@ RSpec.describe Cms::ContentAttribute do
     expect(attr.reload.value).to eq 123
   end
 
-  it 'has an error if value is not valid' do
+  it 'checks for nil values' do
     attr = setup_attribute
-    attr.valid?
-    expect(attr.errors.count).to eq 1
+    expect(attr.value).to eq nil
   end
 
-  ['abc', nil].each do |val|
+  [1, nil].each do |val|
     it 'has an error' do
       attr = Test.new
       attr.value = val
       attr.valid?
-      expect(attr.errors.count).to eq 3
+      expect(attr.errors.count).to eq 2
     end
   end
 

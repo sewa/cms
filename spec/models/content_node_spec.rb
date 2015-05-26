@@ -13,10 +13,42 @@ RSpec.describe Cms::ContentNode, type: :model do
     expect(node).to be_persisted
   end
 
+  context "content_groups" do
+
+    it "adds an content_attribute" do
+      expect(TestGroupNode.content_groups[:test].size).to eq 2
+    end
+
+    it "adds all other nodes to default group" do
+      expect(TestNode.content_groups[:default].size).to eq 3
+    end
+
+    it "has the content_gropus if the node was saved" do
+      node = TestGroupNode.new(attributes_for(:content_node, type: TestGroupNode.to_s))
+      node.test1 = 'bla bal'
+      expect(node.save).to eq true
+      node = TestGroupNode.last
+      expect(node.content_groups[:test].size).to eq 2
+    end
+
+    it "includes parent group definitions" do
+      expect(TestNode.content_groups.size).to eq 2
+    end
+
+  end
+
   context "content_attributes" do
 
-    it "retruns the kes" do
-      expect(TestNode.content_attribute_keys).to eq [:test1, :test2]
+    it "retruns the keys" do
+      class TestNode1 < Cms::ContentNode
+        content_attribute :string, :string
+        content_attribute :list, :image_list
+      end
+      expect(TestNode1.permit_content_attributes).to eq [:seo_text, :string, :list => []]
+    end
+
+    it "includes parent group definitions" do
+      expect(TestNode.content_attributes.size).to eq 4
     end
 
     it "responds to the methods" do
@@ -29,8 +61,27 @@ RSpec.describe Cms::ContentNode, type: :model do
     it "assigns the values" do
       node = TestNode.new(attributes_for(:content_node))
       node.test1 = 'bla bal'
-      node.test2 = create(:content_image).id
+      img = create(:content_image)
+      node.test2 = img.id
+      node.float = 12.2
       expect(node.save).to eq true
+      expect(node.reload.test2).to eq img
+      expect(node.reload.test1).to eq 'bla bal'
+    end
+
+    it "returns nil values" do
+      node = TestNode.new(attributes_for(:content_node))
+      node.test1 = 'bla bal'
+      node.float = 12.2
+      expect(node.save).to eq true
+      expect(node.reload.test2).to eq nil
+      expect(node.reload.test1).to eq 'bla bal'
+    end
+
+    it "validates the attributes" do
+      node = TestNode.new(attributes_for(:content_node))
+      expect(node.valid?).to eq false
+      expect(node.errors[:float].count).to eq 2
     end
 
   end

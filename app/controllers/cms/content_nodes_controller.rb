@@ -5,6 +5,7 @@ module Cms
     include Cms::ControllerHelpers::ContentNodes
 
     before_filter :find_node, only: [:show, :edit, :update, :up, :down, :destroy, :set_version, :children]
+    before_filter :load_assets, only: [:new, :edit, :create, :update]
 
     def index
       @content_nodes = ContentNode.where(:parent_id => nil).page(params[:page]).per(20)
@@ -25,7 +26,7 @@ module Cms
       if @content_node.update_attributes(content_node_params)
         # @content_node.create_version!(current_user)
         @content_node.save
-        redirect_to edit_content_node_path(@content_node)
+        redirect_to content_nodes_path
       else
         render :action => 'edit'
       end
@@ -73,11 +74,15 @@ module Cms
 
     def content_attrs
       params.require(:content_node).permit(base_attrs)
-      safe_type(params[:content_node][:type], content_node_types).classify.constantize.content_attribute_keys
+      safe_type(params[:content_node][:type], content_node_types).classify.constantize.permit_content_attributes
     end
 
     def content_node_params
       params.require(:content_node).permit(base_attrs + content_attrs)
+    end
+
+    def load_assets
+      @content_images = ContentImage.all
     end
 
   end

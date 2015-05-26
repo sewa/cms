@@ -1,0 +1,11 @@
+<div class="sidebar">
+  <fieldset>
+    <legend><%= t(:images) %></legend>
+    <%= render 'cms/shared/asset_search_form', type: :content_images, url: search_content_images_path %>
+    <ul class="assets images">
+      <% content_images.each do |asset| %>
+        <%= render 'cms/shared/asset_field', asset: asset %>
+      <% end %>
+    </ul>
+  </fieldset>
+</div>

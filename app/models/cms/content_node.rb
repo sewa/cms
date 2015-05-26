@@ -24,6 +24,10 @@ module Cms
     scope :public_nodes, -> { where('access = ?', 'public') }
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
 
+    content_group :seo do
+      content_attribute :seo_text, :text
+    end
+
     class << self
 
       def resolve(path)

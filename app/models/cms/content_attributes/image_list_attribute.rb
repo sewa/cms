@@ -2,14 +2,14 @@
 class ImageListAttribute < Cms::ContentAttribute
   content_type :string
 
-  def value
-    read_attribute(:value).to_s.split(',').map {|id| Cms::ContentImage.find_by_id(id) }
+  def images
+    (fetch_value || '').split(',').map do |id|
+      Cms::ContentImage.find(id)
+    end
   end
 
-  def value=(json)
-    images = ActiveSupport::JSON.decode(json)
-    ids = images.map {|p| p['id'] }.join(',')
-    write_value(ids)
+  def value=(value)
+    assign_value(value.join(','))
   end
 
 end

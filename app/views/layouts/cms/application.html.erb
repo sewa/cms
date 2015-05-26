@@ -28,20 +28,14 @@
           </li>
         </ul>
         <ul class="left">
-          <li>
-            <%= link_to t(:pages), content_nodes_path %>
-          </li>
-          <li class="active">
-            <%= link_to t(:categories), content_categories_path %>
-          </li>
-          <li>
-            <%= link_to t(:images), content_images_path %>
-          </li>
-          <li>
-          </li>
+          <%= nav_link_to t(:pages), content_nodes_path %>
+          <%= nav_link_to t(:categories), content_categories_path %>
+          <%= nav_link_to t(:images), content_images_path %>
         </ul>
       </section>
     </nav>
+
+    <%= content_for :sidebar %>
 
     <%= yield %>
 

@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "4.2.1"
   s.add_dependency "jquery-rails"
+  s.add_dependency "jquery-ui-rails"
   s.add_dependency "devise"
   s.add_dependency "acts_as_tree"
   s.add_dependency "acts_as_list"

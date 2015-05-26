@@ -8,6 +8,7 @@ PATH
       devise
       foundation-rails (= 5.5.2.1)
       jquery-rails
+      jquery-ui-rails
       paperclip
       rails (= 4.2.1)
       simple_form
@@ -87,6 +88,8 @@ GEM
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (5.0.5)
+      railties (>= 3.2.16)
     json (1.8.2)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)

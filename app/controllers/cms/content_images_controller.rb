@@ -2,15 +2,15 @@
 module Cms
   class ContentImagesController < ApplicationController
 
-    before_filter :find_content_images, only: [:index, :dialog]
+    before_filter :find_content_images, only: [:index, :search]
     before_filter :load_content_image, only: [:edit, :update, :destroy]
 
     def index
       @content_images = @query.page(params[:page]).per(20)
     end
 
-    def dialog
-      @content_images = @query.page(params[:page]).per(6)
+    def search
+      @content_images = @query.page(params[:page]).per(20)
       render :layout => false
     end
 

@@ -14,16 +14,14 @@
 ActiveRecord::Schema.define(version: 20131120084440) do
 
   create_table "content_attributes", force: :cascade do |t|
-    t.integer  "content_node_id",  null: false
-    t.integer  "content_value_id", null: false
-    t.string   "key",              null: false
-    t.string   "type",             null: false
+    t.integer  "content_node_id", null: false
+    t.string   "key",             null: false
+    t.string   "type",            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "content_attributes", ["content_node_id"], name: "index_content_attributes_on_content_node_id"
-  add_index "content_attributes", ["content_value_id"], name: "index_content_attributes_on_content_value_id"
   add_index "content_attributes", ["key"], name: "index_content_attributes_on_key"
 
   create_table "content_categories", force: :cascade do |t|
@@ -90,28 +88,46 @@ ActiveRecord::Schema.define(version: 20131120084440) do
   add_index "content_nodes", ["url"], name: "index_content_nodes_on_url"
 
   create_table "content_value_datetime", force: :cascade do |t|
-    t.datetime "value", null: false
+    t.integer  "content_attribute_id", null: false
+    t.datetime "value",                null: false
   end
+
+  add_index "content_value_datetime", ["content_attribute_id"], name: "index_content_value_datetime_on_content_attribute_id"
 
   create_table "content_value_float", force: :cascade do |t|
-    t.float "value", null: false
+    t.integer "content_attribute_id", null: false
+    t.float   "value",                null: false
   end
+
+  add_index "content_value_float", ["content_attribute_id"], name: "index_content_value_float_on_content_attribute_id"
 
   create_table "content_value_integer", force: :cascade do |t|
-    t.integer "value", null: false
+    t.integer "content_attribute_id", null: false
+    t.integer "value",                null: false
   end
+
+  add_index "content_value_integer", ["content_attribute_id"], name: "index_content_value_integer_on_content_attribute_id"
 
   create_table "content_value_reference", force: :cascade do |t|
-    t.integer "value", null: false
-    t.string  "scope", null: false
+    t.integer "content_attribute_id", null: false
+    t.integer "value",                null: false
+    t.string  "scope",                null: false
   end
+
+  add_index "content_value_reference", ["content_attribute_id"], name: "index_content_value_reference_on_content_attribute_id"
 
   create_table "content_value_string", force: :cascade do |t|
-    t.string "value", null: false
+    t.integer "content_attribute_id", null: false
+    t.string  "value",                null: false
   end
 
+  add_index "content_value_string", ["content_attribute_id"], name: "index_content_value_string_on_content_attribute_id"
+
   create_table "content_value_text", force: :cascade do |t|
-    t.text "value", null: false
+    t.integer "content_attribute_id", null: false
+    t.text    "value",                null: false
   end
+
+  add_index "content_value_text", ["content_attribute_id"], name: "index_content_value_text_on_content_attribute_id"
 
 end

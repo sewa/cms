@@ -1,3 +1,7 @@
+<%= content_for :sidebar do %>
+  <%= render 'cms/shared/asset_bar', content_images: @content_images %>
+<% end %>
+
 <%= f.hidden_field :parent_id %>
 <%= f.hidden_field :type %>
 
@@ -18,11 +22,13 @@
   <% end %>
 </fieldset>
 
-<fieldset>
-  <legend><%= t(:attributes) %></legend>
-  <% for attribute in @content_node.content_attribute_list %>
-    <div class="row">
-      <%= render 'cms/content_attributes/' + attribute.type_name + '_field', :f => f, :attribute => attribute %>
-    </div>
-  <% end %>
-</fieldset>
+<% @content_node.content_groups.each do |group, attrs| %>
+  <fieldset>
+    <legend><%= t(group) %></legend>
+    <% attrs.each do |attribute| %>
+      <div class="row">
+        <%= render 'cms/content_attributes/' + attribute.type_name + '_field', f: f, attribute: attribute %>
+      </div>
+    <% end %>
+  </fieldset>
+<% end %>

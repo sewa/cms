@@ -20,7 +20,7 @@ Cms::Engine.routes.draw do
 
   resources :content_images do
     collection do
-      get :dialog
+      get :search
     end
   end
 

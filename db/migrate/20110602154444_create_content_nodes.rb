@@ -25,7 +25,6 @@ class CreateContentNodes < ActiveRecord::Migration
 
     create_table :content_attributes do |t|
       t.integer :content_node_id, null: false
-      t.integer :content_value_id, null: false
       t.string :key, null: false
       t.string :type, null: false
       t.timestamps
@@ -33,33 +32,46 @@ class CreateContentNodes < ActiveRecord::Migration
 
     add_index :content_attributes, :content_node_id
     add_index :content_attributes, :key
-    add_index :content_attributes, :content_value_id
 
+    # content values
     create_table :content_value_integer do |t|
+      t.integer :content_attribute_id, null: false
       t.integer :value, null: false
     end
+    add_index :content_value_integer, :content_attribute_id
 
     create_table :content_value_float do |t|
+      t.integer :content_attribute_id, null: false
       t.float :value, null: false
     end
+    add_index :content_value_float, :content_attribute_id
 
     create_table :content_value_string do |t|
+      t.integer :content_attribute_id, null: false
       t.string :value, null: false
     end
+    add_index :content_value_string, :content_attribute_id
 
     create_table :content_value_text do |t|
+      t.integer :content_attribute_id, null: false
       t.text :value, null: false
     end
+    add_index :content_value_text, :content_attribute_id
 
     create_table :content_value_datetime do |t|
+      t.integer :content_attribute_id, null: false
       t.datetime :value, null: false
     end
+    add_index :content_value_datetime, :content_attribute_id
 
     create_table :content_value_reference do |t|
+      t.integer :content_attribute_id, null: false
       t.integer :value, null: false
       t.string :scope, null: false
     end
+    add_index :content_value_reference, :content_attribute_id
 
+    # content categories
     create_table :content_categories do |t|
       t.string :name, size: 64
       t.string :description

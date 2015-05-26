@@ -1,0 +1,23 @@
+.sidebar{
+    position: fixed;
+    right: 0px;
+    background: #FAFAFA;
+    height: 100%;
+    width: 544px;
+    padding: 0 20px;
+    ul {
+        list-style: none;
+        margin: 0px;
+        li {
+            float: left;
+            width: 146px;
+            height: 146px;
+            line-height: 142px;
+            text-align: center;
+            margin: 4px;
+            .actions {
+                display: none;
+            }
+        }
+    }
+}

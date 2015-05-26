@@ -5,6 +5,22 @@ class TestNode < Cms::ContentNode
   content_attribute :test1, :text
   content_attribute :test2, :image
 
+
+  content_attribute :float, :float
+  validates :float, presence: true
+  validates :float, numericality: true
+
+end
+
+class TestGroupNode < Cms::ContentNode
+
+  content_group :test do
+
+    content_attribute :test1, :text
+    content_attribute :test2, :image
+
+  end
+
 end
 
 FactoryGirl.define do
@@ -16,7 +32,7 @@ FactoryGirl.define do
 
     trait :node_with_attrs do
       test1 'some text'
-      test2 12
+      float 12.1
     end
 
     trait :nil_type do

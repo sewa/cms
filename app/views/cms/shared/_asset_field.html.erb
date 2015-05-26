@@ -1,0 +1,13 @@
+<li data-asset-id="<%= asset.id %>" data-url="<%= asset.image.url %>">
+  <div class="relative">
+    <div class="actions">
+      <%= link_to "x", "#", class: 'delete' %>
+    </div>
+    <% if defined?(name) && name.present? %>
+      <%= hidden_field_tag name, asset.id %>
+    <% else %>
+      <%= hidden_field_tag '', asset.id %>
+    <% end %>
+    <%= image_tag asset.image.url(:thumb) %>
+  </div>
+</li>
