@@ -52,25 +52,30 @@ $(document).ready(function() {
   dragndrop($('.images li', '.sidebar'), $('.drop-zone.images'), 'images');
   dragndrop($('.documents li', '.sidebar'), $('.drop-zone.documents'), 'documents');
 
-  $('.drop-zone-single').droppable({
-    activeClass: 'active',
-    accept: function(d) {
-      return d.parent().attr('class').match('images');
-    },
-    drop: function(event, ui) {
-      var li = ui.draggable.clone();
-      $(this).empty().append(li);
-      var name = li.parent().attr('data-name');
-      li.find('input[type=hidden]').attr('name', name);
-      attribute_not_empty($(this));
-    }
-  });
+  function drop_single(to, accept) {
+    $(to).droppable({
+      activeClass: 'active',
+      accept: function(d) {
+        return d.parent().attr('class').match(accept);
+      },
+      drop: function(event, ui) {
+        var li = ui.draggable.clone();
+        $(this).empty().append(li);
+        var name = li.parent().attr('data-name');
+        li.find('input[type=hidden]').attr('name', name);
+        attribute_not_empty($(this));
+      }
+    });
+  }
+
+  drop_single($('.drop-zone-single.images'), 'images');
+  drop_single($('.drop-zone-single.documents'), 'documents');
 
   $(document).on('click', '.drop-zone .delete, .drop-zone-single .delete', function(e) {
     e.preventDefault();
-    var ul = $(this).parents('ul'),
+    var ul = $(this).parents('ul').first(),
         input = $('input.empty', $(this).parents('.row'));
-    $(this).parents('li').remove();
+    $(this).parent().parent().parent().remove();
     mark_attribute(ul, input);
   });
 

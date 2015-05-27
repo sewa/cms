@@ -83,6 +83,7 @@ module Cms
 
     def load_assets
       @content_images = ContentImage.all
+      @content_documents = ContentDocument.all
     end
 
   end

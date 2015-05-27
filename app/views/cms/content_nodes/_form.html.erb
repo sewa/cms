@@ -1,30 +1,34 @@
 <%= f.hidden_field :parent_id %>
 <%= f.hidden_field :type %>
+<ul class="accordion" data-accordion>
+  <li class="accordion-navigation">
+    <a href="#metadata"><%= t(:metadata) %></a>
+    <div id="metadata" class="content active">
+      <%= f.input :title %>
+      <%= f.input :name %>
+      <%= f.input :template do %>
+        <%= f.select :template, template_options %>
+      <% end %>
+      <%= f.input :page_title %>
+      <%= f.input :keywords %>
+      <%= f.input :description, as: :text %>
+      <%= f.input :url %>
+      <%= f.input :redirect %>
+      <%= f.input :access do %>
+        <%= f.select :access, [[t('public'), 'public'], [t('private'), 'private']] %>
+      <% end %>
+    </div>
+  </li>
 
-<fieldset>
-  <legend><%= t(:metadata) %></legend>
-  <%= f.input :title %>
-  <%= f.input :name %>
-  <%= f.input :template do %>
-    <%= f.select :template, template_options %>
-  <% end %>
-  <%= f.input :page_title %>
-  <%= f.input :keywords %>
-  <%= f.input :description, as: :text %>
-  <%= f.input :url %>
-  <%= f.input :redirect %>
-  <%= f.input :access do %>
-    <%= f.select :access, [[t('public'), 'public'], [t('private'), 'private']] %>
-  <% end %>
-</fieldset>
-
-<% @content_node.content_groups.each do |group, attrs| %>
-  <fieldset>
-    <legend><%= t(group) %></legend>
-    <% attrs.each do |attribute| %>
-      <div class="row">
-        <%= render 'cms/content_attributes/' + attribute.type_name + '_field', f: f, attribute: attribute %>
+  <% @content_node.content_groups.each do |group, attrs| %>
+    <li class="accordion-navigation">
+      <a href="#<%= group %>"><%= t(group) %></a>
+      <div id="<%= group %>" class="content">
+        <% attrs.each do |attribute| %>
+          <div class="row">
+            <%= render 'cms/content_attributes/' + attribute.type_name + '_field', f: f, attribute: attribute %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-  </fieldset>
-<% end %>
+  <% end %>
+</ul>

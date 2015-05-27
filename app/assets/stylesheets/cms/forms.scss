@@ -7,6 +7,32 @@ form .cke {
     margin-bottom: 16px !important;
 }
 
+ul.drop-zone-single {
+    text-align: center;
+    li {
+        display: inline-block;
+    }
+}
+
+ul.drop-zone {
+    li {
+        float: left;
+    }
+}
+
+ul.drop-zone.images, ul.drop-zone-single.images {
+    li {
+        width: 146px;
+        height: 146px;
+    }
+}
+
+ul.drop-zone.documents, ul.drop-zone-single.documents {
+    li .relative {
+        padding-top: 24px;
+    }
+}
+
 ul.drop-zone, ul.drop-zone-single {
     background-color: #fafafa;
     border: 1px dashed #ababab;
@@ -15,25 +41,38 @@ ul.drop-zone, ul.drop-zone-single {
     margin: 0 0 16px 0;
     padding: 4px;
     li {
-        float: left;
-        width: 146px;
-        height: 146px;
         text-align: center;
         margin: 4px;
         .actions {
             position: absolute;
             top: 0;
             right: 0;
-            background-color: #ababab;
-            line-height: normal;
-            width: 20px;
-            height: 20px;
+            a {
+                display: block;
+                background-color: #fafafa;
+                border: 1px solid #ababab;
+                line-height: normal;
+                padding: 3px 7px;
+            }
         }
     }
 }
+
 ul.drop-zone.active, ul.drop-zone-single.active {
     background-color: #e9f9e9;
 }
+
 li.ui-draggable-dragging {
     z-index: 4000;
+}
+
+.accordion {
+    margin: 24px 0;
+    li > a {
+        border-bottom: 1px solid #ababab;
+    }
+    .content {
+        padding-top: 32px !important;
+        background-color: #fafafa !important;
+    }
 }

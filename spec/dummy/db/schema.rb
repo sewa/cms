@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131120084440) do
+ActiveRecord::Schema.define(version: 20150527100712) do
 
   create_table "content_attributes", force: :cascade do |t|
     t.integer  "content_node_id", null: false
@@ -42,18 +42,29 @@ ActiveRecord::Schema.define(version: 20131120084440) do
   add_index "content_category_nodes", ["content_category_id"], name: "index_content_category_nodes_on_content_category_id"
   add_index "content_category_nodes", ["content_node_id"], name: "index_content_category_nodes_on_content_node_id"
 
+  create_table "content_documents", force: :cascade do |t|
+    t.string   "name",                    null: false
+    t.string   "tags"
+    t.string   "attachment_file_name",    null: false
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "content_images", force: :cascade do |t|
     t.string   "caption"
-    t.string   "alt"
     t.string   "tags"
     t.string   "text"
     t.string   "url"
+    t.string   "alt"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "content_node_connections", id: false, force: :cascade do |t|

@@ -16,8 +16,10 @@ de:
       day: '%A'
       month: '%M'
 
-  images: Bilder
   pages: Seiten
+  categories: Kategorien
+  images: Bilder
+  documents: Dokumente
   cms: CMS
   logout: Logout
   create_page: Seite erstellen
@@ -31,6 +33,8 @@ de:
   new_content_node: Neue Seite erstellen
   new_content_category: Neue Kategorie erstellen
   new_content_image: Neues Bild erstellen
+  new_content_document: Neues Dokument erstellen
 
   search_content_images: Bilder durchsuchen
+  search_content_documents: Dokumente durchsuchen
   really_delete: Wirklich löschen?

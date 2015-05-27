@@ -1,7 +1,5 @@
-
 $(function(){
   $(document).foundation();
-
   var config = {};
   config.toolbarGroups = [
 	  { name: 'document', groups: [ 'mode' ] },

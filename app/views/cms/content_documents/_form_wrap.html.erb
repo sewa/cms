@@ -1,0 +1,9 @@
+<div class="columns small-7">
+  <%= simple_form_for object, wrapper: :horizontal_form do |f| %>
+    <fieldset>
+      <legend><%= legend %></legend>
+      <%= render 'cms/content_documents/form', f: f %>
+    </fieldset>
+    <%= render 'cms/shared/form_buttons', cancel: content_documents_path, f: f %>
+  <% end %>
+</div>

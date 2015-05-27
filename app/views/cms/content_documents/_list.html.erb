@@ -1,0 +1,33 @@
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="154"><%= t "attachment" %></th>
+      <th><%= t "name" %></th>
+      <th><%= t "tags" %></th>
+      <th width="193" class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% objects.each do |object| %>
+      <tr>
+        <td>
+          <%= link_to object.attachment.url, target: :blank do %>
+            <%= image_tag 'cms/pdf_icon.png', alt: 'pdf' %>
+          <% end %>
+        </td>
+        <td><%= object.name %></td>
+        <td><%= object.tags %></td>
+        <td class="actions">
+          <ul class="button-group right radius">
+            <li>
+              <%= link_to t(:edit), edit_content_document_path(object), class: 'button tiny'  %>
+            </li>
+            <li>
+              <%= link_to t(:delete), content_document_path(object), 'data-confirm': t(:really_delete), method: :delete, class: 'button tiny' %>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

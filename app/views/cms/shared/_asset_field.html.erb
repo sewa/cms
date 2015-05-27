@@ -1,4 +1,4 @@
-<li data-asset-id="<%= asset.id %>" data-url="<%= asset.image.url %>">
+<li data-asset-id="<%= asset.id %>" data-url="<%= asset_url(asset) %>">
   <div class="relative">
     <div class="actions">
       <%= link_to "x", "#", class: 'delete' %>
@@ -8,6 +8,11 @@
     <% else %>
       <%= hidden_field_tag '', asset.id %>
     <% end %>
-    <%= image_tag asset.image.url(:thumb) %>
+    <% if image?(asset) %>
+      <%= image_tag asset.image.url(:thumb) %>
+    <% elsif document?(asset) %>
+      <%= image_tag 'cms/pdf_icon.png', alt: 'pdf' %>
+      <%= asset.name %>
+    <% end %>
   </div>
 </li>

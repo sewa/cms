@@ -24,4 +24,10 @@ Cms::Engine.routes.draw do
     end
   end
 
+  resources :content_documents do
+    collection do
+      get :search
+    end
+  end
+
 end

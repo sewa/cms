@@ -1,11 +1,24 @@
 <div class="sidebar columns small-5">
-  <fieldset>
-    <legend><%= t(:images) %></legend>
-    <%= render 'cms/shared/asset_search_form', type: :content_images, url: search_content_images_path %>
-    <ul class="assets images">
-      <% content_images.each do |asset| %>
-        <%= render 'cms/shared/asset_field', asset: asset %>
-      <% end %>
+  <div class="tabs">
+    <ul class="button-group radius">
+      <li><a class="button small secondary" href="#images-tab"><%= t(:images)%></a></li>
+      <li><a class="button small secondary" href="#documents-tab"><%= t(:documents)%></a></li>
     </ul>
-  </fieldset>
+    <div id="images-tab">
+      <%= render 'cms/shared/asset_search_form', type: :content_images, url: search_content_images_path %>
+      <ul class="assets images">
+        <% images.each do |asset| %>
+          <%= render 'cms/shared/asset_field', asset: asset %>
+        <% end %>
+      </ul>
+    </div>
+    <div id="documents-tab">
+      <%= render 'cms/shared/asset_search_form', type: :content_documents, url: search_content_documents_path %>
+      <ul class="assets documents">
+        <% documents.each do |asset| %>
+          <%= render 'cms/shared/asset_field', asset: asset %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </div>
