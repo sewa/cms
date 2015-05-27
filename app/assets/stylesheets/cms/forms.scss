@@ -7,7 +7,7 @@ form .cke {
     margin-bottom: 16px !important;
 }
 
-ul.drop-zone {
+ul.drop-zone, ul.drop-zone-single {
     background-color: #fafafa;
     border: 1px dashed #ababab;
     min-height: 164px;
@@ -31,6 +31,9 @@ ul.drop-zone {
         }
     }
 }
-ul.drop-zone.active {
+ul.drop-zone.active, ul.drop-zone-single.active {
     background-color: #e9f9e9;
+}
+li.ui-draggable-dragging {
+    z-index: 4000;
 }

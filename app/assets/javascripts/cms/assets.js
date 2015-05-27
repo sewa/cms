@@ -1,5 +1,18 @@
 $(document).ready(function() {
 
+  function mark_attribute(ul, input) {
+    if (ul.children().length == 0) {
+      input.val('-1');
+    } else {
+      input.val('');
+    }
+  };
+
+  function attribute_not_empty(ul) {
+    var input = $('input.empty', ul.parents('.row'));
+    mark_attribute(ul, input);
+  };
+
   function droppable(from, to, accept) {
     to.droppable({
       activeClass: 'active',
@@ -12,6 +25,7 @@ $(document).ready(function() {
           ui.helper.data().dragged = false;
           var name = ui.draggable.parent().attr('data-name');
           ui.draggable.find('input[type=hidden]').attr('name', name);
+          attribute_not_empty($(this));
         }
       }
     }).sortable({
@@ -38,19 +52,26 @@ $(document).ready(function() {
   dragndrop($('.images li', '.sidebar'), $('.drop-zone.images'), 'images');
   dragndrop($('.documents li', '.sidebar'), $('.drop-zone.documents'), 'documents');
 
-  $('.drop-url').droppable({
+  $('.drop-zone-single').droppable({
     activeClass: 'active',
     accept: function(d) {
       return d.parent().attr('class').match('images');
     },
     drop: function(event, ui) {
-      $(this).val(ui.draggable.attr('data-url'));
+      var li = ui.draggable.clone();
+      $(this).empty().append(li);
+      var name = li.parent().attr('data-name');
+      li.find('input[type=hidden]').attr('name', name);
+      attribute_not_empty($(this));
     }
   });
 
-  $(document).on('click', '.drop-zone .delete', function(e) {
+  $(document).on('click', '.drop-zone .delete, .drop-zone-single .delete', function(e) {
     e.preventDefault();
+    var ul = $(this).parents('ul'),
+        input = $('input.empty', $(this).parents('.row'));
     $(this).parents('li').remove();
+    mark_attribute(ul, input);
   });
 
   $('.tabs', '.sidebar').tabs();

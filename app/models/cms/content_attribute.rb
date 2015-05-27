@@ -36,7 +36,10 @@ module Cms
     protected
 
     def assign_value(value)
-      unless value.blank?
+      # attributes marked with -1 get deleted
+      if value == '-1' && content_value.present?
+        content_value.destroy
+      elsif value.present?
         cv = content_value || build_content_value
         cv.value = value
         if cv.respond_to?(:scope) && self.class.scope

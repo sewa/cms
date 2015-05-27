@@ -1,15 +1,11 @@
+<input type="hidden" name="content_node[<%= attribute.key%>]", class="empty" />
 
-<%= f.input attribute.key %>
+<div class="columns small-3">
+  <%= f.label attribute.key, t(attribute.key), class: 'right inline' %>
+</div>
 
-<% if attribute.value.present? %>
-  <%= image_tag attribute.value.image.url, :class => 'thumb', :width => 75 %>
-<% else %>
-  <%= image_tag "noimage/small.jpg", :class => 'thumb', :width => 75 %>
-<% end %>
-
-<%= f.hidden_field attribute.key, :value => attribute.value ? attribute.value.id : nil, :id => attribute.key %>
-
-<% if attribute.value.present? %>
-  <a href="#" class="remove-image"><%= t 'remove_image' %></a> |
-<% end %>
-<%#= link_to t('choose_image'), dialog_admin_content_images_path, :class => 'choose-image' %>
+<ul class="drop-zone-single columns small-3 images" data-name="content_node[<%= attribute.key%>]">
+  <% if attribute.value.present? %>
+    <%= render 'cms/shared/asset_field', asset: attribute.value, name: "content_node[#{attribute.key}]" %>
+  <% end %>
+</ul>
