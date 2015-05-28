@@ -21,9 +21,12 @@ module Cms
     before_validation :correct_url
     before_validation :correct_redirect
 
+    default_scope -> { order(position: :asc) }
+
     # active record already defines a public method
     scope :public_nodes, -> { where('access = ?', 'public') }
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
+    scope :root_nodes, -> { where(parent_id: nil) }
 
     class << self
 

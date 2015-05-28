@@ -6,3 +6,11 @@ table.content-nodes .button {
     width: 120px;
     margin-bottom: 4px !important;
 }
+table {
+    margin-top: 15px;
+    tbody {
+        tr {
+            cursor: move;
+        }
+    }
+}

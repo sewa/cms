@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     <% content_nodes.each do |node| %>
-      <tr id="<%= dom_id node %>">
+      <tr id="<%= dom_id node %>" data-sort-url="<%= sort_content_node_path(node) %>">
         <td>
           <% if node.all_children.count > 0 %>
             <%= link_to node.title, action: 'show', id: node %>

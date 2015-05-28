@@ -4,7 +4,7 @@ module Cms
 
     include Cms::ControllerHelpers::ContentNodes
 
-    before_filter :load_object, only: [:show, :edit, :update, :destroy]
+    before_filter :load_object, only: [:show, :edit, :update, :destroy, :sort]
     before_filter :load_parent, only: [:new, :create, :update]
     before_filter :load_assets, only: [:new, :edit, :create, :update]
 
@@ -28,13 +28,18 @@ module Cms
         @content_node.save
         redirect_to content_nodes_path
       else
-        render :action => 'edit'
+        render action: :edit
       end
     end
 
     def new
       type = params.delete(:type)
       @content_node = safe_new(type, content_node_types(@parent), parent_id: params[:parent_id])
+    end
+
+    def sort
+      @content_node.set_list_position(params[:position])
+      render json: { status: :success }
     end
 
     def destroy
@@ -66,7 +71,7 @@ module Cms
     end
 
     def load_parent
-      parent_id = params[:parent_id] || params[:content_node][:parent_id]
+      parent_id = params[:parent_id] || (params[:content_node] || {})[:parent_id]
       if parent_id.present?
         @parent = ContentNode.find(parent_id)
       end

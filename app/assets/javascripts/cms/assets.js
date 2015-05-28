@@ -79,8 +79,6 @@ $(document).ready(function() {
     mark_attribute(ul, input);
   });
 
-  $('.tabs', '.sidebar').tabs();
-
   $('.assets-search-form input').on('keyup', function() {
     var self = this,
         val = $(this).val(),
@@ -95,20 +93,5 @@ $(document).ready(function() {
       $.get($(this).attr('data-url'), success);
     }
   });
-
-  var sidebar_top = $('.sidebar').position().top;
-  if (sidebar_top) {
-    $(document).scroll(function() {
-      console.log(sidebar_top);
-      var scroll_top = $(document).scrollTop();
-      if (scroll_top >= sidebar_top) {
-        $('.sidebar').css('position', 'fixed');
-        $('.sidebar').css('right', '0px');
-        $('.sidebar').css('top', '0px');
-      } else if (scroll_top < sidebar_top){
-        $('.sidebar').css('position', 'static');
-      }
-    });
-  }
 
 });

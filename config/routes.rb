@@ -7,8 +7,7 @@ Cms::Engine.routes.draw do
       get ':parent_id/new/:type' => 'content_nodes#new', as: :new_parent
     end
     member do
-      post :up
-      post :down
+      post :sort
       get :version
       get :versions
       get :children
