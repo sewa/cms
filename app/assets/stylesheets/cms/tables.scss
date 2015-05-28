@@ -2,15 +2,21 @@
 table .actions .button {
     margin: 0 !important;
 }
-table.content-nodes .button {
-    width: 120px;
-    margin-bottom: 4px !important;
-}
-table {
-    margin-top: 15px;
+
+table.content-nodes {
     tbody {
         tr {
             cursor: move;
         }
+    }
+    .button {
+        margin-bottom: 4px !important;
+    }
+}
+
+table {
+    margin-top: 15px;
+    .center {
+        text-align: center;
     }
 }

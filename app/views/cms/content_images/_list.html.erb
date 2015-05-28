@@ -4,13 +4,13 @@
       <th width="154"><%= t "image" %></th>
       <th><%= t "caption" %></th>
       <th><%= t "tags" %></th>
-      <th width="193" class="actions"></th>
+      <th width="243" class="actions"></th>
     </tr>
   </thead>
   <tbody>
     <% objects.each do |image| %>
       <tr>
-        <td>
+        <td class="center">
           <%= image_tag image.image.url %>
         </td>
         <td><%= image.caption %></td>
@@ -18,10 +18,10 @@
         <td class="actions">
           <ul class="button-group right radius">
             <li>
-              <%= link_to t(:edit), edit_content_image_path(image), class: 'button tiny'  %>
+              <%= link_to t(:edit), edit_content_image_path(image), class: 'button small'  %>
             </li>
             <li>
-              <%= link_to t(:delete), content_image_path(image), 'data-confirm': t(:really_delete), method: :delete, class: 'button tiny' %>
+              <%= link_to t(:delete), content_image_path(image), 'data-confirm': t(:really_delete), method: :delete, class: 'button small' %>
             </li>
           </ul>
         </td>
