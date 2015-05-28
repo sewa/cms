@@ -4,7 +4,7 @@
   </div>
 <% end %>
 
-<div class="columns small-6 content-node-form">
+<div class="columns small-6 form-left">
   <%= simple_form_for @content_node, as: :content_node, url: content_nodes_url, wrapper: :horizontal_form do |f| %>
     <%= render 'cms/content_nodes/form', f: f %>
     <div class="form-buttons">

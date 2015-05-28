@@ -1,3 +1,13 @@
 <%= f.input :attachment, as: :file %>
+<% if f.object.attachment.present? %>
+  <div class="row document-icon">
+    <div class="small-2 columns"></div>
+    <div class="small-10 columns">
+      <%= link_to f.object.attachment.url, target: :blank do %>
+        <%= image_tag 'cms/pdf_icon.png', alt: 'pdf icon'%>
+      <% end %>
+    </div>
+  </div>
+<% end %>
 <%= f.input :name %>
 <%= f.input :tags %>

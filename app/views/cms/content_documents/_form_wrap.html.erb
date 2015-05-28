@@ -1,15 +1,11 @@
-<%= actions do %>
-  <%= link_to t(:back_to_index), content_documents_path, class: 'button right radius small secondary' %>
-<% end %>
-
-<div class="row">
-  <div class="columns small-12">
-    <%= simple_form_for object, wrapper: :horizontal_form do |f| %>
-      <fieldset>
-        <legend><%= legend %></legend>
-        <%= render 'cms/content_documents/form', f: f %>
-      </fieldset>
+<div class="columns small-12 form-left">
+  <%= simple_form_for object, wrapper: :horizontal_form do |f| %>
+    <h2><%= legend %></h2>
+    <div class="content">
+      <%= render 'cms/content_documents/form', f: f %>
+    </div>
+    <div class="form-buttons">
       <%= render 'cms/shared/form_buttons', cancel: content_documents_path, f: f %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

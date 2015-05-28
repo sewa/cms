@@ -5,16 +5,18 @@
   </div>
 <% end %>
 
-<div class="columns small-6">
+<div class="columns small-6 form-left">
+  <h2><%= t(:edit_image) %></h2>
   <%= simple_form_for @object, wrapper: :horizontal_form do |f| %>
-    <fieldset>
-      <legend><%= t(:edit_image) %></legend>
+    <div class="content">
       <%= render 'cms/content_images/form', f: f %>
-    </fieldset>
-    <%= render 'cms/shared/form_buttons', cancel: content_images_path, f: f %>
+    </div>
+    <div class="form-buttons">
+      <%= render 'cms/shared/form_buttons', cancel: content_images_path, f: f %>
+    </div>
   <% end %>
 </div>
 
-<div class="image columns small-6">
+<div class="sidebar columns small-6">
   <%= image_tag @object.image.url(:rotator), class: "image" %>
 </div>

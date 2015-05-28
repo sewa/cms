@@ -1,1 +1,17 @@
-<%= render 'cms/content_images/form_wrap', legend: t(:new_image), object: @object %>
+<%= actions do %>
+  <%= link_to t(:back_to_index), content_images_path, class: 'button right radius small secondary' %>
+<% end %>
+
+<div class="columns small-6 form-left">
+  <%= simple_form_for @object, wrapper: :horizontal_form do |f| %>
+    <h2><%= t(:new_image) %></h2>
+    <div class="content">
+      <%= render 'cms/content_images/form', f: f %>
+    </div>
+    <div class="form-buttons">
+      <%= render 'cms/shared/form_buttons', cancel: content_images_path, f: f %>
+    </div>
+  <% end %>
+</div>
+
+<div class="sidebar columns small-6"></div>

@@ -1,1 +1,8 @@
+<%= actions do %>
+  <div class="right">
+    <%= link_to t(:back_to_index), content_categories_path, class: 'button radius small secondary' %>
+    <%= link_to t(:new_content_category), new_content_category_path, class: 'button radius small' %>
+  </div>
+<% end %>
+
 <%= render 'cms/content_categories/form_wrap', legend: t(:edit_category), object: @object %>

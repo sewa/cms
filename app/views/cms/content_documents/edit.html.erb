@@ -1,1 +1,8 @@
+<%= actions do %>
+  <div class="right">
+    <%= link_to t(:back_to_index), content_documents_path, class: 'button radius small secondary' %>
+    <%= link_to t(:new_content_document), new_content_document_path, class: 'button radius small' %>
+  </div>
+<% end %>
+
 <%= render 'form_wrap', legend: t(:edit_document), object: @object %>

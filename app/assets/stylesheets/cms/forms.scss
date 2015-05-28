@@ -71,15 +71,23 @@ li.ui-draggable-dragging {
     li > a {
         border-bottom: 1px solid #ababab;
     }
-    .content {
-        padding-top: 32px !important;
-        background-color: #fafafa !important;
-    }
 }
 
-.content-node-form {
+.form-left {
     padding: 0px;
-    border-right: 1px solid #ababab;
+    background-color: #fafafa !important;
+    .content {
+        padding: 0.9375rem;
+        padding-top: 1.8375rem !important;
+    }
+    h2 {
+        margin-bottom: 0px;
+        background: #efefef;
+        color: #222;
+        font-size: 1rem;
+        padding: 1rem;
+        border-bottom: 1px solid #ababab;
+    }
     .form-buttons {
         background-color: #3d454c;
         padding-top: 20px;
@@ -93,4 +101,12 @@ li.ui-draggable-dragging {
 
 input[name=query] {
     width: 400px;
+}
+
+body {
+    background-color: #fafafa;
+}
+
+.document-icon {
+    margin-bottom: 28px;
 }
