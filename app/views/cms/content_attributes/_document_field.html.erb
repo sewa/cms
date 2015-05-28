@@ -1,10 +1,10 @@
 <input type="hidden" name="content_node[<%= attribute.key%>]", class="empty" />
 
-<div class="columns small-3">
+<div class="columns small-2">
   <%= f.label attribute.key, t(attribute.key), class: 'right inline' %>
 </div>
 
-<ul class="drop-zone-single columns small-centered small-3 documents" data-name="content_node[<%= attribute.key%>]">
+<ul class="drop-zone-single columns small-centered small-4 left documents" data-name="content_node[<%= attribute.key%>]">
   <% if attribute.value.present? %>
     <%= render 'cms/shared/asset_field', asset: attribute.value, name: "content_node[#{attribute.key}]" %>
   <% end %>
