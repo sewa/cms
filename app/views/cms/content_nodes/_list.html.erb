@@ -24,10 +24,12 @@
         <td><%= t(node.access) %></td>
         <td><%= l node.updated_at, format: :full %></td>
         <td class="actions">
-          <%= link_to t(:new_sub_node), '#', 'data-dropdown': "drop-#{dom_id node}", 'aria-controls': "drop-#{dom_id node}", 'aria-expanded': 'false', 'data-options': 'align:left' , class: 'button tiny radius'  %>
-          <ul id="drop-<%= dom_id node %>" class="small f-dropdown" data-dropdown-content>
-            <%= render 'cms/content_nodes/options', options: content_node_options(node), parent_id: node.id %>
-          </ul>
+          <% if content_node_options(node).present? %>
+            <%= link_to t(:new_sub_node), '#', 'data-dropdown': "drop-#{dom_id node}", 'aria-controls': "drop-#{dom_id node}", 'aria-expanded': 'false', 'data-options': 'align:left' , class: 'button tiny radius'  %>
+            <ul id="drop-<%= dom_id node %>" class="small f-dropdown" data-dropdown-content>
+              <%= render 'cms/content_nodes/options', options: content_node_options(node), parent_id: node.id %>
+            </ul>
+          <% end %>
           <% if node.all_children.count > 0 %>
             <%# = link_to t(:show_sub_nodes), content_node_path(node), class: 'button tiny radius' %>
           <% end %>

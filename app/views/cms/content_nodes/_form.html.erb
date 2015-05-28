@@ -23,6 +23,7 @@
   <li class="accordion-navigation">
     <a href="#categories"><%= t(:categories) %></a>
     <div id="categories" class="content">
+      <%= f.association :content_categories, as: :check_boxes, label: false %>
     </div>
   </li>
 

@@ -67,7 +67,7 @@ li.ui-draggable-dragging {
 }
 
 .accordion {
-    margin: 0 0 16px 0;
+    margin: 0;
     li > a {
         border-bottom: 1px solid #ababab;
     }
@@ -75,4 +75,22 @@ li.ui-draggable-dragging {
         padding-top: 32px !important;
         background-color: #fafafa !important;
     }
+}
+
+.content-node-form {
+    padding: 0px;
+    border-right: 1px solid #ababab;
+    .form-buttons {
+        background-color: #3d454c;
+        padding-top: 20px;
+        padding-right: 20px;
+        overflow: hidden;
+    }
+    .checkbox input {
+        margin-right: 4px;
+    }
+}
+
+input[name=query] {
+    width: 400px;
 }

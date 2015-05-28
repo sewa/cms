@@ -46,7 +46,7 @@ module Cms
     protected
 
     def base_attrs
-      [:title, :type, :parent_id, :name, :template, :page_title, :keywords, :description, :url, :redirect, :access]
+      [:title, :type, :parent_id, :name, :template, :page_title, :keywords, :description, :url, :redirect, :access, content_category_ids: []]
     end
 
     def content_attrs
@@ -62,6 +62,7 @@ module Cms
     def load_assets
       @content_images = ContentImage.all
       @content_documents = ContentDocument.all
+      @content_categories = ContentCategory.all
     end
 
     def load_parent
