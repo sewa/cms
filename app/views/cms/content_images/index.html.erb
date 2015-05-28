@@ -1,12 +1,7 @@
-<div class="row">
-  <div class="columns small-12">
-    <br>
-    <%= link_to t(:new_content_image), new_content_image_path, class: 'button right radius small' %>
-  </div>
-</div>
+<%= actions do %>
+  <%= link_to t(:new_content_image), new_content_image_path, class: 'button right radius small' %>
+<% end %>
 
-<div class="row">
-  <div class="columns small-12 small-centered">
-    <%= render 'cms/content_images/list', content_images: @content_images %>
-  </div>
+<div class="columns small-12">
+  <%= render 'cms/content_images/list', objects: @objects %>
 </div>

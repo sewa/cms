@@ -6,8 +6,8 @@
   <%= f.input :text, as: :text %>
 </div>
 
-<% if @content_image.persisted? %>
+<% if @object.persisted? %>
   <div class="left">
-    <%= image_tag @content_image.image.url(:rotator), class: "image" %>
+    <%= image_tag @object.image.url(:rotator), class: "image" %>
   </div>
 <% end %>

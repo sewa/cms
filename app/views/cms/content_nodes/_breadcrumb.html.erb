@@ -1,6 +1,0 @@
-<h2>
-  <%= link_to t('content'), admin_content_nodes_path %>
-  <% for node in @content_node.ancestors.reverse + [@content_node] %>
-    &raquo; <%= link_to node.title, admin_content_node_path(node) %>
-  <% end %>
-</h2>

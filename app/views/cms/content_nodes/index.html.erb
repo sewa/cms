@@ -1,7 +1,18 @@
-<%= render 'cms/content_nodes/actions' %>
-
-<div class="row">
-  <div class="columns small-12 small-centered">
-    <%= render 'cms/content_nodes/list', content_nodes: @content_nodes %>
+<%= actions do %>
+  <div class="right">
+    <button href="#" data-dropdown="content-nodes-drop" aria-controls="content-nodes-drop" aria-expanded="false" class="button dropdown radius small" data-options='align:left'>
+      <% if params[:id].present? %>
+        <%= t(:new_sub_page) %>
+      <% else %>
+        <%= t(:new_content_node) %>
+      <% end %>
+    </button>
+    <ul id="content-nodes-drop" data-dropdown-content class="f-dropdown" aria-hidden="true">
+      <%= render 'cms/content_nodes/options', options: content_node_options, parent_id: params[:id] %>
+    </ul>
   </div>
+<% end %>
+
+<div class="columns small-12">
+  <%= render 'cms/content_nodes/list', content_nodes: @content_nodes %>
 </div>

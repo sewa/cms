@@ -6,7 +6,7 @@
       <th><%= t("name") %></th>
       <th><%= t("access") %></th>
       <th><%= t("updated_at") %></th>
-      <th width="192"></th>
+      <th width="264"></th>
     </tr>
   </thead>
   <tbody>
@@ -24,13 +24,14 @@
         <td><%= t(node.access) %></td>
         <td><%= l node.updated_at, format: :full %></td>
         <td class="actions">
-          <ul id="drop" class="small f-dropdown" data-dropdown-content>
-            <%= render 'cms/content_nodes/options', options: content_node_options, parent_id: node.id %>
+          <%= link_to t(:new_sub_node), '#', 'data-dropdown': "drop-#{dom_id node}", 'aria-controls': "drop-#{dom_id node}", 'aria-expanded': 'false', 'data-options': 'align:left' , class: 'button tiny radius'  %>
+          <ul id="drop-<%= dom_id node %>" class="small f-dropdown" data-dropdown-content>
+            <%= render 'cms/content_nodes/options', options: content_node_options(node), parent_id: node.id %>
           </ul>
           <% if node.all_children.count > 0 %>
-            <%= link_to t(:show_sub_pages), content_node_path(node), class: 'button tiny single radius' %>
+            <%# = link_to t(:show_sub_nodes), content_node_path(node), class: 'button tiny radius' %>
           <% end %>
-          <%= link_to t(:edit), edit_content_node_path(node), class: 'button tiny single radius'  %>
+          <%= link_to t(:edit), edit_content_node_path(node), class: 'button tiny radius'  %>
           <%= link_to t(:show), node.path, class: 'button tiny radius' %>
           <%= link_to t(:delete), content_node_path(node), 'data-confirm': t(:really_delete), method: :delete, class: 'button tiny radius' %>
           </ul>

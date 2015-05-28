@@ -1,5 +1,5 @@
 <%= actions do %>
-  <%= link_to t(:back_to_index), content_documents_path, class: 'button right radius small secondary' %>
+  <%= link_to t(:back_to_index), content_images_path, class: 'button right radius small secondary' %>
 <% end %>
 
 <div class="row">
@@ -7,9 +7,9 @@
     <%= simple_form_for object, wrapper: :horizontal_form do |f| %>
       <fieldset>
         <legend><%= legend %></legend>
-        <%= render 'cms/content_documents/form', f: f %>
+        <%= render 'cms/content_images/form', f: f %>
       </fieldset>
-      <%= render 'cms/shared/form_buttons', cancel: content_documents_path, f: f %>
+      <%= render 'cms/shared/form_buttons', cancel: content_images_path, f: f %>
     <% end %>
   </div>
 </div>

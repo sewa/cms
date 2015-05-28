@@ -12,25 +12,42 @@ module Cms
 
         protected
 
-        def content_node_types
-          return @content_node_types if @content_node_types
-          folder = Rails.root.join('app/models/content_nodes')
-          if File.exist?(folder)
-            Dir.chdir(folder) do
-              @content_node_types = Dir.glob("**/*.rb").map do |file|
-                file.chomp(".rb").classify
-              end
+        def content_node_types(node = nil)
+          if node.instance_of? String
+            node = node.constantize
+          end
+          if node.present?
+            ret = []
+            if node.sub_nodes.present?
+              ret = node.sub_nodes
             end
-            @content_node_types.sort!{ |a,b| a.first <=> b.first }
+            if node.common_sub_nodes
+               ret += collect_common_nodes
+            end
+            ret
           else
-            fail 'Provide content nodes in app/models/content_nodes'
+            collect_common_nodes
           end
         end
 
-        def content_node_options
-          @content_node_options ||= content_node_types.map do |type|
-            [t("content_nodes.#{type.downcase}"), type]
+        def collect_common_nodes
+          return @common_nodes if @common_nodes.present?
+          folder = Rails.root.join('app/models/content_nodes')
+          if File.exist?(folder)
+            Dir.chdir(folder) do
+              @content_node_types = Dir.glob("*.rb").map do |file|
+                file.chomp(".rb").classify
+              end
+            end
+          else
+            fail "Provide content nodes in #{folder}"
           end
+        end
+
+        def content_node_options(node = nil)
+          content_node_types(node).map do |type|
+            [t("content_nodes.#{type.downcase}"), type]
+          end.sort{ |a,b| a.first <=> b.first }
         end
 
         def template_options
@@ -48,10 +65,6 @@ module Cms
           else
             fail 'Provide views in app/views/content_nodes'
           end
-        end
-
-        def find_node
-          @content_node = ContentNode.find(params[:id])
         end
 
       end

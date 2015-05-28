@@ -1,7 +1,7 @@
-<%= render 'cms/content_categories/actions' %>
+<%= actions do %>
+  <%= link_to t(:new_content_category), new_content_category_path, class: 'button right radius small' %>
+<% end %>
 
-<div class="row">
-  <div class="columns small-12 small-centered">
-    <%= render 'cms/content_categories/list', content_categories: @content_categories %>
-  </div>
+<div class="columns small-12">
+  <%= render 'cms/content_categories/list', objects: @objects %>
 </div>

@@ -1,4 +1,4 @@
-$(function(){
+$(document).ready(function() {
   $(document).foundation();
   var config = {};
   config.toolbarGroups = [

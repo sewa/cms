@@ -20,6 +20,12 @@
     </div>
   </li>
 
+  <li class="accordion-navigation">
+    <a href="#categories"><%= t(:categories) %></a>
+    <div id="categories" class="content">
+    </div>
+  </li>
+
   <% @content_node.content_groups.each do |group, attrs| %>
     <li class="accordion-navigation">
       <a href="#<%= group %>"><%= t(group) %></a>

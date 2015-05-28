@@ -7,6 +7,7 @@ module Cms
     include Cms::Concerns::ContentNode::ContentAttributes
     include Cms::Concerns::ContentNode::ContentCategories
     include Cms::Concerns::ContentNode::TreeList
+    include Cms::Concerns::ContentNode::SubNodes
 
     validates :title, presence: true
     validates :template, presence: true, if: -> (n) { n.class.template.nil? }
@@ -23,10 +24,6 @@ module Cms
     # active record already defines a public method
     scope :public_nodes, -> { where('access = ?', 'public') }
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
-
-    content_group :seo do
-      content_attribute :seo_text, :text
-    end
 
     class << self
 

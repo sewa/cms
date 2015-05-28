@@ -28,12 +28,18 @@ de:
   edit: Bearbeiten
   delete: Löschen
   create: Erstellen
-  new_sub_page: Neue Unterseite erstellen
-  show_sub_pages: Unterseiten anzeigen
+  new_sub_node: Neue Unterseite
+  show_sub_nodes: Unterseiten
   new_content_node: Neue Seite erstellen
   new_content_category: Neue Kategorie erstellen
   new_content_image: Neues Bild erstellen
   new_content_document: Neues Dokument erstellen
+  new_document: Neues Dokument
+  new_image: Neues Bild
+  new_category: Neue Kategorie
+  edit_document: Dokument bearbeiten
+  edit_image: Bild bearbeiten
+  edit_category: Kategorie bearbeiten
 
   search_content_images: Bilder durchsuchen
   search_content_documents: Dokumente durchsuchen

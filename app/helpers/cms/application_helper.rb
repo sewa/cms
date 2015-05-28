@@ -7,5 +7,10 @@ module Cms
       end.html_safe
     end
 
+    def actions(options = {}, &block)
+      content = with_output_buffer(&block)
+      render(partial: 'cms/shared/actions', locals: options.merge!(content: content))
+    end
+
   end
 end
