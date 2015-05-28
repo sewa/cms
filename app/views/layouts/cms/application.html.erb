@@ -24,7 +24,7 @@
       <section class="top-bar-section">
         <ul class="right">
           <li class="has-form">
-            <%= link_to t(:logout), content_nodes_path, class: 'button' %>
+            <%= link_to t(:logout), content_nodes_path, class: 'button redius' %>
           </li>
         </ul>
         <ul class="left">
@@ -35,6 +35,10 @@
         </ul>
       </section>
     </nav>
+
+    <%= render 'cms/shared/breadcrumb' %>
+
+    <%= yield :actions %>
 
     <%= yield %>
 

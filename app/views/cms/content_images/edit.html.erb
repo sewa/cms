@@ -1,1 +1,20 @@
-<%= render 'cms/content_images/form_wrap', legend: t(:edit_image), object: @object %>
+<%= actions do %>
+  <div class="right">
+    <%= link_to t(:back_to_index), content_images_path, class: 'button radius small secondary' %>
+    <%= link_to t(:new_content_image), new_content_image_path, class: 'button radius small' %>
+  </div>
+<% end %>
+
+<div class="columns small-6">
+  <%= simple_form_for @object, wrapper: :horizontal_form do |f| %>
+    <fieldset>
+      <legend><%= t(:edit_image) %></legend>
+      <%= render 'cms/content_images/form', f: f %>
+    </fieldset>
+    <%= render 'cms/shared/form_buttons', cancel: content_images_path, f: f %>
+  <% end %>
+</div>
+
+<div class="image columns small-6">
+  <%= image_tag @object.image.url(:rotator), class: "image" %>
+</div>

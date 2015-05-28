@@ -1,13 +1,5 @@
-<div class="left columns small-4">
-  <%= f.input :image, as: :file %>
-  <%= f.input :caption %>
-  <%= f.input :alt %>
-  <%= f.input :tags %>
-  <%= f.input :text, as: :text %>
-</div>
-
-<% if @object.persisted? %>
-  <div class="left">
-    <%= image_tag @object.image.url(:rotator), class: "image" %>
-  </div>
-<% end %>
+<%= f.input :image, as: :file %>
+<%= f.input :caption %>
+<%= f.input :alt %>
+<%= f.input :tags %>
+<%= f.input :text, as: :text %>

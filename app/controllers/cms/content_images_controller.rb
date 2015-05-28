@@ -23,7 +23,7 @@ module Cms
     def create
       @object = ContentImage.new(object_params)
       if @object.save
-        redirect_to(objects_path)
+        redirect_to content_images_path
       else
         render 'new'
       end
@@ -31,7 +31,7 @@ module Cms
 
     def update
       if @object.update_attributes(object_params)
-        redirect_to(objects_path)
+        redirect_to content_images_path
       else
         render 'edit'
       end
@@ -40,7 +40,7 @@ module Cms
     def destroy
       @object.destroy
       flash.notice = I18n.t('cms.image_delete_success')
-      redirect_to objects_path
+      redirect_to content_images_path
     end
 
     protected
@@ -54,7 +54,7 @@ module Cms
     end
 
     def find_objects
-      @query = ContentImage.order('caption ASC')
+      @query = ContentImage.all
       if params[:q]
         queries = params[:q].gsub(' ', ',').split(',').map(&:strip).reject(&:blank?).map{|p| "%#{p}%" }
         queries.each do |q|

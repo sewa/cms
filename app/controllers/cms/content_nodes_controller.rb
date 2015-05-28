@@ -17,7 +17,7 @@ module Cms
       type = create_params.delete('type')
       @content_node = safe_new(type, content_node_types(@parent))
       if @content_node.update_attributes(create_params)
-        redirect_to content_nodes_path
+        redirect_to_parent_or_index
       else
         render action: :new
       end
@@ -26,7 +26,7 @@ module Cms
     def update
       if @content_node.update_attributes(content_node_params)
         @content_node.save
-        redirect_to content_nodes_path
+        redirect_to_parent_or_index
       else
         render action: :edit
       end
@@ -49,6 +49,14 @@ module Cms
     end
 
     protected
+
+    def redirect_to_parent_or_index
+      if @parent.present?
+        redirect_to content_node_path(@parent)
+      else
+        redirect_to content_nodes_path
+      end
+    end
 
     def base_attrs
       [:title, :type, :parent_id, :name, :template, :page_title, :keywords, :description, :url, :redirect, :access, content_category_ids: []]
