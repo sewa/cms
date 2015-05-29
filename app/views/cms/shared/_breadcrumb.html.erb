@@ -4,19 +4,19 @@
   <% if controller? :content_nodes %>
     <%= breadcrumb_item(t(:nodes), content_nodes_path, li_class: ('current' if index?)) %>
     <% if @content_node.present? %>
-      <% if @content_node.root? %>
-        <%= breadcrumb_item(@content_node.title, content_node_path(@content_node), li_class: 'current') %>
+      <% if new? %>
+        <% (@content_node.ancestors.reverse).each do |node| %>
+          <%= breadcrumb_item(node.title, content_node_path(node), li_class: ('current' if node.id == @content_node.id && !edit?)) %>
+        <% end %>
+        <%= breadcrumb_item(t(:new_node), '#', li_class: 'current') %>
       <% else %>
-        <%= breadcrumb_item(@content_node.root.title, content_node_path(@content_node.root)) %>
-        <% @content_node.root.all_children.each do |node| %>
-          <%= breadcrumb_item(node.title, content_node_path(node), li_class: ('current' if node.id == @content_node.id)) %>
+        <% (@content_node.ancestors.reverse + [@content_node]).each do |node| %>
+          <%= breadcrumb_item(node.title, content_node_path(node), li_class: ('current' if node.id == @content_node.id && !edit?)) %>
         <% end %>
       <% end %>
     <% end %>
-    <% if new? %>
-      <%= breadcrumb_item(t(:new_node), '#', li_class: 'current') %>
-    <% elsif edit? %>
-      <%= breadcrumb_item(t(:edit_node, title: @content_node.title), '#', li_class: 'current') %>
+    <% if edit? %>
+      <%= breadcrumb_item(t(:edit_node), '#', li_class: 'current') %>
     <% end %>
   <% end %>
 

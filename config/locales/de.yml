@@ -38,7 +38,7 @@ de:
   new_node: Neue Seite
   new_image: Neues Bild
   new_category: Neue Kategorie
-  edit_node: "%{title} bearbeiten"
+  edit_node: Bearbeiten
   edit_document: Dokument bearbeiten
   edit_image: Bild bearbeiten
   edit_category: Kategorie bearbeiten

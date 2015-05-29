@@ -2,6 +2,7 @@
   <div class="right">
     <% path = @content_node.root? ? content_nodes_path : content_node_path(@content_node.parent) %>
     <%= link_to t(:back_to_index), path, class: 'button radius small secondary' %>
+    <%= link_to t(:edit), edit_content_node_path(@content_node), class: 'button radius small'  %>
     <button href="#" data-dropdown="content-nodes-drop" aria-controls="content-nodes-drop" aria-expanded="false" class="button dropdown radius small" data-options='align:left'>
       <%= t(:new_sub_node) %>
     </button>

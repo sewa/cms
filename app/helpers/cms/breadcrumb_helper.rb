@@ -7,11 +7,11 @@ module Cms
     end
 
     def new?
-      request[:action] == 'new'
+      request[:action] == 'new' || request[:action] == 'create'
     end
 
     def edit?
-      request[:action] == 'edit'
+      request[:action] == 'edit' || request[:action] == 'update'
     end
 
     def index?

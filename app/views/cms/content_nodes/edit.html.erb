@@ -1,6 +1,12 @@
 <%= actions do %>
   <div class="right">
-    <% path = @content_node.root? ? content_nodes_path : content_node_path(@content_node.parent) %>
+    <% if @content_node.all_children.present? %>
+      <% path = content_node_path(@content_node) %>
+    <% elsif @content_node.parent.present? %>
+      <% path = content_node_path(@content_node.parent) %>
+    <% else %>
+      <% path = content_nodes_path %>
+    <% end %>
     <%= link_to t(:back_to_index), path, class: 'button radius small secondary' %>
     <% if content_node_options(@content_node).present? %>
       <button href="#" data-dropdown="content-nodes-drop" aria-controls="content-nodes-drop" aria-expanded="false" class="button dropdown radius small" data-options='align:left'>

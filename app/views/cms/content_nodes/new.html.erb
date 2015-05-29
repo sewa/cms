@@ -1,6 +1,7 @@
 <%= actions do %>
   <div class="right">
-    <%= link_to t(:back_to_index), content_nodes_path, class: 'button radius small secondary' %>
+    <% path = @parent.present? ? content_node_path(@parent) : content_nodes_path %>
+    <%= link_to t(:back_to_index), path, class: 'button radius small secondary' %>
   </div>
 <% end %>
 
