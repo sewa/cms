@@ -46,7 +46,7 @@ module Cms
     protected
 
     def object_params
-      params.require(:content_image).permit(:image, :caption, :alt, :href, :tags, :text)
+      params.require(:content_image).permit(:image, :caption, :alt, :href, :url, :tags, :text)
     end
 
     def load_object
@@ -64,5 +64,4 @@ module Cms
     end
 
   end
-
 end

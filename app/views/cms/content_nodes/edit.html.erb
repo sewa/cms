@@ -1,16 +1,15 @@
 <%= actions do %>
   <div class="right">
-    <%= link_to t(:back_to_index), content_nodes_path, class: 'button radius small secondary' %>
-    <button href="#" data-dropdown="content-nodes-drop" aria-controls="content-nodes-drop" aria-expanded="false" class="button dropdown radius small" data-options='align:left'>
-      <% if params[:id].present? %>
+    <% path = @content_node.root? ? content_nodes_path : content_node_path(@content_node.parent) %>
+    <%= link_to t(:back_to_index), path, class: 'button radius small secondary' %>
+    <% if content_node_options(@content_node).present? %>
+      <button href="#" data-dropdown="content-nodes-drop" aria-controls="content-nodes-drop" aria-expanded="false" class="button dropdown radius small" data-options='align:left'>
         <%= t(:new_sub_node) %>
-      <% else %>
-        <%= t(:new_content_node) %>
-      <% end %>
-    </button>
-    <ul id="content-nodes-drop" data-dropdown-content class="f-dropdown" aria-hidden="true">
-      <%= render 'cms/content_nodes/options', options: content_node_options(@content_node), parent_id: params[:id] %>
-    </ul>
+      </button>
+      <ul id="content-nodes-drop" data-dropdown-content class="f-dropdown" aria-hidden="true">
+        <%= render 'cms/content_nodes/options', options: content_node_options(@content_node), parent_id: params[:id] %>
+      </ul>
+    <% end %>
   </div>
 <% end %>
 
