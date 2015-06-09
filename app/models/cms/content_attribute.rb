@@ -4,10 +4,12 @@ module Cms
 
     self.table_name = 'content_attributes'
 
-    belongs_to :content_node, class_name: Cms::ContentNode
+    belongs_to :attributable, polymorphic: true
 
-    validates :content_node, presence: true
-    validates :key, uniqueness: { scope: 'content_node_id' }, presence: true
+    alias_method :content_node=, :attributable=
+    alias_method :content_node, :attributable
+
+    validates :key, uniqueness: { scope: [:attributable_id, :attributable_type] }, presence: true
 
     def value
       fetch_value

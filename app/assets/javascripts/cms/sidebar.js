@@ -29,7 +29,6 @@ $(document).ready(function() {
 
     set_height(document_height - nav_height);
 
-    $('.tabs', '.sidebar').tabs();
   }
 
 });

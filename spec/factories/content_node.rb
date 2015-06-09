@@ -5,7 +5,6 @@ class TestNode < Cms::ContentNode
   content_attribute :test1, :text
   content_attribute :test2, :image
 
-
   content_attribute :float, :float
   validates :float, presence: true
   validates :float, numericality: true
@@ -24,10 +23,10 @@ class TestGroupNode < Cms::ContentNode
 end
 
 FactoryGirl.define do
-
+  sequence(:title) { |n| "node-#{n}" }
   factory :content_node, class: Cms::ContentNode do
     type TestNode.to_s
-    title 'some title'
+    title
     template 'template'
 
     trait :node_with_attrs do

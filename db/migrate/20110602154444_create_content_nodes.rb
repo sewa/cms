@@ -1,19 +1,22 @@
 class CreateContentNodes < ActiveRecord::Migration
   def self.up
 
+    ###
+    # nodes
+    ###
     create_table :content_nodes do |t|
       t.integer :parent_id
-      t.integer :position
-      t.string :type, null: false
+      t.integer :position, null: false
+      t.string :type, null: false, size: 30
+      t.string :template, null: false, size: 30
       t.string :title, null: false
       t.string :name, null: false
-      t.string :template
+      t.string :access, default: 'private'
       t.string :redirect
       t.string :url
-      t.string :keywords
-      t.string :description
-      t.string :page_title, size: 64
-      t.string :access, :default => 'private'
+      t.string :meta_keywords # => used to be keywords
+      t.string :meta_description # => used to be description
+      t.string :meta_title, size: 64 # => used to be page_title
       t.timestamps
     end
 
@@ -21,19 +24,45 @@ class CreateContentNodes < ActiveRecord::Migration
     add_index :content_nodes, :position
     add_index :content_nodes, :title
     add_index :content_nodes, :name
-    add_index :content_nodes, :url
+    add_index :content_nodes, :type
 
+    ###
+    # components
+    ###
+    create_table :content_components do |t|
+      t.string :name, null: false
+      t.string :type, null: false, size: 30
+    end
+
+    add_index :content_components, :type
+
+    create_table :content_components_nodes do |t|
+      t.references :content_node
+      t.references :content_component
+    end
+
+    add_index :content_components_nodes, :content_node_id
+    add_index :content_components_nodes, :content_component_id
+
+    ###
+    # attributes
+    ###
     create_table :content_attributes do |t|
-      t.integer :content_node_id, null: false
+      t.integer :attributable_id, null: false
+      t.integer :attributable_type, null: false
       t.string :key, null: false
       t.string :type, null: false
       t.timestamps
     end
 
-    add_index :content_attributes, :content_node_id
+    add_index :content_attributes, :attributable_id
+    add_index :content_attributes, :attributable_type
     add_index :content_attributes, :key
+    add_index :content_attributes, :type
 
-    # content values
+    ###
+    # values
+    ###
     create_table :content_value_integer do |t|
       t.integer :content_attribute_id, null: false
       t.integer :value, null: false
@@ -71,7 +100,9 @@ class CreateContentNodes < ActiveRecord::Migration
     end
     add_index :content_value_reference, :content_attribute_id
 
-    # content categories
+    ###
+    # categories
+    ###
     create_table :content_categories do |t|
       t.string :name, size: 64
       t.string :description
@@ -81,18 +112,19 @@ class CreateContentNodes < ActiveRecord::Migration
 
     add_index :content_categories, :name
 
-    create_table :content_category_nodes do |t|
+    create_table :content_categories_nodes do |t|
       t.integer :content_node_id
       t.integer :content_category_id
     end
 
-    add_index :content_category_nodes, :content_node_id
-    add_index :content_category_nodes, :content_category_id
+    add_index :content_categories_nodes, :content_node_id
+    add_index :content_categories_nodes, :content_category_id
 
   end
 
   def self.down
     drop_table :content_nodes
+    drop_table :content_components
     drop_table :content_attributes
     drop_table :content_value_integer
     drop_table :content_value_float

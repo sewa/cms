@@ -29,4 +29,10 @@ Cms::Engine.routes.draw do
     end
   end
 
+  resources :content_components, only: [] do
+    collection do
+      get :search
+    end
+  end
+
 end

@@ -1,0 +1,5 @@
+<% attributes.each do |attribute| %>
+  <div class="row">
+    <%= render 'cms/content_attributes/' + attribute.type_name + '_field', attribute: attribute %>
+  </div>
+<% end %>

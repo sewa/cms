@@ -58,7 +58,7 @@ ul.drop-zone, ul.drop-zone-single {
     }
 }
 
-ul.drop-zone.active, ul.drop-zone-single.active {
+ul.drop-zone.active, ul.drop-zone-single.active, ul.drop-placeholder.active {
     background-color: #e9f9e9;
 }
 
@@ -96,6 +96,15 @@ li.ui-draggable-dragging {
     }
     .checkbox input {
         margin-right: 4px;
+    }
+
+    .drop-placeholder {
+        background-color: #fafafa;
+        border: 1px dashed #ababab;
+        list-style: none;
+        text-align: center;
+        margin: 16px;
+        padding: 8px;
     }
 }
 

@@ -1,0 +1,21 @@
+.ui-tabs-nav {
+    li {
+        float: left;
+    }
+    .ui-state-active {
+        .button {
+            background-color: #cdcdcd;
+        }
+    }
+    .button {
+        margin: 0;
+        outline: none;
+    }
+    margin: 20px 0 20px 0 !important;
+}
+
+.form-left {
+    .ui-tabs-nav {
+        margin-left: 20px !important;
+    }
+}

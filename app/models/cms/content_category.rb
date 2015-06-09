@@ -4,7 +4,7 @@ module Cms
 
     self.table_name = :content_categories
 
-    has_many :content_category_nodes
+    has_and_belongs_to_many :content_nodes
 
     validates :name, presence: true
 

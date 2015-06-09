@@ -14,4 +14,6 @@ $(document).ready(function() {
 	  { name: 'others' }
   ];
   $('.ckeditor').ckeditor(config);
+
+  $('.tabs').tabs();
 });

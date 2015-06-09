@@ -4,10 +4,10 @@ module Cms
 
     self.table_name = :content_nodes
 
-    include Cms::Concerns::ContentNode::ContentAttributes
-    include Cms::Concerns::ContentNode::ContentCategories
-    include Cms::Concerns::ContentNode::TreeList
-    include Cms::Concerns::ContentNode::SubNodes
+    include Cms::Concerns::ContentAttributes
+    include Cms::Concerns::ContentCategories
+    include Cms::Concerns::TreeList
+    include Cms::Concerns::SubNodes
 
     validates :title, presence: true
     validates :template, presence: true, if: -> (n) { n.class.template.nil? }
@@ -16,6 +16,8 @@ module Cms
 
     has_and_belongs_to_many :content_nodes, join_table: "content_node_connections", foreign_key: "content_node_id_1", association_foreign_key: "content_node_id_2"
     has_and_belongs_to_many :content_nodes_inversed, class_name: "ContentNode", join_table: "content_node_connections", foreign_key: "content_node_id_2", association_foreign_key: "content_node_id_1"
+
+    has_and_belongs_to_many :content_components
 
     before_validation :slugalize_name
     before_validation :correct_url
@@ -27,6 +29,8 @@ module Cms
     scope :public_nodes, -> { where('access = ?', 'public') }
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
     scope :root_nodes, -> { where(parent_id: nil) }
+
+    accepts_nested_attributes_for :content_components
 
     class << self
 

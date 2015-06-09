@@ -51,7 +51,7 @@ module Cms
         attr = Test.new
         attr.value = val
         attr.valid?
-        expect(attr.errors.count).to eq 2
+        expect(attr.errors.count).to eq 1
       end
     end
 

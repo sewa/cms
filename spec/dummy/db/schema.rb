@@ -14,15 +14,18 @@
 ActiveRecord::Schema.define(version: 20150527100712) do
 
   create_table "content_attributes", force: :cascade do |t|
-    t.integer  "content_node_id", null: false
-    t.string   "key",             null: false
-    t.string   "type",            null: false
+    t.integer  "attributable_id",   null: false
+    t.integer  "attributable_type", null: false
+    t.string   "key",               null: false
+    t.string   "type",              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "content_attributes", ["content_node_id"], name: "index_content_attributes_on_content_node_id"
+  add_index "content_attributes", ["attributable_id"], name: "index_content_attributes_on_attributable_id"
+  add_index "content_attributes", ["attributable_type"], name: "index_content_attributes_on_attributable_type"
   add_index "content_attributes", ["key"], name: "index_content_attributes_on_key"
+  add_index "content_attributes", ["type"], name: "index_content_attributes_on_type"
 
   create_table "content_categories", force: :cascade do |t|
     t.string   "name"
@@ -34,13 +37,28 @@ ActiveRecord::Schema.define(version: 20150527100712) do
 
   add_index "content_categories", ["name"], name: "index_content_categories_on_name"
 
-  create_table "content_category_nodes", force: :cascade do |t|
+  create_table "content_categories_nodes", force: :cascade do |t|
     t.integer "content_node_id"
     t.integer "content_category_id"
   end
 
-  add_index "content_category_nodes", ["content_category_id"], name: "index_content_category_nodes_on_content_category_id"
-  add_index "content_category_nodes", ["content_node_id"], name: "index_content_category_nodes_on_content_node_id"
+  add_index "content_categories_nodes", ["content_category_id"], name: "index_content_categories_nodes_on_content_category_id"
+  add_index "content_categories_nodes", ["content_node_id"], name: "index_content_categories_nodes_on_content_node_id"
+
+  create_table "content_components", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "type", null: false
+  end
+
+  add_index "content_components", ["type"], name: "index_content_components_on_type"
+
+  create_table "content_components_nodes", force: :cascade do |t|
+    t.integer "content_node_id"
+    t.integer "content_component_id"
+  end
+
+  add_index "content_components_nodes", ["content_component_id"], name: "index_content_components_nodes_on_content_component_id"
+  add_index "content_components_nodes", ["content_node_id"], name: "index_content_components_nodes_on_content_node_id"
 
   create_table "content_documents", force: :cascade do |t|
     t.string   "name",                    null: false
@@ -77,17 +95,17 @@ ActiveRecord::Schema.define(version: 20150527100712) do
 
   create_table "content_nodes", force: :cascade do |t|
     t.integer  "parent_id"
-    t.integer  "position"
-    t.string   "type",                            null: false
-    t.string   "title",                           null: false
-    t.string   "name",                            null: false
-    t.string   "template"
+    t.integer  "position",                             null: false
+    t.string   "type",                                 null: false
+    t.string   "template",                             null: false
+    t.string   "title",                                null: false
+    t.string   "name",                                 null: false
+    t.string   "access",           default: "private"
     t.string   "redirect"
     t.string   "url"
-    t.string   "keywords"
-    t.string   "description"
-    t.string   "page_title"
-    t.string   "access",      default: "private"
+    t.string   "meta_keywords"
+    t.string   "meta_description"
+    t.string   "meta_title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -96,7 +114,7 @@ ActiveRecord::Schema.define(version: 20150527100712) do
   add_index "content_nodes", ["parent_id"], name: "index_content_nodes_on_parent_id"
   add_index "content_nodes", ["position"], name: "index_content_nodes_on_position"
   add_index "content_nodes", ["title"], name: "index_content_nodes_on_title"
-  add_index "content_nodes", ["url"], name: "index_content_nodes_on_url"
+  add_index "content_nodes", ["type"], name: "index_content_nodes_on_type"
 
   create_table "content_value_datetime", force: :cascade do |t|
     t.integer  "content_attribute_id", null: false

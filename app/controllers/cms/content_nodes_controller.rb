@@ -4,6 +4,9 @@ module Cms
 
     include Cms::ControllerHelpers::ContentNodes
 
+    helper_method :template_options
+    helper_method :content_node_options
+
     before_filter :load_object, only: [:show, :edit, :update, :destroy, :sort]
     before_filter :load_parent, only: [:new, :create, :update]
     before_filter :load_assets, only: [:new, :edit, :create, :update]
@@ -73,9 +76,9 @@ module Cms
     end
 
     def load_assets
-      @content_images = ContentImage.all
-      @content_documents = ContentDocument.all
-      @content_categories = ContentCategory.all
+      @images = ContentImage.all
+      @documents = ContentDocument.all
+      @components = components
     end
 
     def load_parent

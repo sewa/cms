@@ -44,9 +44,12 @@ de:
   edit_category: Kategorie bearbeiten
   images: Bilder
   documents: Dokumente
+  components: Komponenten
   nodes: Seiten
   categories: Kategorien
 
-  search_content_images: Bilder durchsuchen
-  search_content_documents: Dokumente durchsuchen
+  search_images: Bilder durchsuchen
+  search_documents: Dokumente durchsuchen
+  search_components: Komponenten durchsuchen
+
   really_delete: Wirklich löschen?

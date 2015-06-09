@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  function mark_attribute(ul, input) {
+  function mark_attribute_deleted(ul, input) {
     if (ul.children().length == 0) {
       input.val('-1');
     } else {
@@ -10,21 +10,23 @@ $(document).ready(function() {
 
   function attribute_not_empty(ul) {
     var input = $('input.empty', ul.parents('.row'));
-    mark_attribute(ul, input);
+    mark_attribute_deleted(ul, input);
   };
 
   function droppable(from, to, accept) {
     to.droppable({
+      greedy: true,
       activeClass: 'active',
-      // jqueryui has a bug in the accept callback when you use the clone helper.
       accept: function(d) {
         return d.parent().attr('class').match(accept);
       },
       drop: function(event, ui) {
         if(ui.helper.data().dragged == true) {
           ui.helper.data().dragged = false;
-          var name = ui.draggable.parent().attr('data-name');
-          ui.draggable.find('input[type=hidden]').attr('name', name);
+          var h = ui.helper.clone();
+          h.attr('style', '').appendTo(this);
+          var name = $(this).attr('data-name');
+          h.find('input[type=hidden]').attr('name', name);
           attribute_not_empty($(this));
         }
       }
@@ -44,14 +46,81 @@ $(document).ready(function() {
     });
   }
 
-  function dragndrop(from, to, accept) {
-    droppable(from, to, accept);
-    draggable(from, to);
+  draggable($('.images li', '.sidebar'), $('.drop-zone.images'), 'images');
+  draggable($('.documents li', '.sidebar'), $('.drop-zone.documents'), 'documents');
+
+  // components
+  var to = $('#components'),
+      from = $('.components li', '.sidebar'),
+      accept = 'components';
+
+  function replace_idx(node, attr, idx) {
+    var val = node.attr(attr);
+    if(val !== undefined) {
+      node.attr(attr, val.replace(/\d/, idx));
+    }
+  }
+
+  function set_index(node) {
+    replace_idx(node.children('a'), 'href', node.index());
+    replace_idx(node.children('.content'), 'id', node.index());
+    $.each($('label, input, .drop-zone', node), function() {
+      var self = this;
+      $.each(['id', 'name', 'for', 'data-name'], function(idx, attr) {
+        replace_idx($(self), attr, node.index());
+      });
+    });
   };
 
-  dragndrop($('.images li', '.sidebar'), $('.drop-zone.images'), 'images');
-  dragndrop($('.documents li', '.sidebar'), $('.drop-zone.documents'), 'documents');
+  function insert(node) {
+    node.parent().children().each(function(idx, child) {
+      set_index($(child));
+    });
+  }
 
+  to.droppable({
+    greedy: true,
+    activeClass: 'active',
+    accept: function(d) {
+      var id = d.parent().attr('id');
+      if (id !== undefined) {
+        return id.match(accept);
+      } else {
+        return false;
+      } 
+    },
+    over: function(event, ui) {
+      if(ui.helper.data().component == true) {
+        ui.draggable.css({
+          'width': '100%',
+          'height': 'auto'
+        }).addClass('accordion-navigation');
+      }
+    },
+    drop: function(event, ui) {
+      var ul = ui.draggable.parent();
+      ul.removeClass('drop-placeholder');
+      ul.children('.placeholder').remove();
+      droppable($('.images li', '.sidebar'), $('.drop-zone.images', ui.draggable), 'images');
+      droppable($('.documents li', '.sidebar'), $('.drop-zone.documents', ui.draggable), 'documents');
+    }
+  }).sortable({
+    accept: from,
+    stop: function(event, ui) {
+      insert(ui.item);
+    }
+  });
+
+  from.draggable({
+    connectToSortable: to,
+    revert: 'invalid',
+    helper: 'clone',
+    start: function(event, ui) {
+      ui.helper.data().component = true;
+    }
+  });
+
+  // single drop
   function drop_single(to, accept) {
     $(to).droppable({
       activeClass: 'active',
@@ -71,14 +140,16 @@ $(document).ready(function() {
   drop_single($('.drop-zone-single.images'), 'images');
   drop_single($('.drop-zone-single.documents'), 'documents');
 
+  // delete
   $(document).on('click', '.drop-zone .delete, .drop-zone-single .delete', function(e) {
     e.preventDefault();
     var ul = $(this).parents('ul').first(),
         input = $('input.empty', $(this).parents('.row'));
     $(this).parent().parent().parent().remove();
-    mark_attribute(ul, input);
+    mark_attribute_deleted(ul, input);
   });
 
+  // search
   $('.assets-search-form input').on('keyup', function() {
     var self = this,
         val = $(this).val(),

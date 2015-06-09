@@ -14,6 +14,21 @@ module Cms
       expect(node).to be_persisted
     end
 
+    it "can have many content_components" do
+      node.content_components << [create(:content_component)]
+      expect(node.content_components.count).to eq 1
+    end
+
+    context "content_categories" do
+
+      it "saves the categories" do
+        c1 = build(:content_category)
+        node.content_categories = [c1]
+        expect(node.content_categories.count).to eq 1
+      end
+
+    end
+
     context "content_groups" do
 
       it "adds an content_attribute" do
@@ -27,6 +42,7 @@ module Cms
       it "has the content_gropus if the node was saved" do
         node = TestGroupNode.new(attributes_for(:content_node, type: TestGroupNode.to_s))
         node.test1 = 'bla bal'
+        node.save!
         expect(node.save).to eq true
         node = TestGroupNode.last
         expect(node.content_groups[:test].size).to eq 2
@@ -82,7 +98,7 @@ module Cms
     context "#path" do
 
       it "returns path" do
-        expect(node.path).to eq '/some-title'
+        expect(node.path).to match /node-\d/
       end
 
       it "returns url if url is present" do

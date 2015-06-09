@@ -1,11 +1,11 @@
-<input type="hidden" name="content_node[<%= attribute.key%>][]", class="empty" />
+<input type="hidden" name="content_node[content_components_attributes][0][<%= attribute.key%>][]", class="empty" />
 
 <div class="columns small-2">
-  <%= f.label attribute.key, t(attribute.key), class: 'right inline' %>
+  <label for="images" class="right inline"><%= t(attribute.key) %></label>
 </div>
 
-<ul class="drop-zone columns small-10 images" data-name="content_node[<%= attribute.key%>][]">
+<ul class="drop-zone columns small-10 images" data-name="content_node[content_components_attributes][0][<%= attribute.key%>][]">
   <% attribute.images.each do |asset| %>
-    <%= render 'cms/shared/asset_field', asset: asset, name: "content_node[#{attribute.key}][]" %>
+    <%= render 'cms/shared/asset_field', asset: asset, name: "content_node[content_components_attributes][0][#{attribute.key}][]" %>
   <% end %>
 </ul>
