@@ -31,15 +31,11 @@ module Cms
     scope :root_nodes, -> { where(parent_id: nil) }
 
     def content_components_attributes=(arr)
+      content_components.destroy_all
       arr.each do |k, attrs|
-        unless comp = content_components[k.to_i]
-          comp = content_components.build(type: attrs.delete(:type))
-        else
-          comp.update_attribute(:type, attrs.delete(:type))
-          comp.reload
-        end
+        comp = content_components.build(type: attrs.delete(:type))
         comp.content_attributes.each do |attr|
-          comp.send("#{attr.key}=", attrs[attr.key])
+          comp.send("#{attr.key}=", attrs[attr.key.to_sym])
         end
       end
     end

@@ -8,18 +8,36 @@ class TestComponent < Cms::ContentComponent
 
 end
 
+class TestComponent1 < Cms::ContentComponent
+
+  icon '/some/path/icon.png'
+
+  content_attribute :test1, :text
+  content_attribute :test2, :string
+
+end
+
 FactoryGirl.define do
-  factory :content_component, :class => 'Cms::ContentComponent' do
-    type 'TestComponent'
+  factory :content_component, class: 'Cms::ContentComponent' do
+
     content_node { create(:content_node) }
 
     trait :without_node do
       content_node { nil }
     end
 
-    trait :with_attrs do
-      text 'some text'
-      float 12.1
-    end
   end
+
+  factory :test_comp, class: TestComponent, parent: :content_component do |u|
+    type 'TestComponent'
+    text 'some text'
+    float 12.1
+  end
+
+  factory :test_comp_1, class: TestComponent1, parent: :content_component do |u|
+    type 'TestComponent1'
+    test1 'test1'
+    test2 'test2'
+  end
+
 end

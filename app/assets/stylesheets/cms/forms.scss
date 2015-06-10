@@ -38,7 +38,7 @@ ul.drop-zone, ul.drop-zone-single {
     border: 1px dashed #ababab;
     min-height: 164px;
     list-style: none;
-    margin: 0 0 16px 0;
+    margin-bottom: 16px;
     padding: 4px;
     li {
         text-align: center;
@@ -78,7 +78,6 @@ li.ui-draggable-dragging {
     background-color: #fafafa !important;
     .content {
         padding: 0.9375rem;
-        padding-top: 1.8375rem !important;
     }
     h2 {
         margin-bottom: 0px;

@@ -4,6 +4,10 @@ require "rails_helper"
 module Cms
   RSpec.describe ContentComponent do
 
+    it "has a valid factory" do
+      expect{ create(:content_component) }.to change{ContentComponent.count}.by 1
+    end
+
     it "has a component name and icon" do
       expect(TestComponent.new.icon).to eq "/some/path/icon.png"
     end

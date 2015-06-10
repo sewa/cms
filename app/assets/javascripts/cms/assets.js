@@ -13,7 +13,7 @@ $(document).ready(function() {
     mark_attribute_deleted(ul, input);
   };
 
-  function droppable(from, to, accept) {
+  function droppable_asset(from, to, accept) {
     to.droppable({
       greedy: true,
       activeClass: 'active',
@@ -35,7 +35,7 @@ $(document).ready(function() {
     });
   };
 
-  function draggable(from, to) {
+  function draggable_asset(from, to) {
     from.draggable({
       connectToSortable: to,
       revert: 'invalid',
@@ -46,11 +46,11 @@ $(document).ready(function() {
     });
   }
 
-  droppable($('.images li', '.sidebar'), $('.drop-zone.images'), 'images');
-  droppable($('.documents li', '.sidebar'), $('.drop-zone.documents'), 'documents');
+  droppable_asset($('.images li', '.sidebar'), $('.drop-zone.images'), 'images');
+  droppable_asset($('.documents li', '.sidebar'), $('.drop-zone.documents'), 'documents');
 
-  draggable($('.images li', '.sidebar'), $('.drop-zone.images'), 'images');
-  draggable($('.documents li', '.sidebar'), $('.drop-zone.documents'), 'documents');
+  draggable_asset($('.images li', '.sidebar'), $('.drop-zone.images'), 'images');
+  draggable_asset($('.documents li', '.sidebar'), $('.drop-zone.documents'), 'documents');
 
   // components
   var to = $('#components'),
@@ -67,6 +67,7 @@ $(document).ready(function() {
   function set_index(node) {
     replace_idx(node.children('a'), 'href', node.index());
     replace_idx(node.children('.content'), 'id', node.index());
+    console.log(node.index());
     $.each($('label, input, .drop-zone', node), function() {
       var self = this;
       $.each(['id', 'name', 'for', 'data-name'], function(idx, attr) {
@@ -75,8 +76,8 @@ $(document).ready(function() {
     });
   };
 
-  function insert(node) {
-    node.parent().children().each(function(idx, child) {
+  function update(node) {
+    node.children().each(function(idx, child) {
       set_index($(child));
     });
   }
@@ -108,13 +109,13 @@ $(document).ready(function() {
       var ul = ui.draggable.parent();
       ul.removeClass('drop-placeholder');
       ul.children('.placeholder').remove();
-      droppable($('.images li', '.sidebar'), $('.drop-zone.images', ui.draggable), 'images');
-      droppable($('.documents li', '.sidebar'), $('.drop-zone.documents', ui.draggable), 'documents');
+      droppable_asset($('.images li', '.sidebar'), $('.drop-zone.images', ui.draggable), 'images');
+      droppable_asset($('.documents li', '.sidebar'), $('.drop-zone.documents', ui.draggable), 'documents');
     }
   }).sortable({
     accept: from,
     stop: function(event, ui) {
-      insert(ui.item);
+      update(ui.item.parent());
     }
   });
 
@@ -125,6 +126,13 @@ $(document).ready(function() {
     start: function(event, ui) {
       ui.helper.data().component = true;
     }
+  });
+
+  $(document).on('click', '.remove-component', function() {
+    var li = $(this).parents('li'),
+        ul = li.parent();
+    li.remove();
+    update(ul);
   });
 
   // single drop
@@ -162,7 +170,7 @@ $(document).ready(function() {
         val = $(this).val(),
         success = function (data) {
           $(self).parent().next().html(data);
-          draggable($('.images li', '.sidebar'), $('.drop-zone.images'));
+          draggable_asset($('.images li', '.sidebar'), $('.drop-zone.images'));
         };
 
     if (val.length > 2) {

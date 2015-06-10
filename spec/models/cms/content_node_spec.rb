@@ -15,7 +15,7 @@ module Cms
     end
 
     it "can have many content_components" do
-      node.content_components << [create(:content_component)]
+      node.content_components << [create(:test_comp)]
       expect(node.content_components.count).to eq 1
     end
 
@@ -145,6 +145,53 @@ module Cms
 
       it "not raises an error if url is blank" do
         expect{node.valid?}.not_to raise_error
+      end
+
+    end
+
+    context "#content_components_attributes" do
+
+      def hash(arr)
+        h = {}
+        arr.each_with_index do |v,k|
+          h[k.to_s] = v
+        end
+        h
+      end
+
+      let(:comp1) { attributes_for(:test_comp, :without_node) }
+      let(:comp2) { attributes_for(:test_comp, :without_node) }
+      let(:comp3) { attributes_for(:test_comp_1, :without_node) }
+
+      it "builds the new components" do
+        node.content_components_attributes = hash([comp1, comp2])
+        node.save
+        expect(node.content_components.count).to eq 2
+        expect(node.content_components.last.float).to eq 12.1
+        expect(node.content_components.last.text).to eq 'some text'
+      end
+
+      it "updates the existing" do
+        comp = create(:test_comp, float: 1.1)
+        expect(comp.float).to eq 1.1
+        node = comp.content_node
+        expect(node.content_components.size).to eq 1
+        node.content_components_attributes = hash([comp1, comp2])
+        node.save
+        expect(node.content_components.first.float).to eq 12.1
+        expect(node.content_components.last.float).to eq 12.1
+        expect(node.content_components.count).to eq 2
+      end
+
+      it "removes the unused" do
+        node.content_components_attributes = hash([comp1, comp2])
+        node.save
+        expect(node.content_components.count).to eq 2
+        node.content_components_attributes = hash([comp3])
+        node.save
+        expect(node.content_components.count).to eq 1
+        expect(node.content_components.first.test1).to eq 'test1'
+        expect(node.content_components.first.test2).to eq 'test2'
       end
 
     end
