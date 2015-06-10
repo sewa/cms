@@ -11,10 +11,6 @@ module Cms
 
         after_initialize :load_attributes
 
-        def content_attribute_list
-          self.class.content_attributes.map {|attr| content_attribute(attr[:key]) }
-        end
-
         def content_attribute(key)
           key = key.to_s
           content_attributes.detect {|attr| attr.key == key }
@@ -36,10 +32,10 @@ module Cms
               unless content_attr = content_attribute(attr[:key])
                 type = (attr[:type].to_s.classify + 'Attribute').constantize
                 content_attr = type.new(type: type.to_s, key: attr[:key])
-                self.content_attributes << content_attr
+                content_attributes << content_attr
               end
-              self.content_groups[group] ||= []
-              self.content_groups[group] << content_attr
+              content_groups[group] ||= []
+              content_groups[group] << content_attr
             end
           end
         end
@@ -63,7 +59,7 @@ module Cms
         end
 
         def content_attribute(key, type, options = {})
-          content_attributes << options.merge(:key => key.to_s, :type => type.to_s)
+          content_attributes << options.merge(key: key.to_s, type: type.to_s)
           content_groups[@content_group || :default] ||= []
           content_groups[@content_group || :default] << content_attributes.last
           define_method(key) do

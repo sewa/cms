@@ -1,11 +1,12 @@
-<input type="hidden" name="content_node[content_components_attributes][0][<%= attribute.key%>][]", class="empty" />
+
+<%= content_attribute_input attribute, value: nil, array: true, as: :hidden, class: 'empty', component_idx: component_idx %>
 
 <div class="columns small-2">
   <label for="images" class="right inline"><%= t(attribute.key) %></label>
 </div>
 
-<ul class="drop-zone columns small-10 images" data-name="content_node[content_components_attributes][0][<%= attribute.key%>][]">
+<ul class="drop-zone columns small-10 images" data-name="<%= content_attribute_field_name(attribute.key, array: true, component_idx: component_idx) %>">
   <% attribute.images.each do |asset| %>
-    <%= render 'cms/shared/asset_field', asset: asset, name: "content_node[content_components_attributes][0][#{attribute.key}][]" %>
+    <%= render 'cms/shared/asset_field', asset: asset, name: content_attribute_field_name(attribute.key, array: true, component_idx: component_idx) %>
   <% end %>
 </ul>

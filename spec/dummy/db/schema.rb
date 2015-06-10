@@ -46,19 +46,14 @@ ActiveRecord::Schema.define(version: 20150527100712) do
   add_index "content_categories_nodes", ["content_node_id"], name: "index_content_categories_nodes_on_content_node_id"
 
   create_table "content_components", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "type", null: false
+    t.integer "content_node_id", null: false
+    t.integer "position",        null: false
+    t.string  "type",            null: false
   end
 
+  add_index "content_components", ["content_node_id"], name: "index_content_components_on_content_node_id"
+  add_index "content_components", ["position"], name: "index_content_components_on_position"
   add_index "content_components", ["type"], name: "index_content_components_on_type"
-
-  create_table "content_components_nodes", force: :cascade do |t|
-    t.integer "content_node_id"
-    t.integer "content_component_id"
-  end
-
-  add_index "content_components_nodes", ["content_component_id"], name: "index_content_components_nodes_on_content_component_id"
-  add_index "content_components_nodes", ["content_node_id"], name: "index_content_components_nodes_on_content_node_id"
 
   create_table "content_documents", force: :cascade do |t|
     t.string   "name",                    null: false

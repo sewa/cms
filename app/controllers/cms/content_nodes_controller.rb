@@ -65,20 +65,29 @@ module Cms
       [:title, :type, :parent_id, :name, :template, :page_title, :keywords, :description, :url, :redirect, :access, content_category_ids: []]
     end
 
-    def content_attrs
+    def component_attrs
+      params[:content_node][:content_components_attributes].clone.map do |key, comp_attrs|
+        type = comp_attrs[:type]
+        klass = safe_type(type, content_component_types).classify.constantize
+        klass.permit_content_attributes
+      end.flatten + [:type]
+    end
+
+    def node_attrs
       params.require(:content_node).permit(base_attrs)
       type = params[:content_node][:type]
       safe_type(type, content_node_types(@parent)).classify.constantize.permit_content_attributes
     end
 
     def content_node_params
-      params.require(:content_node).permit(base_attrs + content_attrs)
+      permit = base_attrs + node_attrs + [ content_components_attributes: component_attrs ]
+      params.require(:content_node).permit(permit)
     end
 
     def load_assets
       @images = ContentImage.all
       @documents = ContentDocument.all
-      @components = components
+      @components = content_components
     end
 
     def load_parent

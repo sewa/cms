@@ -6,13 +6,13 @@ module Cms
 
     included do
 
-      def components
-        component_types.map do |type|
+      def content_components
+        content_component_types.map do |type|
           type.constantize.new
         end
       end
 
-      def component_types
+      def content_component_types
         return @component_types if @component_types.present?
         @component_types = collect_models('content_components')
       end

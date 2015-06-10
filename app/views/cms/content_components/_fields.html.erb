@@ -1,0 +1,7 @@
+<input type="hidden" name="content_node[content_components_attributes][<%= component_idx %>][type]" value="<%= component.type %>" />
+
+<% component.content_attributes.each do |attribute| %>
+  <div class="row">
+    <%= render 'cms/content_attributes/' + attribute.type_name + '_field', attribute: attribute, component_idx: component_idx %>
+  </div>
+<% end %>

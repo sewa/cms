@@ -8,18 +8,7 @@
     <div id="components-tab">
       <%= render 'cms/shared/asset_search_form', type: :components, url: search_content_components_path %>
       <ul class="assets components">
-        <% components.each do |component| %>
-          <% id = "#{dom_id(component)}-9999" %>
-          <li>
-            <%= link_to "##{id}" do %>
-              <%# = image_tag component.component_icon %>
-              <%= t(component.class.name.downcase) %>
-            <% end %>
-            <div id="<%= id %>" class="content">
-              <%= render 'cms/content_components/attributes', attributes: component.content_attributes %>
-            </div>
-          </li>
-        <% end %>
+        <%= render "cms/content_components/accordion_items", components: components %>
       </ul>
     </div>
     <div id="images-tab">

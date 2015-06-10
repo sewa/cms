@@ -17,7 +17,7 @@ module Cms
     has_and_belongs_to_many :content_nodes, join_table: "content_node_connections", foreign_key: "content_node_id_1", association_foreign_key: "content_node_id_2"
     has_and_belongs_to_many :content_nodes_inversed, class_name: "ContentNode", join_table: "content_node_connections", foreign_key: "content_node_id_2", association_foreign_key: "content_node_id_1"
 
-    has_and_belongs_to_many :content_components
+    has_many :content_components, -> { order :position }, autosave: true, dependent: :destroy
 
     before_validation :slugalize_name
     before_validation :correct_url
@@ -30,7 +30,19 @@ module Cms
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
     scope :root_nodes, -> { where(parent_id: nil) }
 
-    accepts_nested_attributes_for :content_components
+    def content_components_attributes=(arr)
+      arr.each do |k, attrs|
+        unless comp = content_components[k.to_i]
+          comp = content_components.build(type: attrs.delete(:type))
+        else
+          comp.update_attribute(:type, attrs.delete(:type))
+          comp.reload
+        end
+        comp.content_attributes.each do |attr|
+          comp.send("#{attr.key}=", attrs[attr.key])
+        end
+      end
+    end
 
     class << self
 

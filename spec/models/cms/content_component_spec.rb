@@ -4,15 +4,35 @@ require "rails_helper"
 module Cms
   RSpec.describe ContentComponent do
 
-    it "can have content_nodes" do
-      c = create(:content_component, :with_node)
-      c.content_nodes << [create(:content_node)]
-      expect(c.content_nodes.count).to eq 2
+    it "has a component name and icon" do
+      expect(TestComponent.new.icon).to eq "/some/path/icon.png"
     end
 
-    it "has a component name and icon" do
-      expect(TestComponent.new.component_name).to eq "test"
-      expect(TestComponent.new.component_icon).to eq "/some/path/icon.png"
+    context "content_attributes" do
+
+      it "retruns the keys" do
+        class TestComponent1 < ContentComponent
+          content_attribute :string, :string
+          content_attribute :list, :image_list
+        end
+        expect(TestComponent1.permit_content_attributes).to eq [:string, :list => []]
+      end
+
+      it "responds to the methods" do
+        node = TestComponent.new
+        expect(node.respond_to?(:text=)).to eq true
+        expect(node.respond_to?(:float=)).to eq true
+      end
+
+      it "assigns the values" do
+        component = TestComponent.new(attributes_for(:content_component))
+        component.text = 'bla bal'
+        component.float = 12.2
+        expect(component.save).to eq true
+        expect(component.reload.text).to eq 'bla bal'
+        expect(component.reload.float).to eq 12.2
+      end
+
     end
 
   end

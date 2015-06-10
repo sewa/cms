@@ -29,9 +29,13 @@ FactoryGirl.define do
     title
     template 'template'
 
-    trait :node_with_attrs do
+    trait :with_attrs do
       test1 'some text'
       float 12.1
+    end
+
+    trait :with_component do
+      content_components { [create(:content_component)] }
     end
 
     trait :nil_type do

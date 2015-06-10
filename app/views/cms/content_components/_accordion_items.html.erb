@@ -1,0 +1,12 @@
+<% components.each_with_index do |component, idx| %>
+  <% id = "#{component.class.name.underscore}-#{idx}-#{component.id || 'new'}" %>
+  <li class="accordion-navigation">
+    <%= link_to "##{id}" do %>
+      <%# = image_tag component.component_icon %>
+      <%= t(component.class.name.downcase) %>
+    <% end %>
+    <div id="<%= id %>" class="content">
+      <%= render 'cms/content_components/fields', component: component, component_idx: idx %>
+    </div>
+  </li>
+<% end %>

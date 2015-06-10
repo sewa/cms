@@ -22,6 +22,19 @@
     <%= f.input :access do %>
       <%= f.select :access, [[t('public'), 'public'], [t('private'), 'private']] %>
     <% end %>
+
+    <% @content_node.content_groups.each do |group, attrs| %>
+      <li class="accordion-navigation">
+        <a href="#<%= group %>"><%= t(group) %></a>
+        <div id="<%= group %>" class="content">
+          <% attrs.each do |attribute| %>
+            <div class="row">
+              <%= render 'cms/content_attributes/' + attribute.type_name + '_field', f: f, attribute: attribute %>
+            </div>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
   </div>
 
   <div id="categories-tab">
@@ -31,20 +44,7 @@
   <div id="components-tab">
     <% if @content_node.content_components.present? %>
       <ul id="components" class="accordion" data-accordion>
-        <% @content_node.content_components.each do |component, attrs| %>
-          <li class="accordion-navigation">
-            <a href="#<%= component %>"><%= t(component) %></a>
-            <div id="<%= component %>" class="content">
-              <% f.fields_for :content_components do |builder| %>
-                <% attrs.each do |attribute| %>
-                  <div class="row">
-                    <%= render 'cms/content_attributes/' + attribute.type_name + '_field', f: builder, attribute: attribute %>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </li>
-        <% end %>
+        <%= render "cms/content_components/accordion_items", components: @content_node.content_components %>
       </ul>
     <% else %>
       <ul id="components" class="accordion drop-placeholder" data-accordion>

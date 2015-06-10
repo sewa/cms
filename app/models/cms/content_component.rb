@@ -6,18 +6,18 @@ module Cms
 
     include Cms::Concerns::ContentAttributes
 
-    has_and_belongs_to_many :content_nodes
+    belongs_to :content_node
 
-    acts_as_list scope: :content_node_id
+    acts_as_list scope: :content_node
 
     def icon
-      self.class.instance_variable_get(:@component_icon)
+      self.class.instance_variable_get(:@icon)
     end
 
     class << self
 
       def icon(icon)
-        @component_icon = icon
+        @icon = icon
       end
 
     end
