@@ -30,6 +30,16 @@
         }
     }
     .components {
+        li {
+            text-align: center;
+            img {
+                display: block;
+                margin: auto;
+            }
+            a {
+                cursor: move;
+            }
+        }
         .content {
             display: none;
         }

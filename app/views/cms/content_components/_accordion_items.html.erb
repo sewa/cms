@@ -5,10 +5,10 @@
       <%= image_tag component.icon %>
       <%= t(component.class.name.downcase) %>
     <% end %>
+    <div class="actions">
+      <%= link_to t(:remove_component), '#', id: "delete-#{id}", class: 'button tiny right radius alert remove-component' %>
+    </div>
     <div id="<%= id %>" class="content">
-      <div class="actions clearfix">
-        <%= link_to t(:remove_component), '#', id: "delete-#{id}", class: 'button tiny right radius remove-component' %>
-      </div>
       <%= render 'cms/content_components/fields', component: component, component_idx: idx %>
     </div>
   </li>

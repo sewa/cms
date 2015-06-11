@@ -1,7 +1,6 @@
-$(document).ready(function() {
-  $(document).foundation();
-  var config = {};
-  config.toolbarGroups = [
+
+var CkEditor = {
+  toolbargroups: [
 	  { name: 'document', groups: [ 'mode' ] },
 	  { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
 	  { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
@@ -12,8 +11,23 @@ $(document).ready(function() {
 	  { name: 'colors' },
 	  { name: 'tools' },
 	  { name: 'others' }
-  ];
-  $('.ckeditor').ckeditor(config);
+  ]
+};
 
-  $('.tabs').tabs();
-});
+CkEditor.init = function() {
+  $('.ckeditor').ckeditor({
+    toolbarGroups: CkEditor.toolbargroups
+  });
+};
+
+CkEditor.destroy = function() {
+
+  debugger;
+  // CKEDITOR.instances
+
+};
+
+// CkEditor.reload(node) = function() {
+//   CkEditor.destroy(node);
+//   CkEditor.init();
+// }

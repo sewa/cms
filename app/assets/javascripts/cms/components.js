@@ -1,3 +1,117 @@
 $(document).ready(function() {
 
+  var Components = {
+
+    draggables: function(scope) {
+      return $('.components li', scope);
+    },
+
+    droppables: function(scope) {
+      return $('#components', scope);
+    },
+
+    accept: 'components'
+
+  };
+
+  Components.replace_idx = function(node, attr, idx) {
+    var val = node.attr(attr);
+    if(val !== undefined) {
+      node.attr(attr, val.replace(/\d/, idx));
+    }
+  };
+
+  Components.update_idx = function(node) {
+    Components.replace_idx(node.children('a'), 'href', node.index());
+    Components.replace_idx(node.children('.content'), 'id', node.index());
+    $.each($('a, label, textarea, input, .drop-zone', node), function() {
+      var self = this;
+      $.each(['id', 'name', 'for', 'data-name'], function(idx, attr) {
+        Components.replace_idx($(self), attr, node.index());
+      });
+    });
+  };
+
+  Components.update = function(node) {
+    node.children().each(function(idx, child) {
+      Components.update_idx($(child));
+    });
+  };
+
+  Components.droppable = function(drag, drop, accept) {
+    drop.droppable({
+      greedy: true,
+      activeClass: 'active',
+      accept: function(d) {
+        var id = d.parent().attr('id');
+        if (id !== undefined) {
+          return id.match(accept);
+        } else {
+          return false;
+        }
+      },
+      over: function(event, ui) {
+        if(ui.helper.data().component == true) {
+          ui.draggable.css({
+            'width': '100%',
+            'height': 'auto'
+          });
+        }
+      },
+      drop: function(event, ui) {
+        ui.draggable.css({
+          'width': '100%',
+          'height': 'auto'
+        });
+        var ul = ui.draggable.parent();
+        ul.removeClass('drop-placeholder');
+        ul.children('.placeholder').remove();
+        CmsAssets.bind_droppables(ui.draggable);
+        CmsAssets.bind_single_droppables(ui.draggable);
+      }
+    }).sortable({
+      accept: drag,
+      stop: function(event, ui) {
+        Components.update(ui.item.parent());
+      }
+    });
+  };
+
+  Components.draggable = function(drag, drop) {
+    drag.draggable({
+      connectToSortable: drop,
+      revert: 'invalid',
+      helper: 'clone',
+      start: function(event, ui) {
+        ui.helper.data().component = true;
+      }
+    });
+  };
+
+  Components.bind_droppables = function(drag_scope, drop_scope) {
+    Components.droppable(
+      Components.draggables(drag_scope),
+      Components.droppables(drop_scope),
+      Components.accept
+    );
+  };
+
+  Components.bind_draggables = function(drag_scope, drop_scope) {
+    Components.draggable(
+      Components.draggables(drag_scope),
+      Components.droppables(drop_scope)
+    );
+  };
+
+  Components.bind_remove = function() {
+    $(document).on('click', '.remove-component', function() {
+      var li = $(this).parents('li'),
+          ul = li.parent();
+      li.remove();
+      Components.update(ul);
+    });
+  };
+
+  window.CmsComponents = Components;
+
 });
