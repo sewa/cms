@@ -71,8 +71,12 @@ $(document).ready(function() {
       }
     }).sortable({
       accept: drag,
+      start: function(event, ui) {
+        CmsCkEditor.destroy(ui.item);
+      },
       stop: function(event, ui) {
         Components.update(ui.item.parent());
+        CmsCkEditor.replace(ui.item);
       }
     });
   };

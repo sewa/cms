@@ -106,18 +106,6 @@ $(document).ready(function() {
     );
   };
 
-  Assets.bind_draggables = function(drag_scope, drop_scope) {
-    Assets.draggable(
-      Assets.draggables(drag_scope).images,
-      Assets.droppables(drop_scope).images
-    );
-
-    Assets.draggable(
-      Assets.draggables(drag_scope).documents,
-      Assets.droppables(drop_scope).documents
-    );
-  };
-
   Assets.bind_single_droppables = function(drop_scope) {
     Assets.single_droppable(
       Assets.single_droppables(drop_scope).images,
@@ -127,6 +115,18 @@ $(document).ready(function() {
     Assets.single_droppable(
       Assets.single_droppables(drop_scope).documents,
       Assets.accept.documents
+    );
+  };
+
+  Assets.bind_draggables = function(drag_scope, drop_scope) {
+    Assets.draggable(
+      Assets.draggables(drag_scope).images,
+      Assets.droppables(drop_scope).images
+    );
+
+    Assets.draggable(
+      Assets.draggables(drag_scope).documents,
+      Assets.droppables(drop_scope).documents
     );
   };
 
@@ -146,7 +146,7 @@ $(document).ready(function() {
           val = $(this).val(),
           success = function (data) {
             $(self).parent().next().html(data);
-            draggable_asset($('.images li', '.sidebar'), $('.drop-zone.images'));
+            Assets.bind_draggables($('.images li', '.sidebar'), $('.drop-zone.images'));
           };
 
       if (val.length > 2) {
