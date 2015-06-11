@@ -9,7 +9,7 @@ class ImageListAttribute < Cms::ContentAttribute
   end
 
   def value=(value)
-    assign_value(value.reject(&:blank?).join(','))
+    assign_value((value || []).reject(&:blank?).join(','))
   end
 
 end

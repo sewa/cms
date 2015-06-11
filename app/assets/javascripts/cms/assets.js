@@ -48,8 +48,16 @@ $(document).ready(function() {
       greedy: true,
       activeClass: 'active',
       accept: function(d) {
-        return d.parent().attr('class').match(accept);
+        if (typeof d !== 'undefined' && typeof d.parent().attr('class') !== 'undefined') {
+          return d.parent().attr('class').match(accept);
+        } else {
+          return false;
+        }
       },
+      // the helper is not appended to the drop zone
+      // when you like to drag an asset on a dragged compoenent.
+      // solution was to clone the helper append it to the drop zone
+      // and remove the original helper.
       drop: function(event, ui) {
         if(ui.helper.data().dragged == true) {
           ui.helper.data().dragged = false;
@@ -57,7 +65,7 @@ $(document).ready(function() {
           h.attr('style', '').appendTo(this);
           var name = $(this).attr('data-name');
           h.find('input[type=hidden]').attr('name', name);
-          Assets.empty_drop_zone($(this));
+          ui.helper.remove();
         }
       }
     }).sortable({
@@ -80,7 +88,11 @@ $(document).ready(function() {
     drop.droppable({
       activeClass: 'active',
       accept: function(d) {
-        return d.parent().attr('class').match(accept);
+        if (typeof d !== 'undefined' && typeof d.parent().attr('class') !== 'undefined') {
+          return d.parent().attr('class').match(accept);
+        } else {
+          return false;
+        }
       },
       drop: function(event, ui) {
         var li = ui.draggable.clone();
@@ -136,7 +148,6 @@ $(document).ready(function() {
       var ul = $(this).parents('ul').first(),
           input = $('input.empty', $(this).parents('.row'));
       $(this).parent().parent().parent().remove();
-      Assets.removed(ul, input);
     });
   };
 
