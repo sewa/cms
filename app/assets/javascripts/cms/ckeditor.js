@@ -15,17 +15,19 @@ $(document).ready(function() {
     ]
   };
 
+  var opts = {
+    toolbarGroups: CkEditor.toolbargroups
+  };
+
   CkEditor.init = function(scope) {
-    $('.ckeditor', scope).ckeditor({
-      toolbarGroups: CkEditor.toolbargroups
-    });
+    $('.ckeditor', scope).ckeditor(opts);
   };
 
   CkEditor.destroy = function(node) {
     $('.ckeditor', node).each(function(idx, textarea){
       var id = $(textarea).attr('id'),
           editor = CKEDITOR.instances[id];
-      if (typeof editor !== undefined) {
+      if (typeof editor !== 'undefined') {
         editor.destroy();
         CKEDITOR.remove(id);
       }
@@ -34,7 +36,7 @@ $(document).ready(function() {
 
   CkEditor.replace = function(node) {
     $('.ckeditor', node).each(function(idx, textarea){
-      CKEDITOR.replace($(textarea).attr('id'));
+      CKEDITOR.replace($(textarea).attr('id'), opts);
     });
   };
 
