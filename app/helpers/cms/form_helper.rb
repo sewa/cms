@@ -1,6 +1,14 @@
 module Cms
   module FormHelper
 
+    def show_components
+      @content_node.show_components
+    end
+
+    def show_categories?
+      Cms::ContentCategory.count > 0
+    end
+
     def content_label(attribute, opts)
       label_tag content_attribute_field_name(attribute.key, opts), t(attribute.key), class: 'right inline'
     end

@@ -1,16 +1,20 @@
 <div class="sidebar columns small-6">
   <div class="tabs">
     <ul class="button-group radius">
-      <li><a class="button small secondary" href="#components-tab"><%= t(:components)%></a></li>
+      <% if show_components %>
+        <li><a class="button small secondary" href="#components-tab"><%= t(:components)%></a></li>
+      <% end %>
       <li><a class="button small secondary" href="#images-tab"><%= t(:images)%></a></li>
       <li><a class="button small secondary" href="#documents-tab"><%= t(:documents)%></a></li>
     </ul>
-    <div id="components-tab">
-      <%= render 'cms/shared/asset_search_form', type: :components, url: search_content_components_path %>
-      <ul class="assets components block-grid-4">
-        <%= render "cms/content_components/accordion_items", components: components %>
-      </ul>
-    </div>
+    <% if show_components %>
+      <div id="components-tab">
+        <%= render 'cms/shared/asset_search_form', type: :components, url: search_content_components_path %>
+        <ul class="assets components block-grid-4">
+          <%= render "cms/content_components/accordion_items", components: components %>
+        </ul>
+      </div>
+    <% end %>
     <div id="images-tab">
       <%= render 'cms/shared/asset_search_form', type: :images, url: search_content_images_path %>
       <ul class="assets images">

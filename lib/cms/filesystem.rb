@@ -26,7 +26,7 @@ module Cms
           if node.sub_nodes.present?
             ret = node.sub_nodes
           end
-          if node.common_sub_nodes
+          if node.common_node_childs
             ret += common_node_types
           end
           ret

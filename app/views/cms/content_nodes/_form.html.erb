@@ -3,42 +3,51 @@
 
 <div class="tabs">
   <ul class="button-group radius">
-    <li><a class="button small secondary" href="#metadata-tab"><%= t(:metadata)%></a></li>
-    <li><a class="button small secondary" href="#categories-tab"><%= t(:categories)%></a></li>
-    <li><a class="button small secondary" href="#components-tab"><%= t(:components)%></a></li>
+    <li><a class="button small secondary" href="#metadata-tab"><%= t(:metadata_and_static_content)%></a></li>
+    <% if show_components %>
+      <li><a class="button small secondary" href="#components-tab"><%= t(:components)%></a></li>
+    <% end %>
+    <% if show_categories? %>
+      <li><a class="button small secondary" href="#categories-tab"><%= t(:categories)%></a></li>
+    <% end %>
   </ul>
 
   <div id="metadata-tab">
-    <%= f.input :title %>
-    <%= f.input :name %>
-    <%= f.input :template do %>
-      <%= f.select :template, template_options %>
-    <% end %>
-    <%= f.input :meta_title %>
-    <%= f.input :meta_keywords %>
-    <%= f.input :meta_description, as: :text %>
-    <%= f.input :url %>
-    <%= f.input :redirect %>
-    <%= f.input :access do %>
-      <%= f.select :access, [[t('public'), 'public'], [t('private'), 'private']] %>
-    <% end %>
+    <ul class="accordion" data-accordion>
 
-    <% @content_node.content_groups.each do |group, attrs| %>
       <li class="accordion-navigation">
-        <a href="#<%= group %>"><%= t(group) %></a>
-        <div id="<%= group %>" class="content">
-          <% attrs.each do |attribute| %>
-            <div class="row">
-              <%= render 'cms/content_attributes/' + attribute.type_name + '_field', f: f, attribute: attribute %>
-            </div>
-          <% end %>
-        </div>
+          <a href="#metadata"><%= t(:metadata) %></a>
+          <div id="metadata" class="content">
+            <%= f.input :title %>
+            <%= f.input :name %>
+            <%= f.input :template do %>
+              <%= f.select :template, template_options %>
+            <% end %>
+            <%= f.input :meta_title %>
+            <%= f.input :meta_keywords %>
+            <%= f.input :meta_description, as: :text %>
+            <%= f.input :url %>
+            <%= f.input :redirect %>
+            <%= f.input :access do %>
+              <%= f.select :access, [[t('public'), 'public'], [t('private'), 'private']] %>
+            <% end %>
+          </div>
       </li>
-    <% end %>
-  </div>
 
-  <div id="categories-tab">
-    <%= f.association :content_categories, as: :check_boxes, label: false %>
+      <% @content_node.content_groups.each do |group, attrs| %>
+        <li class="accordion-navigation">
+          <a href="#<%= group %>"><%= t(group) %></a>
+          <div id="<%= group %>" class="content">
+            <% attrs.each do |attribute| %>
+              <div class="row">
+                <%= render 'cms/content_attributes/' + attribute.type_name + '_field', f: f, attribute: attribute, component_idx: nil %>
+              </div>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+
+    </ul>
   </div>
 
   <div id="components-tab">
@@ -52,4 +61,11 @@
       </ul>
     <% end %>
   </div>
+
+  <% if show_categories? %>
+    <div id="categories-tab">
+      <%= f.association :content_categories, as: :check_boxes, label: false %>
+    </div>
+  <% end %>
+
 </div>

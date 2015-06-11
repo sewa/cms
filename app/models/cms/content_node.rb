@@ -6,8 +6,8 @@ module Cms
 
     include Cms::Concerns::ContentAttributes
     include Cms::Concerns::ContentCategories
+    include Cms::Concerns::ContentNodeProperties
     include Cms::Concerns::TreeList
-    include Cms::Concerns::SubNodes
 
     validates :title, presence: true
     validates :template, presence: true, if: -> (n) { n.class.template.nil? }

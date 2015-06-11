@@ -196,5 +196,16 @@ module Cms
 
     end
 
+    context "properties" do
+
+      it "defines the attribute accessors" do
+        class TestNode1 < ContentNode
+          common_sub_nodes true
+        end
+        expect(TestNode1.common_sub_nodes).to eq true
+        expect(TestNode1.new.common_sub_nodes).to eq true
+      end
+
+    end
   end
 end

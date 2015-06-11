@@ -61,10 +61,11 @@ $(document).ready(function() {
       drop: function(event, ui) {
         if(ui.helper.data().dragged == true) {
           ui.helper.data().dragged = false;
-          var h = ui.helper.clone();
-          h.attr('style', '').appendTo(this);
-          var name = $(this).attr('data-name');
-          h.find('input[type=hidden]').attr('name', name);
+          ui.helper.clone()
+            .attr('style', '')
+            .appendTo(this)
+            .find('input[type=hidden]')
+            .attr('name', $(this).attr('data-name'));
           ui.helper.remove();
         }
       }
