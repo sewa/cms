@@ -6,38 +6,24 @@ module Cms
 
     included do
 
-      def content_components
-        content_component_types.map do |type|
+      def content_components(node)
+        content_component_types(node).map do |type|
           type.constantize.new
         end
       end
 
-      def content_component_types
-        return @component_types if @component_types.present?
-        @component_types = collect_models('content_components')
+      def content_component_types(node)
+        node = node.instance_of?(String) ? node.constantize : node
+        limit(node.use_components, all_component_types)
       end
 
       def content_node_types(node = nil)
-        if node.instance_of? String
-          node = node.constantize
-        end
+        node = node.instance_of?(String) ? node.constantize : node
         if node.present?
-          ret = []
-          if node.sub_nodes.present?
-            ret = node.sub_nodes
-          end
-          if node.common_node_childs
-            ret += common_node_types
-          end
-          ret
+          limit(node.child_nodes, all_node_types)
         else
-          common_node_types
+          all_node_types
         end
-      end
-
-      def common_node_types
-        return @common_nodes if @common_nodes.present?
-        @common_nodes = collect_models('content_nodes')
       end
 
       def templates
@@ -54,6 +40,16 @@ module Cms
 
       protected
 
+      def all_component_types
+        return @all_component_types if @all_component_types.present?
+        @all_component_types = collect_models('content_components')
+      end
+
+      def all_node_types
+        return @all_node_types if @all_node_types.present?
+        @all_node_types = collect_models('content_nodes')
+      end
+
       def collect_models(folder, &block)
         collect('models/' + folder) do
           Dir.glob("*.rb").map do |file|
@@ -69,8 +65,27 @@ module Cms
             yield
           end
         else
-          fail "Provide content nodes in #{folder}"
+          fail "Provide objects in #{folder}"
         end
+      end
+
+      def limit(given, all)
+        if given.instance_of?(Array) && given.present?
+          return given
+        elsif given.instance_of?(Hash)
+          only = given[:only]
+          except = given[:except]
+          if only.present?
+            return only.instance_of?(Array) ? only : [only]
+          elsif except.present?
+            return all - (except.instance_of?(Array) ? except : [except])
+          end
+        elsif given.instance_of?(String)
+          return [given]
+        elsif given == :all
+          return all
+        end
+        []
       end
 
     end

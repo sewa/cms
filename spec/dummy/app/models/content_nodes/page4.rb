@@ -2,7 +2,9 @@ class Page4 < Cms::ContentNode
 
   template 'page'
 
-  common_sub_nodes true
+  child_nodes except: ['Page1', 'Page2']
+
+  use_components except: ['TestComponent2']
 
   content_group :test do
     content_attribute :body, :text

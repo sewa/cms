@@ -28,8 +28,8 @@ de:
   edit: Bearbeiten
   delete: Löschen
   create: Erstellen
-  new_sub_node: Neue Unterseite
-  show_sub_nodes: Unterseiten
+  new_child_node: Neue Unterseite
+  show_child_nodes: Unterseiten
   new_content_node: Neue Seite erstellen
   new_content_category: Neue Kategorie erstellen
   new_content_image: Neues Bild erstellen

@@ -2,10 +2,11 @@ class Page < Cms::ContentNode
 
   template 'page'
 
-  sub_node 'SubPage'
-  sub_node 'SubPage1'
+  child_node 'Page2'
+  child_node 'Page3'
 
-  common_sub_nodes true
+  use_component 'TestComponent'
+  use_component 'TestComponent2'
 
   content_group :test do
     content_attribute :body, :text

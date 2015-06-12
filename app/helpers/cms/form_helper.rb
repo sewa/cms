@@ -2,7 +2,7 @@ module Cms
   module FormHelper
 
     def show_components
-      @content_node.show_components
+      @components.any?
     end
 
     def show_categories?

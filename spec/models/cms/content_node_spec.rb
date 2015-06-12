@@ -200,10 +200,10 @@ module Cms
 
       it "defines the attribute accessors" do
         class TestNode1 < ContentNode
-          common_sub_nodes true
+          show_components true
         end
-        expect(TestNode1.common_sub_nodes).to eq true
-        expect(TestNode1.new.common_sub_nodes).to eq true
+        expect(TestNode1.show_components).to eq true
+        expect(TestNode1.new.show_components).to eq true
       end
 
     end

@@ -7,15 +7,11 @@ module Cms
 
       included do
 
-        [:common_node_childs, :show_components].each do |property|
+        [:child_nodes, :use_components].each do |property|
           define_property_accessor(property)
           define_method(property) do
             self.class.instance_variable_get("@#{property}")
           end
-        end
-
-        def sub_nodes
-          self.class.sub_nodes
         end
 
       end
@@ -32,12 +28,14 @@ module Cms
           end
         end
 
-        def sub_nodes
-          @sub_nodes ||= []
+        def child_node(node)
+          @child_nodes ||= []
+          @child_nodes << node
         end
 
-        def sub_node(node)
-          sub_nodes << node
+        def use_component(component)
+          @use_components ||= []
+          @use_components << component
         end
 
       end

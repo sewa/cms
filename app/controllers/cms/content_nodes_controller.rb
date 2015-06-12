@@ -15,6 +15,12 @@ module Cms
       @content_nodes = ContentNode.where(:parent_id => nil).page(params[:page]).per(20)
     end
 
+    def new
+      type = params.delete(:type)
+      @content_node = safe_new(type, content_node_types(@parent), parent_id: params[:parent_id])
+      load_components
+    end
+
     def create
       create_params = content_node_params
       type = create_params.delete('type')
@@ -22,8 +28,13 @@ module Cms
       if @content_node.update_attributes(create_params)
         redirect_to_parent_or_index
       else
+        load_components
         render action: :new
       end
+    end
+
+    def edit
+      load_components
     end
 
     def update
@@ -31,13 +42,9 @@ module Cms
         @content_node.save
         redirect_to_parent_or_index
       else
+        load_components
         render action: :edit
       end
-    end
-
-    def new
-      type = params.delete(:type)
-      @content_node = safe_new(type, content_node_types(@parent), parent_id: params[:parent_id])
     end
 
     def sort
@@ -88,7 +95,10 @@ module Cms
     def load_assets
       @images = ContentImage.all
       @documents = ContentDocument.all
-      @components = content_components
+    end
+
+    def load_components
+      @components = content_components(@content_node)
     end
 
     def load_parent

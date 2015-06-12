@@ -50,17 +50,19 @@
     </ul>
   </div>
 
-  <div id="components-tab">
-    <% if @content_node.content_components.present? %>
-      <ul id="components" class="accordion" data-accordion>
-        <%= render "cms/content_components/accordion_items", components: @content_node.content_components %>
-      </ul>
-    <% else %>
-      <ul id="components" class="accordion drop-placeholder" data-accordion>
-        <li class="placeholder"><%= t(:drop_components) %></li>
-      </ul>
-    <% end %>
-  </div>
+  <% if show_components %>
+    <div id="components-tab">
+      <% if @content_node.content_components.present? %>
+        <ul id="components" class="accordion" data-accordion>
+          <%= render "cms/content_components/accordion_items", components: @content_node.content_components %>
+        </ul>
+      <% else %>
+        <ul id="components" class="accordion drop-placeholder" data-accordion>
+          <li class="placeholder"><%= t(:drop_components) %></li>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
 
   <% if show_categories? %>
     <div id="categories-tab">
