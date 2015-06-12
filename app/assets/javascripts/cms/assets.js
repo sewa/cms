@@ -30,7 +30,7 @@ $(document).ready(function() {
 
   };
 
-  Assets.removed = function(ul, input) {
+  Assets.empty = function(ul, input) {
     if (ul.children().length == 0) {
       input.val('-1');
     } else {
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
   Assets.empty_drop_zone = function(ul) {
     var input = $('input.empty', ul.parents('.row'));
-    Assets.removed(ul, input);
+    Assets.empty(ul, input);
   };
 
   Assets.droppable = function(drag, drop, accept) {
@@ -100,7 +100,6 @@ $(document).ready(function() {
         $(this).empty().append(li);
         var name = li.parent().attr('data-name');
         li.find('input[type=hidden]').attr('name', name);
-        Assets.empty_drop_zone($(this));
       }
     });
   };
@@ -149,6 +148,7 @@ $(document).ready(function() {
       var ul = $(this).parents('ul').first(),
           input = $('input.empty', $(this).parents('.row'));
       $(this).parent().parent().parent().remove();
+      Assets.empty_drop_zone(ul);
     });
   };
 

@@ -30,13 +30,40 @@ module Cms
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
     scope :root_nodes, -> { where(parent_id: nil) }
 
-    def content_components_attributes=(arr)
-      content_components.destroy_all
-      arr.each do |k, attrs|
-        comp = content_components.build(type: attrs.delete(:type))
-        comp.content_attributes.each do |attr|
-          comp.send("#{attr.key}=", attrs[attr.key.to_sym])
+    # most of the code is taken from active_record/nested_attributes.rb
+    # see https://github.com/rails/rails/blob/4-2-stable/activerecord/lib/active_record/nested_attributes.rb#L433
+    # some modifications where made in order to make the single table inhertance and sorting work.
+    def content_components_attributes=(attributes_collection)
+      unless attributes_collection.is_a?(Hash) || attributes_collection.is_a?(Array)
+        raise ArgumentError, "Hash or Array expected, got #{attributes_collection.class.name} (#{attributes_collection.inspect})"
+      end
+
+      if attributes_collection.is_a? Hash
+        attributes_collection = attributes_collection.values
+      end
+
+      existing_records = -> do
+        attribute_ids = attributes_collection.map {|a| a['id'] || a[:id] }.compact
+        attribute_ids.empty? ? [] : content_components.where(id: attribute_ids)
+      end.call
+
+      association = association(:content_components)
+
+      attributes_collection.each_with_index do |attributes, idx|
+        attributes = attributes.with_indifferent_access
+        type = attributes.delete(:type)
+        if attributes[:id].blank?
+          component = content_components.build(type: type)
+        elsif component = existing_records.detect { |record| record.id.to_s == attributes['id'].to_s }
+          target_record = content_components.target.detect { |record| record.id.to_s == attributes['id'].to_s }
+          if target_record
+            component = target_record
+          else
+            association.add_to_target(component, :skip_callbacks)
+          end
         end
+        attributes[:position] = idx + 1
+        assign_to_or_mark_for_destruction(component, attributes, true)
       end
     end
 

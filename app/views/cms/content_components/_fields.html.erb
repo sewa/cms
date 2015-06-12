@@ -1,4 +1,6 @@
-<input type="hidden" name="content_node[content_components_attributes][<%= component_idx %>][type]" value="<%= component.type %>" />
+<%= content_input as: :hidden, key: :type, value: component.type, component_idx: component_idx %>
+<%= content_input as: :hidden, key: :id, value: component.id, component_idx: component_idx %>
+<%= content_input as: :hidden, key: '_destroy', class: 'destroy', component_idx: component_idx %>
 
 <% component.content_attributes.each do |attribute| %>
   <div class="row">

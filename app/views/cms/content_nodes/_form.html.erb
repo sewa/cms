@@ -15,9 +15,10 @@
   <div id="metadata-tab">
     <ul class="accordion" data-accordion>
 
-      <li class="accordion-navigation">
+      <% css_class = node_errors?(@content_node, [:title, :name, :template, :meta_title, :meta_keywords, :meta_description, :url, :redirect, :access]) ? 'active accordion-error' : '' %>
+      <li class="accordion-navigation <%= css_class %>">
           <a href="#metadata"><%= t(:metadata) %></a>
-          <div id="metadata" class="content">
+          <div id="metadata" class="content <%= css_class %>">
             <%= f.input :title %>
             <%= f.input :name %>
             <%= f.input :template do %>
@@ -35,11 +36,13 @@
       </li>
 
       <% @content_node.content_groups.each do |group, attrs| %>
-        <li class="accordion-navigation">
+        <% css_class = attributes_errors?(@content_node, attrs) ? 'active accordion-error' : '' %>
+        <li class="accordion-navigation <%= css_class %>">
           <a href="#<%= group %>"><%= t(group) %></a>
-          <div id="<%= group %>" class="content">
+          <div id="<%= group %>" class="content <%= css_class %>">
             <% attrs.each do |attribute| %>
-              <div class="row">
+              <% css_class = !attribute_errors(@content_node, attribute).nil? ? 'error' : '' %>
+              <div class="row <%= css_class %>">
                 <%= render 'cms/content_attributes/' + attribute.type_name + '_field', f: f, attribute: attribute, component_idx: nil %>
               </div>
             <% end %>

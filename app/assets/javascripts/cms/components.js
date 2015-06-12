@@ -117,8 +117,10 @@ $(document).ready(function() {
     $(document).on('click', '.remove-component', function() {
       CmsCkEditor.destroy('.accordion');
       var li = $(this).parents('li'),
-          ul = li.parent();
-      li.remove();
+          ul = li.parent(),
+          destroy = $('.destroy', li);
+      li.hide();
+      destroy.val('1');
       Components.update(ul);
       CmsCkEditor.replace('.accordion');
     });

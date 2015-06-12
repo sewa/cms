@@ -86,6 +86,10 @@ li.ui-draggable-dragging {
     .ui-sortable-placeholder {
         height: 20px !important;
     }
+    .accordion-error a {
+        background-color: #f04124 !important;
+        color: #fff;
+    }
 }
 
 .form-left {

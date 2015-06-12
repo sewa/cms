@@ -76,8 +76,9 @@ module Cms
       return [] unless params[:content_node][:content_components_attributes].present?
       params[:content_node][:content_components_attributes].clone.map do |key, comp_attrs|
         type = comp_attrs[:type]
-        klass = safe_type(type, content_component_types).classify.constantize
-        klass.permit_content_attributes
+        node_type = params[:content_node][:type]
+        klass = safe_type(type, content_component_types(node_type)).classify.constantize
+        klass.permit_content_attributes + [:id, '_destroy']
       end.flatten + [:type]
     end
 

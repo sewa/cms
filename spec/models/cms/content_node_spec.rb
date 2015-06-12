@@ -159,9 +159,9 @@ module Cms
         h
       end
 
-      let(:comp1) { attributes_for(:test_comp, :without_node) }
-      let(:comp2) { attributes_for(:test_comp, :without_node) }
-      let(:comp3) { attributes_for(:test_comp_1, :without_node) }
+      let(:comp1) { attributes_for(:test_comp, :without_node).reject{ |k,v| k == :content_node } }
+      let(:comp2) { attributes_for(:test_comp, :without_node).reject{ |k,v| k == :content_node } }
+      let(:comp3) { attributes_for(:test_comp_1, :without_node).reject{ |k,v| k == :content_node } }
 
       it "builds the new components" do
         node.content_components_attributes = hash([comp1, comp2])
@@ -173,39 +173,38 @@ module Cms
 
       it "updates the existing" do
         comp = create(:test_comp, float: 1.1)
+        comp_a = create(:test_comp, float: 99.99, content_node: comp.content_node)
+
         expect(comp.float).to eq 1.1
+        expect(comp.position).to eq 1
+
+        expect(comp_a.float).to eq 99.99
+        expect(comp_a.position).to eq 2
+
         node = comp.content_node
-        expect(node.content_components.size).to eq 1
-        node.content_components_attributes = hash([comp1, comp2])
+        expect(node.content_components.size).to eq 2
+        node.content_components_attributes = hash([comp2.merge(float: 11.11), comp1.merge(id: comp.id), comp1.merge(id: comp_a.id, float: 99.99)])
         node.save
-        expect(node.content_components.first.float).to eq 12.1
-        expect(node.content_components.last.float).to eq 12.1
-        expect(node.content_components.count).to eq 2
+
+        expect(node.content_components.first.float).to eq 11.11
+        expect(node.content_components.first.position).to eq 1
+
+        expect(comp.reload.float).to eq 12.1
+        expect(comp.position).to eq 2
+
+        expect(comp_a.reload.float).to eq 99.99
+        expect(comp_a.position).to eq 3
       end
 
       it "removes the unused" do
-        node.content_components_attributes = hash([comp1, comp2])
+        comp = create(:test_comp, float: 1.1)
+        node = comp.content_node
+        node.content_components_attributes = hash([comp1.merge(id: comp.id, _destroy: '1')])
         node.save
-        expect(node.content_components.count).to eq 2
-        node.content_components_attributes = hash([comp3])
-        node.save
-        expect(node.content_components.count).to eq 1
-        expect(node.content_components.first.test1).to eq 'test1'
-        expect(node.content_components.first.test2).to eq 'test2'
+        expect(node.reload.content_components.count).to eq 0
       end
 
     end
 
-    context "properties" do
-
-      it "defines the attribute accessors" do
-        class TestNode1 < ContentNode
-          show_components true
-        end
-        expect(TestNode1.show_components).to eq true
-        expect(TestNode1.new.show_components).to eq true
-      end
-
-    end
   end
 end

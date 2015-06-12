@@ -7,6 +7,7 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
 
     before do
       expect(controller).to receive(:content_node_types).at_most(:twice).and_return ['TestNode']
+      expect(controller).to receive(:content_component_types).at_most(:twice).and_return ['TestComponent', 'TestComponent1']
     end
 
     it "raises an error if no content node params are present" do
@@ -17,8 +18,8 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
     def valid_post
       params = attributes_for(:content_node, :with_attrs).merge(content_components_attributes:
                                                                 {
-                                                                 '0': attributes_for(:content_component, :with_attrs, :without_node),
-                                                                 '1': attributes_for(:content_component, :with_attrs, :without_node),
+                                                                 '0': attributes_for(:test_comp, :without_node),
+                                                                 '1': attributes_for(:test_comp_1,:without_node),
                                                                 }
                                                                )
       post :create, content_node: params
@@ -35,6 +36,41 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
     it "redirects to index" do
       valid_post
       expect(response).to redirect_to content_nodes_path
+    end
+
+  end
+
+  context "#update" do
+
+    before do
+      expect(controller).to receive(:content_node_types).at_most(:twice).and_return ['TestNode']
+      expect(controller).to receive(:content_component_types).at_most(:twice).and_return ['TestComponent', 'TestComponent1']
+    end
+
+    it "updates the components" do
+      comp1 = create(:test_comp, float: 1.1)
+      comp2 = create(:test_comp_1, content_node: comp1.content_node)
+      node = comp1.content_node
+      params = attributes_for(:content_node, :with_attrs).merge(content_components_attributes:
+                                                                {
+                                                                 '0': attributes_for(:test_comp, :without_node).merge(id: comp1.id),
+                                                                 '1': attributes_for(:test_comp_1,:without_node).merge(id: comp2.id),
+                                                                }
+                                                               )
+      expect{put :update, id: node.id, content_node: params}.to change{ Cms::ContentComponent.count }.by(0)
+    end
+
+    it "deletes the components" do
+      comp1 = create(:test_comp, float: 1.1)
+      comp2 = create(:test_comp_1, content_node: comp1.content_node)
+      node = comp1.content_node
+      params = attributes_for(:content_node, :with_attrs).merge(content_components_attributes:
+                                                                {
+                                                                 '0': attributes_for(:test_comp, :without_node).merge(id: comp1.id, '_destroy': '1'),
+                                                                 '1': attributes_for(:test_comp_1,:without_node).merge(id: comp2.id, '_destroy': '1'),
+                                                                }
+                                                               )
+      expect{put :update, id: node.id, content_node: params}.to change{ Cms::ContentComponent.count }.by(-2)
     end
 
   end
