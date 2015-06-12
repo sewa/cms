@@ -67,6 +67,23 @@ module Cms
       end
     end
 
+    def destroy_content_attributes_including_components(attributes_collection)
+      destroy_content_attributes(attributes_collection)
+      if components_attributes = attributes_collection[:content_components_attributes]
+        if components_attributes.is_a? Hash
+           components_attributes = components_attributes.values
+        end
+        components_attributes.each do |attribute|
+          attribute = attribute.first
+          component_id = attribute.first
+          if component = content_components.find_by_id(component_id)
+            component.destroy_content_attributes(attribute.last)
+          end
+        end
+      end
+      reload
+    end
+
     class << self
 
       def resolve(path)

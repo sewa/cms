@@ -1,0 +1,11 @@
+<%= asset_destroy_input attribute, component_idx: component_idx %>
+
+<div class="columns small-2">
+  <%= content_label attribute, component_idx: component_idx %>
+</div>
+
+<ul class="drop-zone columns small-10 <%= scope %>" data-name="<%= content_field_name(attribute.key, array: true, component_idx: component_idx) %>">
+  <% attribute.images.each do |asset| %>
+    <%= render 'cms/shared/asset_field', asset: asset, name: content_field_name(attribute.key, array: true, component_idx: component_idx) %>
+  <% end %>
+</ul>

@@ -24,7 +24,7 @@ $(document).ready(function() {
   Components.update_idx = function(node) {
     Components.replace_idx(node.children('a'), 'href', node.index());
     Components.replace_idx(node.children('.content'), 'id', node.index());
-    $.each($('a, label, textarea, input, .drop-zone', node), function() {
+    $.each($('a, ul, label, textarea, input, .drop-zone', node), function() {
       var self = this;
       $.each(['id', 'name', 'for', 'data-name'], function(idx, attr) {
         Components.replace_idx($(self), attr, node.index());

@@ -30,17 +30,17 @@ $(document).ready(function() {
 
   };
 
-  Assets.empty = function(ul, input) {
+  Assets.toggle_attribute_destroyed = function(ul, input) {
     if (ul.children().length == 0) {
-      input.val('-1');
+      input.val('1');
     } else {
       input.val('');
     }
   };
 
-  Assets.empty_drop_zone = function(ul) {
-    var input = $('input.empty', ul.parents('.row'));
-    Assets.empty(ul, input);
+  Assets.toggle_destroy_attribute = function(ul) {
+    var input = $('input.destroy', ul.parents('.row'));
+    Assets.toggle_attribute_destroyed(ul, input);
   };
 
   Assets.droppable = function(drag, drop, accept) {
@@ -55,7 +55,7 @@ $(document).ready(function() {
         }
       },
       // the helper is not appended to the drop zone
-      // when you like to drag an asset on a dragged compoenent.
+      // when you drag an asset on a dragged compoenent.
       // solution was to clone the helper append it to the drop zone
       // and remove the original helper.
       drop: function(event, ui) {
@@ -67,6 +67,7 @@ $(document).ready(function() {
             .find('input[type=hidden]')
             .attr('name', $(this).attr('data-name'));
           ui.helper.remove();
+          Assets.toggle_destroy_attribute($(this));
         }
       }
     }).sortable({
@@ -100,6 +101,7 @@ $(document).ready(function() {
         $(this).empty().append(li);
         var name = li.parent().attr('data-name');
         li.find('input[type=hidden]').attr('name', name);
+        Assets.toggle_destroy_attribute($(this));
       }
     });
   };
@@ -148,7 +150,7 @@ $(document).ready(function() {
       var ul = $(this).parents('ul').first(),
           input = $('input.empty', $(this).parents('.row'));
       $(this).parent().parent().parent().remove();
-      Assets.empty_drop_zone(ul);
+      Assets.toggle_destroy_attribute(ul);
     });
   };
 

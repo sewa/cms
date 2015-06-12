@@ -44,7 +44,7 @@ class CreateContentNodes < ActiveRecord::Migration
     ###
     create_table :content_attributes do |t|
       t.integer :attributable_id, null: false
-      t.integer :attributable_type, null: false
+      t.string :attributable_type, null: false, size: 50
       t.string :key, null: false
       t.string :type, null: false
       t.timestamps

@@ -4,8 +4,8 @@ class ImageListAttribute < Cms::ContentAttribute
 
   def images
     (fetch_value || '').split(',').reject(&:blank?).map do |id|
-      Cms::ContentImage.find(id)
-    end
+      Cms::ContentImage.find_by_id(id)
+    end.compact
   end
 
   def value=(value)

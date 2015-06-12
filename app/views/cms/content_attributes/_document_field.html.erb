@@ -1,12 +1,1 @@
-<%= content_attribute_input attribute, value: nil, as: :hidden, class: 'empty', component_idx: component_idx %>
-
-<div class="columns small-2">
-  <%= content_label attribute, component_idx: component_idx %>
-</div>
-
-<ul class="drop-zone-single columns left small-4 documents" data-name="<%= content_field_name(attribute.key, component_idx: component_idx) %>">
-  <% if attribute.value.present? %>
-    <%= render 'cms/shared/asset_field', asset: attribute.value, name: content_field_name(attribute.key, component_idx: component_idx) %>
-  <% end %>
-  <%= attribute_errors(@content_node, attribute) %>
-</ul>
+<%= render 'cms/content_attributes/asset_field', attribute: attribute, component_idx: component_idx, scope: :documents %>

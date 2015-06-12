@@ -206,5 +206,14 @@ module Cms
 
     end
 
+    context "#destroy_content_attributes" do
+
+      it 'destroys the attributes' do
+        node = create(:test_node)
+        expect{ node.destroy_content_attributes(test2: 1) }.to change{ ContentAttribute.count }.by(-1)
+      end
+
+    end
+
   end
 end

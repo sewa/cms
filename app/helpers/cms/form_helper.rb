@@ -52,6 +52,15 @@ module Cms
       text_field_tag name, opts[:value], class: opts[:class], type: type
     end
 
+    def asset_destroy_input(attribute, opts)
+      if attribute.attributable.is_a? Cms::ContentNode
+        return content_input(opts.merge(as: :hidden, class: 'destroy', name: content_field_name(attribute.key, opts.merge(for_destroy: true))))
+      elsif attribute.attributable.is_a? Cms::ContentComponent
+        name = content_field_name(attribute.attributable.id, opts.merge(for_destroy: true))
+        content_input(opts.merge(as: :hidden, class: 'destroy', name: name + "[#{attribute.key}]"))
+      end
+    end
+
     def content_attribute_input(attribute, opts)
       content_input(opts.merge(
                                value: opts.keys.include?(:value) ? opts[:value] : attribute.value,
@@ -62,9 +71,17 @@ module Cms
 
     def content_field_name(key, opts)
       ret = if opts[:component_idx].nil?
-        "content_node[#{key}]"
+              if opts[:for_destroy].nil?
+                "content_node[#{key}]"
+              else
+                "destroy[content_node][#{key}]"
+              end
       else
-        "content_node[content_components_attributes][#{opts[:component_idx]}][#{key}]"
+              if opts[:for_destroy].nil?
+                "content_node[content_components_attributes][#{opts[:component_idx]}][#{key}]"
+              else
+                "destroy[content_node][content_components_attributes][#{opts[:component_idx]}][#{key}]"
+              end
       end
       opts[:array] ? ret + "[]" : ret
     end

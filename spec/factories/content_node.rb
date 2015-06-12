@@ -48,4 +48,13 @@ FactoryGirl.define do
 
   end
 
+  factory :test_node, class: TestNode do
+    type TestNode.to_s
+    title
+    template 'template'
+    float 12.1
+    test1 'some text'
+    test2 { create(:content_image).id }
+  end
+
 end

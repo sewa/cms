@@ -67,5 +67,14 @@ module Cms
 
     end
 
+    context "destroy" do
+
+      it "does not destroy related assets" do
+        node = create(:test_node)
+        expect{ node.content_attribute(:test2).destroy }.to change{ ContentAttribute.count }.by(-1)
+        expect{ node.test2.destroy }.to change{ ContentImage.count }.by(-1)
+      end
+
+    end
   end
 end

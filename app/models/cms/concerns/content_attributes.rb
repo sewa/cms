@@ -11,6 +11,14 @@ module Cms
 
         after_initialize :load_attributes
 
+        def destroy_content_attributes(attrs)
+          attrs.reject {|key, value| value.blank? }.each do |key, value|
+            if attribute = content_attribute(key)
+              attribute.destroy
+            end
+          end
+        end
+
         def content_attribute(key)
           key = key.to_s
           content_attributes.detect {|attr| attr.key == key }

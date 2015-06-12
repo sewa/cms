@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20150527100712) do
 
   create_table "content_attributes", force: :cascade do |t|
     t.integer  "attributable_id",   null: false
-    t.integer  "attributable_type", null: false
+    t.string   "attributable_type", null: false
     t.string   "key",               null: false
     t.string   "type",              null: false
     t.datetime "created_at"
