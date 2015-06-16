@@ -38,7 +38,9 @@ module Cms
     end
 
     def update
-      @content_node.destroy_content_attributes_including_components(params[:destroy][:content_node])
+      if destroy_params = params[:destroy]
+        @content_node.destroy_content_attributes_including_components(destroy_params[:content_node])
+      end
       if @content_node.update_attributes(content_node_params)
         @content_node.save
         redirect_to_parent_or_index

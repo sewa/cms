@@ -23,20 +23,14 @@ $(document).ready(function() {
     $('.ckeditor', scope).ckeditor(opts);
   };
 
-  CkEditor.destroy = function(node) {
-    $('.ckeditor', node).each(function(idx, textarea){
+  CkEditor.destroy = function(scope) {
+    $('.ckeditor', scope).each(function(idx, textarea){
       var id = $(textarea).attr('id'),
           editor = CKEDITOR.instances[id];
       if (typeof editor !== 'undefined') {
         editor.destroy();
         CKEDITOR.remove(id);
       }
-    });
-  };
-
-  CkEditor.replace = function(node) {
-    $('.ckeditor', node).each(function(idx, textarea){
-      CKEDITOR.replace($(textarea).attr('id'), opts);
     });
   };
 
