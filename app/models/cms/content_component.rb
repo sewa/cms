@@ -6,9 +6,9 @@ module Cms
 
     include Cms::Concerns::ContentAttributes
 
-    belongs_to :content_node
+    belongs_to :componentable, polymorphic: true
 
-    acts_as_list scope: :content_node
+    acts_as_list scope: :componentable
 
     def icon
       self.class.instance_variable_get(:@icon)

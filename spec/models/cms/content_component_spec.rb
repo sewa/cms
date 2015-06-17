@@ -5,7 +5,7 @@ module Cms
   RSpec.describe ContentComponent do
 
     it "has a valid factory" do
-      expect{ create(:content_component) }.to change{ContentComponent.count}.by 1
+      expect{ create(:test_comp, :with_node) }.to change{ContentComponent.count}.by 1
     end
 
     it "has a component name and icon" do
@@ -29,7 +29,7 @@ module Cms
       end
 
       it "assigns the values" do
-        component = TestComponent.new(attributes_for(:content_component))
+        component = TestComponent.new(attributes_for(:content_component, :with_node))
         component.text = 'bla bal'
         component.float = 12.2
         expect(component.save).to eq true

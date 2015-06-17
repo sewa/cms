@@ -4,6 +4,8 @@ module Cms
 
     self.table_name = :content_images
 
+    has_many :content_components, autosave: true, dependent: :destroy, as: :componentable
+
     has_attached_file :image,
       styles: { mini: '48x48>', thumb: '146x146>', medium: '240x240>', rotator: '944x944>' },
       default_style: :thumb,

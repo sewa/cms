@@ -30,12 +30,14 @@ class CreateContentNodes < ActiveRecord::Migration
     # components
     ###
     create_table :content_components do |t|
-      t.references :content_node, null: false
+      t.integer :componentable_id, null: false
+      t.string :componentable_type, null: false, size: 50
       t.integer :position, null: false
       t.string :type, null: false, size: 30
     end
 
-    add_index :content_components, :content_node_id
+    add_index :content_components, :componentable_id
+    add_index :content_components, :componentable_type
     add_index :content_components, :position
     add_index :content_components, :type
 

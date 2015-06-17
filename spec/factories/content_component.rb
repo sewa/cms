@@ -20,10 +20,8 @@ end
 FactoryGirl.define do
   factory :content_component, class: 'Cms::ContentComponent' do
 
-    content_node { create(:content_node) }
-
-    trait :without_node do
-      content_node { nil }
+    trait :with_node do
+      componentable { create(:content_node) }
     end
 
   end

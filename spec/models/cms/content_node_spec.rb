@@ -15,7 +15,7 @@ module Cms
     end
 
     it "can have many content_components" do
-      node.content_components << [create(:test_comp)]
+      node.content_components << [create(:test_comp, :with_node)]
       expect(node.content_components.count).to eq 1
     end
 
@@ -159,9 +159,9 @@ module Cms
         h
       end
 
-      let(:comp1) { attributes_for(:test_comp, :without_node).reject{ |k,v| k == :content_node } }
-      let(:comp2) { attributes_for(:test_comp, :without_node).reject{ |k,v| k == :content_node } }
-      let(:comp3) { attributes_for(:test_comp_1, :without_node).reject{ |k,v| k == :content_node } }
+      let(:comp1) { attributes_for(:test_comp).reject{ |k,v| k == :content_node } }
+      let(:comp2) { attributes_for(:test_comp).reject{ |k,v| k == :content_node } }
+      let(:comp3) { attributes_for(:test_comp_1).reject{ |k,v| k == :content_node } }
 
       it "builds the new components" do
         node.content_components_attributes = hash([comp1, comp2])
@@ -172,8 +172,8 @@ module Cms
       end
 
       it "updates the existing" do
-        comp = create(:test_comp, float: 1.1)
-        comp_a = create(:test_comp, float: 99.99, content_node: comp.content_node)
+        comp = create(:test_comp, :with_node, float: 1.1)
+        comp_a = create(:test_comp, float: 99.99, componentable: comp.componentable)
 
         expect(comp.float).to eq 1.1
         expect(comp.position).to eq 1
@@ -181,7 +181,7 @@ module Cms
         expect(comp_a.float).to eq 99.99
         expect(comp_a.position).to eq 2
 
-        node = comp.content_node
+        node = comp.componentable
         expect(node.content_components.size).to eq 2
         node.content_components_attributes = hash([comp2.merge(float: 11.11), comp1.merge(id: comp.id), comp1.merge(id: comp_a.id, float: 99.99)])
         node.save
@@ -197,8 +197,8 @@ module Cms
       end
 
       it "removes the unused" do
-        comp = create(:test_comp, float: 1.1)
-        node = comp.content_node
+        comp = create(:test_comp, :with_node, float: 1.1)
+        node = comp.componentable
         node.content_components_attributes = hash([comp1.merge(id: comp.id, _destroy: '1')])
         node.save
         expect(node.reload.content_components.count).to eq 0

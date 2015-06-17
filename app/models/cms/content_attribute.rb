@@ -6,9 +6,6 @@ module Cms
 
     belongs_to :attributable, polymorphic: true
 
-    alias_method :content_node=, :attributable=
-    alias_method :content_node, :attributable
-
     validates :key, uniqueness: { scope: [:attributable_id, :attributable_type] }, presence: true
 
     def value

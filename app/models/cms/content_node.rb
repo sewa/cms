@@ -17,7 +17,7 @@ module Cms
     has_and_belongs_to_many :content_nodes, join_table: "content_node_connections", foreign_key: "content_node_id_1", association_foreign_key: "content_node_id_2"
     has_and_belongs_to_many :content_nodes_inversed, class_name: "ContentNode", join_table: "content_node_connections", foreign_key: "content_node_id_2", association_foreign_key: "content_node_id_1"
 
-    has_many :content_components, -> { order :position }, autosave: true, dependent: :destroy
+    has_many :content_components, -> { order :position }, autosave: true, dependent: :destroy, as: :componentable
 
     before_validation :slugalize_name
     before_validation :correct_url

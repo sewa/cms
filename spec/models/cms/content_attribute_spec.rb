@@ -31,7 +31,7 @@ module Cms
       attr = Test.new
       attr.key = :number
       attr.value = value
-      attr.content_node = content_node
+      attr.attributable = content_node
       attr
     end
 
