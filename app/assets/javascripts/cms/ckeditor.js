@@ -34,6 +34,9 @@ $(document).ready(function() {
     });
   };
 
-  window.CmsCkEditor = CkEditor;
+  window.CmsCkEditor = {
+    init: CkEditor.init,
+    destroy: CkEditor.destroy
+  };
 
 });

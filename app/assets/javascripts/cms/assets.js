@@ -144,7 +144,7 @@ $(document).ready(function() {
     );
   };
 
-  Assets.bind_delete = function() {
+  Assets.bind_remove = function() {
     $(document).on('click', '.drop-zone .delete, .drop-zone-single .delete', function(e) {
       e.preventDefault();
       var ul = $(this).parents('ul').first(),
@@ -171,6 +171,12 @@ $(document).ready(function() {
     });
   };
 
-  window.CmsAssets = Assets;
+  window.CmsAssets = {
+    bind_droppables: Assets.bind_droppables,
+    bind_single_droppables: Assets.bind_single_droppables,
+    bind_draggables: Assets.bind_draggables,
+    bind_remove: Assets.bind_remove,
+    bind_search: Assets.bind_search
+  };
 
 });

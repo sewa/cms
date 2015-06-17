@@ -126,6 +126,10 @@ $(document).ready(function() {
     });
   };
 
-  window.CmsComponents = Components;
+  window.CmsComponents = {
+    bind_droppables: Components.bind_droppables,
+    bind_draggables: Components.bind_draggables,
+    bind_remove: Components.bind_remove
+  };
 
 });
