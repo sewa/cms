@@ -2,6 +2,9 @@ module Cms
   class ContentDocument < ActiveRecord::Base
     self.table_name = :content_documents
 
+    validates :tags, presence: true
+    validates :attachment, presence: true
+
     has_attached_file :attachment,
       url: '/content/documents/:id/:basename.:extension',
       path: ':rails_root/public/content/documents/:id/:basename.:extension'
