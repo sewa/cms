@@ -93,6 +93,14 @@ module Cms
         expect(node.errors[:float].count).to eq 2
       end
 
+      it "destroys the content_attributes" do
+        node = create(:test_node)
+        expect(Cms::ContentAttribute.count).to eq 3
+        node.destroy
+        expect(Cms::ContentNode.count).to eq 0
+        expect(Cms::ContentAttribute.count).to eq 0
+      end
+
     end
 
     context "#path" do

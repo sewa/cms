@@ -2,7 +2,7 @@
 class DocumentListAttribute < Cms::ContentAttribute
   content_type :string
 
-  def documents
+  def value
     (fetch_value || '').split(',').reject(&:blank?).map do |id|
       Cms::ContentDocument.find(id)
     end

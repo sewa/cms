@@ -43,6 +43,7 @@ de:
   edit_document: Dokument bearbeiten
   edit_image: Bild bearbeiten
   edit_category: Kategorie bearbeiten
+  delete_content_node: Seite löschen
   delete_content_image: Bild löschen
   delete_content_document: Dokument löschen
   delete_content_category: Kategorie löschen

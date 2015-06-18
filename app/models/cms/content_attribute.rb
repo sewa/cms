@@ -2,7 +2,7 @@
 module Cms
   class ContentAttribute < ActiveRecord::Base
 
-    self.table_name = 'content_attributes'
+    self.table_name = :content_attributes
 
     belongs_to :attributable, polymorphic: true
 

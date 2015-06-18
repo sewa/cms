@@ -7,7 +7,7 @@ module Cms
 
       included do
 
-        has_many :content_attributes, autosave: true, dependent: :destroy, as: :attributable
+        has_many :content_attributes, autosave: true, as: :attributable
 
         after_initialize :load_attributes
 
@@ -30,6 +30,16 @@ module Cms
 
         def content_groups
           @content_groups ||= {}
+        end
+
+        # Hack to get around the reinitialization of content_attributes
+        # in the original destroy method.
+        # This also requires the dependent: :destroy method not to be set
+        # when defining the relation.
+        alias_method :orig_destroy, :destroy
+        def destroy
+          orig_destroy
+          content_attributes.destroy_all
         end
 
         protected

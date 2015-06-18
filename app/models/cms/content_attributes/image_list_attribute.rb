@@ -2,7 +2,7 @@
 class ImageListAttribute < Cms::ContentAttribute
   content_type :string
 
-  def images
+  def value
     (fetch_value || '').split(',').reject(&:blank?).map do |id|
       Cms::ContentImage.find_by_id(id)
     end.compact
