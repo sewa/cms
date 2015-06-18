@@ -97,10 +97,13 @@ $(document).ready(function() {
         }
       },
       drop: function(event, ui) {
-        var li = ui.draggable.clone();
-        $(this).empty().append(li);
-        var name = li.parent().attr('data-name');
-        li.find('input[type=hidden]').attr('name', name);
+        $(this).empty();
+        ui.helper.clone()
+          .attr('style', '')
+          .appendTo(this)
+          .find('input[type=hidden]')
+          .attr('name', $(this).attr('data-name'));
+        ui.helper.remove();
         Assets.toggle_destroy_attribute($(this));
       }
     });
