@@ -22,25 +22,31 @@ module Cms
 
     class << self
       # specifies the type of the content_value
-      def content_type(type, scope = nil)
-        @scope ||= scope
+      def content_type(type, reference_type = nil)
+        if type == :reference && reference_type.nil?
+          raise 'A class_name must be set if a reference attribute is defined. e.g. content_attribute :name, :reference, class_name: SomeClass'
+        end
+        @reference_type = reference_type
         has_one :content_value, foreign_key: :content_attribute_id, class_name: "Cms::ContentValue::#{type.to_s.classify}", dependent: :destroy, autosave: true
       end
 
-      def scope
-        @scope
+      def reference_type
+        @reference_type
       end
+
     end
 
     protected
 
-    def assign_value(value)
-      if value.present?
-        cv = content_value || build_content_value
-        cv.value = value
-        if cv.respond_to?(:scope) && self.class.scope
-          cv.scope = self.class.scope
-        end
+    def assign_value(val)
+      if val.present?
+        attrs = if self.class.reference_type.present?
+                  { reference_type: self.class.reference_type}
+                else
+                  {}
+                end
+        cv = content_value || build_content_value(attrs)
+        cv.value = val
       end
     end
 

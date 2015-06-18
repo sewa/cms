@@ -43,6 +43,9 @@ de:
   edit_document: Dokument bearbeiten
   edit_image: Bild bearbeiten
   edit_category: Kategorie bearbeiten
+  delete_content_image: Bild löschen
+  delete_content_document: Dokument löschen
+  delete_content_category: Kategorie löschen
   images: Bilder
   documents: Dokumente
   components: Komponenten
@@ -54,3 +57,5 @@ de:
   search_components: Komponenten durchsuchen
 
   really_delete: Wirklich löschen?
+
+  abort: Abbrechen

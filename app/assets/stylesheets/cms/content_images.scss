@@ -1,7 +1,11 @@
-.image {
+.image-wrap {
+    margin-top: 20px;
     text-align: center;
-    img {
-        display: none;
-        margin-top: 20px;
+    .image {
+        position: relative;
+        display: inline-block;
+        img {
+            display: none;
+        }
     }
 }

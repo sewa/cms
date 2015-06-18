@@ -9,7 +9,7 @@ $(document).ready(function() {
 
     function set_height(height) {
       sidebar.height(height);
-      $('.sidebar.image img').css({
+      $('.image img', '.sidebar').css({
         'max-height': (height / 100) * 80
       }).fadeIn();
     };

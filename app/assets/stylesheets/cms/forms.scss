@@ -73,7 +73,7 @@ li.ui-draggable-dragging {
         border-bottom: 1px solid #ababab;
     }
     .content {
-        padding: 0.9375rem;
+        margin: 0;
     }
     .accordion-navigation {
         position: relative;
@@ -96,6 +96,11 @@ li.ui-draggable-dragging {
 .form-left {
     padding: 0px;
     background-color: #fafafa !important;
+
+    .content {
+        padding: 0.9375rem;
+        padding-top: 32px !important;
+    }
 
     h2 {
         margin-bottom: 0px;

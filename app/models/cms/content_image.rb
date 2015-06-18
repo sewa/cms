@@ -4,7 +4,9 @@ module Cms
 
     self.table_name = :content_images
 
-    has_many :content_components, autosave: true, dependent: :destroy, as: :componentable
+    validates :tags, presence: true
+    validates :alt, presence: true
+    validates :image, presence: true
 
     has_attached_file :image,
       styles: { mini: '48x48>', thumb: '146x146>', medium: '240x240>', rotator: '944x944>' },

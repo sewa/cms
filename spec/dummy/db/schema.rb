@@ -22,8 +22,7 @@ ActiveRecord::Schema.define(version: 20150527100712) do
     t.datetime "updated_at"
   end
 
-  add_index "content_attributes", ["attributable_id"], name: "index_content_attributes_on_attributable_id"
-  add_index "content_attributes", ["attributable_type"], name: "index_content_attributes_on_attributable_type"
+  add_index "content_attributes", ["attributable_id", "attributable_type"], name: "index_content_attributes_on_attr_id_and_attr_type"
   add_index "content_attributes", ["key"], name: "index_content_attributes_on_key"
   add_index "content_attributes", ["type"], name: "index_content_attributes_on_type"
 
@@ -52,8 +51,7 @@ ActiveRecord::Schema.define(version: 20150527100712) do
     t.string  "type",               null: false
   end
 
-  add_index "content_components", ["componentable_id"], name: "index_content_components_on_componentable_id"
-  add_index "content_components", ["componentable_type"], name: "index_content_components_on_componentable_type"
+  add_index "content_components", ["componentable_id", "componentable_type"], name: "index_content_components_on_compo_id_and_compo_type"
   add_index "content_components", ["position"], name: "index_content_components_on_position"
   add_index "content_components", ["type"], name: "index_content_components_on_type"
 
@@ -137,10 +135,11 @@ ActiveRecord::Schema.define(version: 20150527100712) do
   create_table "content_value_reference", force: :cascade do |t|
     t.integer "content_attribute_id", null: false
     t.integer "value",                null: false
-    t.string  "scope",                null: false
+    t.string  "reference_type",       null: false
   end
 
   add_index "content_value_reference", ["content_attribute_id"], name: "index_content_value_reference_on_content_attribute_id"
+  add_index "content_value_reference", ["reference_type", "value"], name: "index_content_value_reference_on_reference_type_and_value"
 
   create_table "content_value_string", force: :cascade do |t|
     t.integer "content_attribute_id", null: false
