@@ -6,22 +6,25 @@ module Cms
 
     include Cms::Concerns::ContentAttributes
     include Cms::Concerns::ContentCategories
-    include Cms::Concerns::ContentNodeProperties
-    include Cms::Concerns::TreeList
+    include Cms::Concerns::ContentProperties
+
+    acts_as_tree
+    acts_as_list scope: :parent_id
+
+    has_many :public_children, -> { order('position ASC').where("content_nodes.access = 'public'") }, class_name: 'ContentNode', foreign_key: 'parent_id', dependent: :destroy
+    has_many :content_components, -> { order :position }, autosave: true, dependent: :destroy, as: :componentable
+
+    has_and_belongs_to_many :content_nodes, join_table: "content_node_connections", foreign_key: "content_node_id_1", association_foreign_key: "content_node_id_2"
+    has_and_belongs_to_many :content_nodes_inversed, class_name: "ContentNode", join_table: "content_node_connections", foreign_key: "content_node_id_2", association_foreign_key: "content_node_id_1"
+
+    before_validation :slugalize_name
+    before_validation :correct_url
+    before_validation :correct_redirect
 
     validates :title, presence: true
     validates :template, presence: true, if: -> (n) { n.class.template.nil? }
     validates :url, uniqueness: true, allow_blank: true
     validates :name, uniqueness: { scope: :parent_id }
-
-    has_and_belongs_to_many :content_nodes, join_table: "content_node_connections", foreign_key: "content_node_id_1", association_foreign_key: "content_node_id_2"
-    has_and_belongs_to_many :content_nodes_inversed, class_name: "ContentNode", join_table: "content_node_connections", foreign_key: "content_node_id_2", association_foreign_key: "content_node_id_1"
-
-    has_many :content_components, -> { order :position }, autosave: true, dependent: :destroy, as: :componentable
-
-    before_validation :slugalize_name
-    before_validation :correct_url
-    before_validation :correct_redirect
 
     default_scope -> { order(position: :asc) }
 
@@ -29,6 +32,20 @@ module Cms
     scope :public_nodes, -> { where('access = ?', 'public') }
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
     scope :root_nodes, -> { where(parent_id: nil) }
+
+    [:child_nodes, :use_components].each do |property|
+      content_property property
+    end
+
+    def child_node(node)
+      @child_nodes ||= []
+      @child_nodes << node
+    end
+
+    def use_component(component)
+      @use_components ||= []
+      @use_components << component
+    end
 
     # most of the code is taken from active_record/nested_attributes.rb
     # see https://github.com/rails/rails/blob/4-2-stable/activerecord/lib/active_record/nested_attributes.rb#L433

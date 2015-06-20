@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Severin Schwanck"]
   s.email       = ["s@schwanck.com"]
   s.homepage    = "TODO"
-  s.summary     = "Basic Cms"
-  s.description = "Basic Cms"
+  s.summary     = "Cms"
+  s.description = "Cms"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "4.2.1"
   s.add_dependency "jquery-rails"
   s.add_dependency "jquery-ui-rails"
-  s.add_dependency "devise"
+  s.add_dependency "cancancan"
   s.add_dependency "acts_as_tree"
   s.add_dependency "acts_as_list"
   s.add_dependency "foundation-rails", "5.5.2.1"

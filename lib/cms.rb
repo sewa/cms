@@ -1,4 +1,4 @@
-require 'devise'
+require 'cancan'
 require 'acts_as_tree'
 require 'acts_as_list'
 require 'foundation-rails'
@@ -15,4 +15,6 @@ require "cms/safer_execution"
 require "cms/content_value"
 
 module Cms
+  mattr_accessor :user_class
+  mattr_accessor :user_roles_attribute
 end
