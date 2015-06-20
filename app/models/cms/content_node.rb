@@ -37,16 +37,6 @@ module Cms
       content_property property
     end
 
-    def child_node(node)
-      @child_nodes ||= []
-      @child_nodes << node
-    end
-
-    def use_component(component)
-      @use_components ||= []
-      @use_components << component
-    end
-
     # most of the code is taken from active_record/nested_attributes.rb
     # see https://github.com/rails/rails/blob/4-2-stable/activerecord/lib/active_record/nested_attributes.rb#L433
     # some modifications where made in order to make the single table inhertance and sorting work.
