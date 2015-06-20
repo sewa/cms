@@ -33,9 +33,8 @@ module Cms
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
     scope :root_nodes, -> { where(parent_id: nil) }
 
-    [:child_nodes, :use_components].each do |property|
-      content_property property
-    end
+    content_property :child_nodes
+    content_property :use_components
 
     # most of the code is taken from active_record/nested_attributes.rb
     # see https://github.com/rails/rails/blob/4-2-stable/activerecord/lib/active_record/nested_attributes.rb#L433
