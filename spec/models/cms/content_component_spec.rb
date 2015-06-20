@@ -9,6 +9,7 @@ module Cms
     end
 
     it "has a component name and icon" do
+      expect(TestComponent.icon).to eq "/some/path/icon.png"
       expect(TestComponent.new.icon).to eq "/some/path/icon.png"
     end
 
