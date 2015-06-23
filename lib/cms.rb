@@ -16,5 +16,5 @@ require "cms/content_value"
 
 module Cms
   mattr_accessor :user_class
-  mattr_accessor :user_roles_attribute
+  mattr_accessor :current_user_method
 end

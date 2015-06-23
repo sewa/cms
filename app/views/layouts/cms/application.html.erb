@@ -24,14 +24,14 @@
       <section class="top-bar-section">
         <ul class="right">
           <li class="has-form">
-            <%= link_to t(:logout), content_nodes_path, class: 'button redius' %>
+            <%= link_to t(:logout), main_app.destroy_cms_user_session_path, method: :delete, class: 'button radius' %>
           </li>
         </ul>
         <ul class="left">
-          <%= nav_link_to t(:pages), content_nodes_path %>
-          <%= nav_link_to t(:images), content_images_path %>
-          <%= nav_link_to t(:documents), content_documents_path %>
-          <%= nav_link_to t(:categories), content_categories_path %>
+          <%= nav_link_to t(:pages), content_nodes_path, object: :content_nodes %>
+          <%= nav_link_to t(:images), content_images_path, object: :content_images %>
+          <%= nav_link_to t(:documents), content_documents_path, object: :content_documents %>
+          <%= nav_link_to t(:categories), content_categories_path, object: :content_categories %>
         </ul>
       </section>
     </nav>

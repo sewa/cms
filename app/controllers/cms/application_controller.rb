@@ -9,7 +9,7 @@ module Cms
       redirect_unauthorized_access
     end
 
-    # before_action :authorize_user
+    before_action :authorize_user
 
     protected
 
@@ -32,23 +32,39 @@ module Cms
     end
 
     def try_current_user
-      if respond_to?(:current_user)
-        current_user
+      if respond_to?(Cms.current_user_method)
+        self.send(Cms.current_user_method)
       else
         nil
       end
     end
 
+    def store_location
+      # disallow return to login, logout, signup pages
+      authentication_routes = [:signup_path, :login_path, :logout_path]
+      disallowed_urls = []
+      authentication_routes.each do |route|
+        if respond_to?(route)
+          disallowed_urls << send(route)
+        end
+      end
+
+      disallowed_urls.map!{ |url| url[/\/\w+$/] }
+      unless disallowed_urls.include?(request.fullpath)
+        session['user_return_to'] = request.fullpath.gsub('//', '/')
+      end
+    end
+
     def redirect_unauthorized_access
       if try_current_user
-        flash[:error] = Cms.t(:authorization_failure)
-        redirect_to '/unauthorized'
+        flash[:error] = I18n.t(:authorization_failure)
+        redirect_to cms.unauthorized_path
       else
         store_location
         if respond_to?(:cms_login_path)
           redirect_to cms_login_path
         else
-          redirect_to cms.respond_to?(:root_path) ? cms.root_path : main_app.root_path
+          redirect_to main_app.new_cms_user_session_path
         end
       end
     end

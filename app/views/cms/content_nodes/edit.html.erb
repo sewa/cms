@@ -1,6 +1,6 @@
 <%= actions do %>
   <div class="right">
-    <% if @content_node.all_children.present? %>
+    <% if @content_node.children.present? %>
       <% path = content_node_path(@content_node) %>
     <% elsif @content_node.parent.present? %>
       <% path = content_node_path(@content_node.parent) %>

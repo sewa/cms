@@ -13,7 +13,7 @@
     <% content_nodes.each do |node| %>
       <tr id="<%= dom_id node %>" data-sort-url="<%= sort_content_node_path(node) %>">
         <td>
-          <% if node.all_children.count > 0 %>
+          <% if node.children.count > 0 %>
             <%= link_to node.title, content_node_path(node), class: 'button small radius secondary' %>
           <% else %>
             <%= link_to node.title, edit_content_node_path(node), class: 'button small radius secondary' %>

@@ -60,3 +60,7 @@ de:
   really_delete: Wirklich löschen?
 
   abort: Abbrechen
+
+  unauthorized: Sie haben keinen Zugriff auf diese Resource
+
+  cms_login: Fliesen-Kemmler CMS

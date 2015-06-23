@@ -1,5 +1,4 @@
 Cms::Engine.routes.draw do
-  # devise_for :users, class_name: "Cms::User", module: :devise
 
   resources :content_nodes, except: [:new] do
     collection do
@@ -8,10 +7,7 @@ Cms::Engine.routes.draw do
     end
     member do
       post :sort
-      get :version
-      get :versions
       get :children
-      post 'set_version' => 'content_nodes#set_current_version', :as => :set_version
     end
   end
 
@@ -28,5 +24,7 @@ Cms::Engine.routes.draw do
       get :search
     end
   end
+
+  get 'unauthorized' => 'pages#unauthorized', as: :unauthorized
 
 end

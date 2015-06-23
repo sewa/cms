@@ -1,7 +1,3 @@
-# Implementation class for Cancan gem.  Instead of overriding this class, consider adding new permissions
-# using the special +register_ability+ method which allows extensions to add their own abilities.
-#
-# See http://github.com/ryanb/cancan for more details on cancan.
 require 'cancan'
 module Cms
   class Ability
@@ -25,14 +21,13 @@ module Cms
     def initialize(user)
       self.clear_aliased_actions
 
-      user ||= Cms.user_class.new
+      user ||= Cms.user_class.constantize.new
 
-      unless user.respond_to?(Cms.user_roles_attribute)
-        raise "User does not have a #{Cms.user_roles_attrbiute} method defined."
+      unless user.respond_to?(:has_role?)
+        raise "User must define a has_role? method."
       end
 
-      roles = user.send(Cms.user_roles_attribute)
-      if roles.include?('admin') || roles.include?('cms_editor')
+      if user.has_role?('admin') || user.has_role?('cms_editor')
         can :manage, :all
       end
 
