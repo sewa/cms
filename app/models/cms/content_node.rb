@@ -7,6 +7,7 @@ module Cms
     include Cms::Concerns::ContentAttributes
     include Cms::Concerns::ContentCategories
     include Cms::Concerns::ContentProperties
+    include Cms::Concerns::Template
 
     acts_as_tree
     acts_as_list scope: :parent_id
@@ -22,7 +23,6 @@ module Cms
     before_validation :correct_redirect
 
     validates :title, presence: true
-    validates :template, presence: true, if: -> (n) { n.class.template.nil? }
     validates :url, uniqueness: true, allow_blank: true
     validates :name, uniqueness: { scope: :parent_id }
 
@@ -104,14 +104,6 @@ module Cms
         resolve(path)
       end
 
-      def template(template = nil)
-        if template
-          @template = template
-        else
-          @template
-        end
-      end
-
     end
 
     def slugalize_name
@@ -172,14 +164,6 @@ module Cms
 
     def public?
       self.access == 'public'
-    end
-
-    def template
-      if read_attribute(:template).blank?
-        self.class.template
-      else
-        read_attribute(:template)
-      end
     end
 
   end

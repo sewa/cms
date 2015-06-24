@@ -6,6 +6,7 @@ module Cms
 
     include Cms::Concerns::ContentAttributes
     include Cms::Concerns::ContentProperties
+    include Cms::Concerns::Template
 
     belongs_to :componentable, polymorphic: true
 

@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20150527100712) do
     t.string  "componentable_type", null: false
     t.integer "position",           null: false
     t.string  "type",               null: false
+    t.string  "template",           null: false
   end
 
   add_index "content_components", ["componentable_id", "componentable_type"], name: "index_content_components_on_compo_id_and_compo_type"

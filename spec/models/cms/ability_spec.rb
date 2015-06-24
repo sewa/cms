@@ -5,15 +5,9 @@ require 'matchers/cancan'
 module Cms
   RSpec.describe Ability do
 
-    class User
-      def roles
-        []
-      end
-    end
-
     before do
       Cms.user_class = User
-      Cms.user_roles_attribute = :roles
+      Cms.current_user_method = :current_user
     end
 
     subject(:ability) { Ability.new(user) }
@@ -24,7 +18,7 @@ module Cms
       let(:user) { User.new }
 
       before do
-        expect(user).to receive(:roles).at_least(:once).and_return(['admin'])
+        user.roles = ['admin']
       end
 
       it { should have_abilities(:manage, ContentNode.new) }
@@ -39,13 +33,28 @@ module Cms
       let(:user) { User.new }
 
       before do
-        expect(user).to receive(:roles).at_least(:once).and_return(['cms_editor'])
+        user.roles = ['cms_editor']
       end
 
       it { should have_abilities(:manage, ContentNode.new) }
       it { should have_abilities(:manage, ContentDocument.new) }
       it { should have_abilities(:manage, ContentImage.new) }
       it { should have_abilities(:manage, ContentCategory.new) }
+
+    end
+
+    context "someone" do
+
+      let(:user) { User.new }
+
+      before do
+        user.roles = ['someone']
+      end
+
+      it { should_not have_abilities(:manage, ContentNode.new) }
+      it { should_not have_abilities(:manage, ContentDocument.new) }
+      it { should_not have_abilities(:manage, ContentImage.new) }
+      it { should_not have_abilities(:manage, ContentCategory.new) }
 
     end
   end

@@ -34,6 +34,7 @@ class CreateContentNodes < ActiveRecord::Migration
       t.string :componentable_type, null: false, size: 50
       t.integer :position, null: false
       t.string :type, null: false, size: 30
+      t.string :template, null: false, size: 30
     end
 
     add_index :content_components, [:componentable_id, :componentable_type], name: 'index_content_components_on_compo_id_and_compo_type'

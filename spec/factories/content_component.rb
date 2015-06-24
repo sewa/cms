@@ -20,6 +20,8 @@ end
 FactoryGirl.define do
   factory :content_component, class: 'Cms::ContentComponent' do
 
+    template :page
+
     trait :with_node do
       componentable { create(:content_node) }
     end

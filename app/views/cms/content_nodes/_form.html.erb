@@ -18,8 +18,12 @@
           <div id="metadata" class="content <%= css_class %>">
             <%= f.input :title %>
             <%= f.input :name %>
-            <%= f.input :template do %>
-              <%= f.select :template, template_options %>
+            <% if template_options.present? %>
+              <%= f.input :template do %>
+                <%= f.select :template, template_options %>
+              <% end %>
+            <% else %>
+              <%= f.input :template, as: :hidden %>
             <% end %>
             <%= f.input :meta_title %>
             <%= f.input :meta_keywords %>

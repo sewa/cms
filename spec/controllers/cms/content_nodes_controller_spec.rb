@@ -3,6 +3,17 @@ require 'rails_helper'
 RSpec.describe Cms::ContentNodesController, :type => :controller do
   routes { Cms::Engine.routes }
 
+  before do
+    controller.class_eval do
+      def current_cms_user
+        user = Cms::User.new
+        user.roles = ['admin']
+        user
+      end
+    end
+    Cms.current_user_method = :current_cms_user
+  end
+
   context "#create" do
 
     before do

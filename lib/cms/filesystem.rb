@@ -28,14 +28,18 @@ module Cms
 
       def templates
         return @templates if @templates
-        collect('views/content_nodes') do
-          @templates = Dir.glob("**/*.html.erb").map do |file|
-            unless file.match(/^_.*|\/_.*/)
-              file.chomp(".html.erb")
-            end
-          end.compact
+        begin
+          collect('views/content_nodes') do
+            @templates = Dir.glob("**/*.html.erb").map do |file|
+              unless file.match(/^_.*|\/_.*/)
+                file.chomp(".html.erb")
+              end
+            end.compact
+          end
+          @templates.sort!
+        rescue RuntimeError
+          []
         end
-        @templates.sort!
       end
 
       protected
