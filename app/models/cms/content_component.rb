@@ -14,5 +14,15 @@ module Cms
 
     content_property :icon
 
+    after_initialize :ensure_template
+
+    protected
+
+    def ensure_template
+      unless self.class.template.present?
+        raise "#{self.class.name} must define a template. Use the template class method to define one."
+      end
+    end
+
   end
 end
