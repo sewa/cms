@@ -16,17 +16,17 @@ module Cms
       false
     end
 
-    def attributes_errors?(node, attrs)
+    def attributes_errors?(node_or_component, attrs)
       attrs.each do |attr|
-        return true if attr.errors.any? || node.errors[attr.key].any?
+        return true if attr.errors.any? || node_or_component.errors[attr.key].any?
       end
       false
     end
 
-    def attribute_errors(node, attr)
-      return if attr.errors.blank? && node.errors[attr.key].blank?
+    def attribute_errors(node_or_component, attr)
+      return if attr.errors.blank? && node_or_component.errors[attr.key].blank?
       values = []
-      node.errors[attr.key].each do |value|
+      node_or_component.errors[attr.key].each do |value|
         values << value
       end
       attr.errors.map do |key, value|

@@ -9,5 +9,6 @@
     <% attribute.value.each do |asset| %>
       <%= render 'cms/shared/asset_field', asset: asset, name: content_field_name(attribute.key, array: true, component_idx: component_idx) %>
     <% end %>
+    <%= attribute_errors(object, attribute) %>
   </ul>
 </div>

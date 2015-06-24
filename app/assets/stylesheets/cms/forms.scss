@@ -59,12 +59,8 @@ ul.drop-zone, ul.drop-zone-single {
     }
 }
 
-ul.drop-zone.active, ul.drop-zone-single.active, ul.drop-placeholder.active {
+ul.drop-zone.active, ul.drop-zone-single.active {
     background-color: #e9f9e9;
-}
-
-li.ui-draggable-dragging {
-    z-index: 4000;
 }
 
 .accordion {
@@ -87,7 +83,7 @@ li.ui-draggable-dragging {
     .ui-sortable-placeholder {
         height: 20px !important;
     }
-    .accordion-error a {
+    .accordion-error .accordion-link {
         background-color: #f04124 !important;
         color: #fff;
     }
@@ -122,7 +118,7 @@ li.ui-draggable-dragging {
         margin-right: 4px;
     }
 
-    .drop-placeholder {
+    .placeholder {
         background-color: #fafafa;
         border: 1px dashed #ababab;
         list-style: none;

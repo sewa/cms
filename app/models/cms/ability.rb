@@ -37,8 +37,6 @@ module Cms
         @rules = rules + ability.send(:rules)
       end
 
-      # Protect admin and user roles
-      # cannot [:update, :destroy], Role, name: ['admin']
     end
   end
 end

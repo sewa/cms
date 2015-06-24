@@ -3,7 +3,8 @@
 <%= content_input as: :hidden, key: '_destroy', class: 'destroy', component_idx: component_idx %>
 
 <% component.content_attributes.each do |attribute| %>
-  <div class="row">
-    <%= render 'cms/content_attributes/' + attribute.type_name + '_field', attribute: attribute, component_idx: component_idx %>
+  <% css_class = !attribute_errors(component, attribute).nil? ? 'error' : '' %>
+  <div class="row <%= css_class %>">
+    <%= render 'cms/content_attributes/' + attribute.type_name + '_field', object: component, attribute: attribute, component_idx: component_idx %>
   </div>
 <% end %>

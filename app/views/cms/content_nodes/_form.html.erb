@@ -3,10 +3,7 @@
 
 <div class="tabs">
   <ul class="button-group radius">
-    <li><a class="button small secondary" href="#metadata-tab"><%= t(:metadata_and_static_content)%></a></li>
-    <% if show_components %>
-      <li><a class="button small secondary" href="#components-tab"><%= t(:components)%></a></li>
-    <% end %>
+    <li><a class="button small secondary" href="#metadata-tab"><%= t(:metadata_and_content)%></a></li>
     <% if show_categories? %>
       <li><a class="button small secondary" href="#categories-tab"><%= t(:categories)%></a></li>
     <% end %>
@@ -17,7 +14,7 @@
 
       <% css_class = node_errors?(@content_node, [:title, :name, :template, :meta_title, :meta_keywords, :meta_description, :url, :redirect, :access]) ? 'active accordion-error' : '' %>
       <li class="accordion-navigation <%= css_class %>">
-          <a href="#metadata"><%= t(:metadata) %></a>
+          <a href="#metadata" class="accordion-link"><%= t(:metadata) %></a>
           <div id="metadata" class="content <%= css_class %>">
             <%= f.input :title %>
             <%= f.input :name %>
@@ -38,12 +35,12 @@
       <% @content_node.content_groups.each do |group, attrs| %>
         <% css_class = attributes_errors?(@content_node, attrs) ? 'active accordion-error' : '' %>
         <li class="accordion-navigation <%= css_class %>">
-          <a href="#<%= group %>"><%= t(group) %></a>
+          <a href="#<%= group %>" class="accordion-link"><%= t(group) %></a>
           <div id="<%= group %>" class="content <%= css_class %>">
             <% attrs.each do |attribute| %>
               <% css_class = !attribute_errors(@content_node, attribute).nil? ? 'error' : '' %>
               <div class="row <%= css_class %>">
-                <%= render 'cms/content_attributes/' + attribute.type_name + '_field', f: f, attribute: attribute, component_idx: nil %>
+                <%= render 'cms/content_attributes/' + attribute.type_name + '_field', f: f, object: @content_node, attribute: attribute, component_idx: nil %>
               </div>
             <% end %>
           </div>
@@ -55,15 +52,13 @@
 
   <% if show_components %>
     <div id="components-tab">
-      <% if @content_node.content_components.present? %>
-        <ul id="components" class="accordion" data-accordion>
+      <ul id="components" class="accordion" data-accordion>
+        <% if @content_node.content_components.present? %>
           <%= render "cms/content_components/accordion_items", components: @content_node.content_components %>
-        </ul>
-      <% else %>
-        <ul id="components" class="accordion drop-placeholder" data-accordion>
+        <% else %>
           <li class="placeholder"><%= t(:drop_components) %></li>
-        </ul>
-      <% end %>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 

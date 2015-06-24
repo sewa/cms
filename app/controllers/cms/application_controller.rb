@@ -35,7 +35,7 @@ module Cms
       if respond_to?(Cms.current_user_method)
         self.send(Cms.current_user_method)
       else
-        nil
+        raise "You have to set the current_user_method in the Cms module. Add e.g. Cms.current_user_method = current_cms_user to config/initializers/cms.rb."
       end
     end
 

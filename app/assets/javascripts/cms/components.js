@@ -42,6 +42,7 @@ $(document).ready(function() {
     drop.droppable({
       greedy: true,
       activeClass: 'active',
+      items: "li:not(.placeholder)",
       accept: function(d) {
         var id = d.parent().attr('id');
         if (id !== undefined) {
@@ -65,9 +66,8 @@ $(document).ready(function() {
             'width': '100%',
             'height': 'auto'
           });
-          var ul = ui.draggable.parent();
-          ul.removeClass('drop-placeholder');
-          ul.children('.placeholder').remove();
+          ui.draggable.css('z-index', 10);
+          $('.placeholder', ui.draggable.parent()).hide();
           CmsAssets.bind_droppables(ui.draggable);
           CmsAssets.bind_single_droppables(ui.draggable);
           CmsAccordion.collapse('#components-tab');
@@ -122,6 +122,10 @@ $(document).ready(function() {
       li.hide();
       destroy.val('1');
       Components.update(ul);
+      if (ul.children('li:visible').length == 0) {
+        ul.addClass('drop-placeholder');
+        ul.children('.placeholder').show();
+      }
       CmsCkEditor.init('#components-tab');
     });
   };
