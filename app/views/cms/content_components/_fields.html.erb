@@ -1,6 +1,7 @@
 <%= content_input as: :hidden, key: :type, value: component.type, component_idx: component_idx %>
 <%= content_input as: :hidden, key: :id, value: component.id, component_idx: component_idx %>
 <%= content_input as: :hidden, key: '_destroy', class: 'destroy', component_idx: component_idx %>
+<%= content_input as: :hidden, key: :template, value: component.class.template, component_idx: component_idx %>
 
 <% component.content_attributes.each do |attribute| %>
   <% css_class = !attribute_errors(component, attribute).nil? ? 'error' : '' %>
