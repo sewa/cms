@@ -41,15 +41,13 @@ module Cms
     protected
 
     def assign_value(val)
-      if val.present?
-        attrs = if self.class.reference_type.present?
-                  { reference_type: self.class.reference_type}
-                else
-                  {}
-                end
-        cv = content_value || build_content_value(attrs)
-        cv.value = val
-      end
+      attrs = if self.class.reference_type.present?
+                { reference_type: self.class.reference_type}
+              else
+                {}
+              end
+      cv = content_value || build_content_value(attrs)
+      cv.value = val
     end
 
     def fetch_value

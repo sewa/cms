@@ -46,14 +46,15 @@ module Cms
       expect(attr.value).to eq nil
     end
 
-    [1, nil].each do |val|
       it 'has an error' do
         attr = Test.new
-        attr.value = val
+        attr.value = 1
         attr.valid?
         expect(attr.errors.count).to eq 1
+        attr.value = nil
+        attr.valid?
+        expect(attr.errors.count).to eq 2
       end
-    end
 
     context "reference type" do
 

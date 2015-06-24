@@ -130,6 +130,16 @@ module Cms
         expect(comp_a.position).to eq 3
       end
 
+      it 'is not valid when components are invalid' do
+        comp = create(:validate_comp, :with_node, test: '123')
+        node = comp.componentable
+        expect(node.content_components.size).to eq 1
+        expect(node.valid?).to eq true
+        comp.test = nil
+        node.content_components = [comp]
+        expect(node.valid?).to eq false
+      end
+
       it "removes the unused" do
         comp = create(:test_comp, :with_node, float: 1.1)
         node = comp.componentable
