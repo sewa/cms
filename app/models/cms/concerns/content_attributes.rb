@@ -52,6 +52,7 @@ module Cms
                 content_attr = type.new(type: type.to_s, key: attr[:key])
                 content_attributes << content_attr
               end
+              content_attr.content_options = attr.reject { |k,v| [:type, :key].include?(k) }
               content_groups[group] ||= []
               content_groups[group] << content_attr
             end

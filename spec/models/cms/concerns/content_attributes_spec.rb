@@ -51,6 +51,16 @@ module Cms
         expect(Cms::ContentAttribute.count).to eq 0
       end
 
+      it "assigns the options attribute" do
+        class TestSelect < ActiveRecord::Base
+          self.table_name = :content_nodes
+          include Cms::Concerns::ContentAttributes
+          content_attribute :select, :select, select_options: ['test', 'test2']
+        end
+
+        expect(TestSelect.new.content_attributes.first.content_options).to eq({ select_options: ['test', 'test2'] })
+      end
+
     end
 
     context "groups" do

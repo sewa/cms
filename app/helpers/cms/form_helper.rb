@@ -44,6 +44,8 @@ module Cms
       case opts[:as]
       when :text
         return text_area_tag name, opts[:value], class: opts[:class], type: opts[:as]
+      when :select
+        return select_tag name, opts[:value], class: opts[:class], type: opts[:as]
       when :hidden
         type = opts[:as]
       else

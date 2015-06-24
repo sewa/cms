@@ -8,6 +8,8 @@ module Cms
 
     validates :key, uniqueness: { scope: [:attributable_id, :attributable_type] }, presence: true
 
+    attr_accessor :content_options
+
     def value
       fetch_value
     end
