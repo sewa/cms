@@ -3,7 +3,7 @@
   <% css_class = attributes_errors?(component, component.content_attributes) ? 'active accordion-error' : '' %>
   <li class="accordion-navigation <%= css_class %>">
     <%= link_to "##{id}", class: 'accordion-link' do %>
-      <%= image_tag component.icon %>
+      <%= image_tag asset_path(component.icon) %>
       <%= component.class.localize_name %>
     <% end %>
     <div class="actions">
