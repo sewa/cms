@@ -10,6 +10,8 @@ require 'paperclip'
 
 require "cms/engine"
 require "cms/filesystem"
+require "cms/controller_helpers/auth"
+require "cms/controller_helpers/routing"
 require "cms/controller_helpers/content_nodes"
 require "cms/safer_execution"
 require "cms/content_value"
