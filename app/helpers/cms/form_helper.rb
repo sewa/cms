@@ -36,7 +36,8 @@ module Cms
     end
 
     def content_label(attribute, opts)
-      label_tag content_field_name(attribute.key, opts), t(attribute.key), class: 'right inline'
+      text = attribute.has_content_option?(:field_label) ? attribute.content_options[:field_label] : t(attribute.key)
+      label_tag content_field_name(attribute.key, opts), text, class: 'right inline'
     end
 
     def content_input(opts)

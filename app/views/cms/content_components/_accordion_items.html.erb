@@ -4,13 +4,16 @@
   <li class="accordion-navigation <%= css_class %>">
     <%= link_to "##{id}", class: 'accordion-link' do %>
       <%= image_tag component.icon %>
-      <%= t("content_components.#{component.class.name.sub('Component', '').underscore}") %>
+      <%= component.class.localize_name %>
     <% end %>
     <div class="actions">
       <%= link_to t(:remove_component), '#', id: "delete-#{id}", class: 'button tiny right radius remove-component' %>
     </div>
-    <div id="<%= id %>" class="content">
-      <%= render 'cms/content_components/fields', component: component, component_idx: idx %>
-    </div>
+    <%= render 'cms/content_components/component_fields', component: component, component_idx: idx %>
+    <% if component.content_attributes.present? %>
+      <div id="<%= id %>" class="content">
+        <%= render 'cms/content_components/attribute_fields', component: component, component_idx: idx %>
+      </div>
+    <% end %>
   </li>
 <% end %>

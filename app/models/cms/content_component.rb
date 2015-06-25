@@ -16,6 +16,12 @@ module Cms
 
     after_initialize :ensure_template
 
+    class << self
+      def localize_name
+        I18n.t('content_components.'+self.name.underscore.sub('_component', ''))
+      end
+    end
+
     protected
 
     def ensure_template

@@ -14,7 +14,7 @@ module Cms
 
       def content_component_types(node)
         node = node.instance_of?(String) ? node.constantize : node
-        limit(node.use_components, all_component_types)
+        limit(node.use_components, all_component_types).sort! { |a,b| a.constantize.localize_name <=> b.constantize.localize_name }
       end
 
       def content_node_types(node = nil)

@@ -10,6 +10,10 @@ module Cms
 
     attr_accessor :content_options
 
+    def has_content_option?(key)
+      (content_options || {}).has_key?(key)
+    end
+
     def value
       fetch_value
     end
