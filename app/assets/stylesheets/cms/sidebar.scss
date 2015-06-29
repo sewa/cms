@@ -1,4 +1,9 @@
 .sidebar{
+    .pagination-centered {
+        clear: both;
+        margin-bottom: 20px;
+    }
+
     border-left: 1px solid #ababab;
     background: #FAFAFA;
     padding: 0 20px;
@@ -20,13 +25,12 @@
         }
     }
     .assets.images {
-        li {
-            float: left;
-            width: 146px;
-            height: 146px;
-            line-height: 142px;
-            text-align: center;
-            margin: 4px;
+        img {
+            border: solid 4px #FFFFFF;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            line-height: 0;
+            max-width: 100%;
         }
     }
     .components {

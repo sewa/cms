@@ -14,5 +14,9 @@ module Cms
       render(partial: 'cms/shared/actions', locals: options.merge!(content: content))
     end
 
+    def cms_paginate(collection, params)
+      paginate collection, remote: true, params: params, views_prefix: :cms, window: 2
+    end
+
   end
 end

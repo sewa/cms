@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527100712) do
+ActiveRecord::Schema.define(version: 20150626095350) do
 
   create_table "content_attributes", force: :cascade do |t|
     t.integer  "attributable_id",   null: false
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20150527100712) do
   create_table "content_images", force: :cascade do |t|
     t.string   "caption"
     t.string   "tags"
-    t.string   "text"
+    t.text     "text"
     t.string   "url"
     t.string   "alt"
     t.string   "image_file_name"

@@ -1,0 +1,2 @@
+$('#document-list').html('<%= escape_javascript(render 'cms/shared/asset_list', objects: @objects, scope: :documents) %>')
+CmsAssets.bind_draggable_documents('.sidebar', '.form-left');

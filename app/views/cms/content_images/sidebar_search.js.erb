@@ -1,0 +1,2 @@
+$('#image-list').html('<%= escape_javascript(render 'cms/shared/asset_list', objects: @objects, scope: :images) %>');
+CmsAssets.bind_draggable_images('.sidebar', '.form-left');

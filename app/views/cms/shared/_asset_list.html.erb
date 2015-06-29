@@ -1,0 +1,4 @@
+<%= cms_paginate objects, controller: "content_#{scope}", action: :sidebar_search, format: :js %>
+<% objects.each do |asset| %>
+  <%= render 'cms/shared/asset_field', asset: asset %>
+<% end %>

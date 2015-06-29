@@ -135,16 +135,23 @@ $(document).ready(function() {
     );
   };
 
-  Assets.bind_draggables = function(drag_scope, drop_scope) {
+  Assets.bind_draggable_images = function(drag_scope, drop_scope) {
     Assets.draggable(
       Assets.draggables(drag_scope).images,
       Assets.droppables(drop_scope).images
     );
+  };
 
+  Assets.bind_draggable_documents = function(drag_scope, drop_scope) {
     Assets.draggable(
       Assets.draggables(drag_scope).documents,
       Assets.droppables(drop_scope).documents
     );
+  };
+
+  Assets.bind_draggables = function(drag_scope, drop_scope) {
+    Assets.bind_draggable_images();
+    Assets.bind_draggable_documents();
   };
 
   Assets.bind_remove = function() {
@@ -157,27 +164,12 @@ $(document).ready(function() {
     });
   };
 
-  Assets.bind_search = function() {
-    $('.assets-search-form input').on('keyup', function() {
-      var self = this,
-          val = $(this).val(),
-          success = function (data) {
-            $(self).parent().next().html(data);
-            Assets.bind_draggables($('.images li', '.sidebar'), $('.drop-zone.images'));
-          };
-
-      if (val.length > 2) {
-        $.get($(this).attr('data-url'), { q: $(this).val() }, success);
-      } else if (val.length == 0) {
-        $.get($(this).attr('data-url'), success);
-      }
-    });
-  };
-
   window.CmsAssets = {
     bind_droppables: Assets.bind_droppables,
     bind_single_droppables: Assets.bind_single_droppables,
     bind_draggables: Assets.bind_draggables,
+    bind_draggable_images: Assets.bind_draggable_images,
+    bind_draggable_documents: Assets.bind_draggable_documents,
     bind_remove: Assets.bind_remove,
     bind_search: Assets.bind_search
   };

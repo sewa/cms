@@ -9,25 +9,23 @@
     </ul>
     <% if show_components %>
       <div id="components-tab">
-        <ul class="assets components block-grid-4">
+        <ul class="assets components small-block-grid-4">
           <%= render "cms/content_components/accordion_items", components: components %>
         </ul>
       </div>
     <% end %>
     <div id="images-tab">
-      <%= render 'cms/shared/asset_search_form', type: :images, url: search_content_images_path %>
-      <ul class="assets images">
-        <% images.each do |asset| %>
-          <%= render 'cms/shared/asset_field', asset: asset %>
-        <% end %>
+      <div class="columns small-12">
+        <%= render 'cms/shared/asset_search_form', type: :images, url: sidebar_search_content_images_path(format: :js) %>
+      </div>
+      <ul id="image-list" class="assets images small-block-grid-4">
+        <%= render 'cms/shared/asset_list', objects: images, scope: :images %>
       </ul>
     </div>
     <div id="documents-tab">
-      <%= render 'cms/shared/asset_search_form', type: :documents, url: search_content_documents_path %>
-      <ul class="assets documents">
-        <% documents.each do |asset| %>
-          <%= render 'cms/shared/asset_field', asset: asset %>
-        <% end %>
+      <%= render 'cms/shared/asset_search_form', type: :documents, url: sidebar_search_content_documents_path(format: :js) %>
+      <ul id="document-list" class="assets documents small-block-grid-4">
+        <%= render 'cms/shared/asset_list', objects: documents, scope: :documents %>
       </ul>
     </div>
   </div>

@@ -4,16 +4,26 @@ require_dependency "cms/application_controller"
 module Cms
   class ContentDocumentsController < ApplicationController
 
-    before_filter :find_objects, only: [:index, :search]
+    include Cms::ControllerHelpers::Paginate
+
+    before_filter :find_objects, only: [:index, :sidebar_search, :index_search]
     before_filter :load_object, only: [:edit, :update, :destroy]
 
     def index
-      @objects = @query.page(params[:page]).per(20)
+      @objects = @query.page(params[:page]).per(assets_per_page)
     end
 
-    def search
-      @objects = @query.page(params[:page]).per(20)
+    def sidebar_search
+      @objects = @query.page(params[:page]).per(assets_per_page)
       render layout: false
+    end
+
+    def index_search
+      @objects = @query.page(params[:page]).per(assets_per_page)
+      respond_to do |format|
+        format.html { render partial: 'list', locals: { objects: @objects } }
+        format.js { render :index_search }
+      end
     end
 
     def new

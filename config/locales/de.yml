@@ -66,3 +66,14 @@ de:
   cms_login: Fliesen-Kemmler CMS
 
   metadata_and_content: Metadaten und Inhalte
+
+  search: Suchen
+
+  views:
+    pagination:
+      truncate: ...
+      next: Nächste
+      last: '&raquo;'
+      first: '&laquo;'
+      previous: Vorherige
+

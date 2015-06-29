@@ -3,6 +3,7 @@ module Cms
   class ContentNodesController < ApplicationController
 
     include Cms::ControllerHelpers::ContentNodes
+    include Cms::ControllerHelpers::Paginate
 
     helper_method :template_options
     helper_method :content_node_options
@@ -97,8 +98,8 @@ module Cms
     end
 
     def load_assets
-      @images = ContentImage.all
-      @documents = ContentDocument.all
+      @images = ContentImage.page(params[:page]).per(assets_per_page)
+      @documents = ContentDocument.page(params[:page]).per(assets_per_page)
     end
 
     def load_components
