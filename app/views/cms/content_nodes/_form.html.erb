@@ -52,10 +52,8 @@
       <% end %>
 
     </ul>
-  </div>
 
-  <% if show_components %>
-    <div id="components-tab">
+    <% if show_components %>
       <ul id="components" class="accordion" data-accordion>
         <% if @content_node.content_components.present? %>
           <%= render "cms/content_components/accordion_items", components: @content_node.content_components %>
@@ -64,8 +62,8 @@
           <li class="placeholder"><%= t(:drop_components) %></li>
         <% end %>
       </ul>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 
   <% if show_categories? %>
     <div id="categories-tab">
