@@ -63,7 +63,7 @@ $(document).ready(function() {
           ui.helper.data().dragged = false;
           ui.helper.clone()
             .attr('style', '')
-            .appendTo(this)
+            .insertAfter($('.ui-sortable-placeholder', this))
             .find('input[type=hidden]')
             .attr('name', $(this).attr('data-name'));
           ui.helper.remove();
@@ -150,8 +150,8 @@ $(document).ready(function() {
   };
 
   Assets.bind_draggables = function(drag_scope, drop_scope) {
-    Assets.bind_draggable_images();
-    Assets.bind_draggable_documents();
+    Assets.bind_draggable_images(drag_scope, drop_scope);
+    Assets.bind_draggable_documents(drag_scope, drop_scope);
   };
 
   Assets.bind_remove = function() {
