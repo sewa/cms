@@ -12,6 +12,7 @@
       <%= image_tag asset.image.url(:thumb) %>
     <% elsif document?(asset) %>
       <%= image_tag 'cms/pdf_icon.png', alt: 'pdf' %>
+      <br />
       <%= asset.name %>
     <% end %>
   </div>

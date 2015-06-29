@@ -23,7 +23,9 @@
       </ul>
     </div>
     <div id="documents-tab">
-      <%= render 'cms/shared/asset_search_form', type: :documents, url: sidebar_search_content_documents_path(format: :js) %>
+      <div class="columns small-12">
+        <%= render 'cms/shared/asset_search_form', type: :documents, url: sidebar_search_content_documents_path(format: :js) %>
+      </div>
       <ul id="document-list" class="assets documents small-block-grid-4">
         <%= render 'cms/shared/asset_list', objects: documents, scope: :documents %>
       </ul>
