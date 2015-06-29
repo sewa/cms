@@ -16,14 +16,14 @@ Cms::Engine.routes.draw do
   resources :content_images do
     collection do
       get :sidebar_search, defaults: { formats: [:js] }
-      get :index_search
+      get :index_search, defaults: { formats: [:js] }
     end
   end
 
   resources :content_documents do
     collection do
-      get :sidebar_search
-      get :index_search
+      get :sidebar_search, defaults: { formats: [:js] }
+      get :index_search, defaults: { formats: [:js] }
     end
   end
 

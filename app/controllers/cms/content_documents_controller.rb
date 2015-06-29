@@ -15,13 +15,14 @@ module Cms
 
     def sidebar_search
       @objects = @query.page(params[:page]).per(assets_per_page)
-      render layout: false
+      respond_to do |format|
+        format.js { render :sidebar_search }
+      end
     end
 
     def index_search
       @objects = @query.page(params[:page]).per(assets_per_page)
       respond_to do |format|
-        format.html { render partial: 'list', locals: { objects: @objects } }
         format.js { render :index_search }
       end
     end
