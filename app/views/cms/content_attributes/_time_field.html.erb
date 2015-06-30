@@ -1,0 +1,8 @@
+<div class="columns small-2">
+  <%= content_label attribute, component_idx: component_idx %>
+</div>
+
+<div class="columns small-10">
+  <%= content_attribute_input attribute, component_idx: component_idx, class: 'timepicker' %>
+  <%= attribute_errors(object, attribute) %>
+</div>

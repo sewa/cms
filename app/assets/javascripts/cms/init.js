@@ -3,6 +3,31 @@ $(document).ready(function() {
   $(document).foundation();
 
   $('.tabs').tabs();
+  $('.timepicker').timepicker({
+    timeOnlyTitle: 'Zeit wählen',
+		timeText: 'Zeit',
+		hourText: 'Stunde',
+		minuteText: 'Minute',
+		secondText: 'Sekunde',
+		millisecText: 'Millisekunde',
+		microsecText: 'Mikrosekunde',
+		timezoneText: 'Zeitzone',
+		currentText: 'Jetzt',
+		closeText: 'Fertig',
+		timeFormat: 'HH:mm',
+		timeSuffix: '',
+		amNames: ['vorm.', 'AM', 'A'],
+		pmNames: ['nachm.', 'PM', 'P'],
+		isRTL: false,
+    step: 15,
+    timeOnly: true,
+    oneLine: true,
+    showButtonPanel: false,
+    controlType: 'select',
+    hourMin: 7,
+	  hourMax: 20,
+    stepMinute: 10
+  });
 
   CmsCkEditor.init('.form-left');
 
