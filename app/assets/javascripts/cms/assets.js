@@ -61,11 +61,20 @@ $(document).ready(function() {
       drop: function(event, ui) {
         if(ui.helper.data().dragged == true) {
           ui.helper.data().dragged = false;
-          ui.helper.clone()
-            .attr('style', '')
-            .insertAfter($('.ui-sortable-placeholder', this))
-            .find('input[type=hidden]')
-            .attr('name', $(this).attr('data-name'));
+          var placeholder = $('.ui-sortable-placeholder', this);
+          if (placeholder.length > 0) {
+            ui.helper.clone()
+              .attr('style', '')
+              .insertAfter(placeholder)
+              .find('input[type=hidden]')
+              .attr('name', $(this).attr('data-name'));
+          } else {
+            ui.helper.clone()
+              .attr('style', '')
+              .appendTo(this)
+              .find('input[type=hidden]')
+              .attr('name', $(this).attr('data-name'));
+          }
           ui.helper.remove();
           Assets.toggle_destroy_attribute($(this));
         }

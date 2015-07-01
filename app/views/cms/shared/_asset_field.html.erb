@@ -9,7 +9,7 @@
       <%= hidden_field_tag '', asset.id %>
     <% end %>
     <% if image?(asset) %>
-      <%= image_tag asset.image.url(:thumb) %>
+      <%= image_tag asset_url(asset) %>
     <% elsif document?(asset) %>
       <%= image_tag 'cms/pdf_icon.png', alt: 'pdf' %>
       <br />

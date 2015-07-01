@@ -1,9 +1,13 @@
 module Cms
   module AssetHelper
 
-    def asset_url(asset, style=nil)
+    def thumb_dimensions
+      '135x135>'
+    end
+
+    def asset_url(asset)
       if image?(asset)
-        asset.image.url(style || 'thumb')
+        asset.image.thumb(thumb_dimensions).url
       elsif document?(asset)
         asset.attachment.url
       end
