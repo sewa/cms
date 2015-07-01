@@ -6,7 +6,9 @@ require 'jquery-rails'
 require 'jquery-ui-rails'
 require 'ckeditor_rails'
 require 'simple_form'
+require 'dragonfly'
 require 'paperclip'
+require 'kaminari'
 
 require "cms/engine"
 require "cms/filesystem"

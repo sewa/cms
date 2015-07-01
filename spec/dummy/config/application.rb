@@ -13,7 +13,8 @@ require "cms"
 
 module Dummy
   class Application < Rails::Application
-    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/models/content_nodes/)
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/models/content_nodes)
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/models/content_components)
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

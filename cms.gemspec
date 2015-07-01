@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency "acts_as_list"
   s.add_dependency "foundation-rails", "5.5.2.1"
   s.add_dependency "ckeditor_rails"
+  s.add_dependency "dragonfly"
   s.add_dependency "paperclip"
   s.add_dependency "simple_form"
   s.add_dependency "kaminari"
