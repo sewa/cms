@@ -13,7 +13,7 @@ module Cms
     before_filter :load_assets, only: [:new, :edit, :create, :update]
 
     def index
-      @content_nodes = ContentNode.where(:parent_id => nil).page(params[:page]).per(20)
+      @content_nodes = ContentNode.where(:parent_id => nil)
     end
 
     def new

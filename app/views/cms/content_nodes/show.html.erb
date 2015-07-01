@@ -13,7 +13,7 @@
 <% end %>
 
 <div class="columns small-12">
-  <% if @content_node.children.prenset? %>
-    <%= render 'cms/content_nodes/list', content_nodes: @content_node.children %>
+  <% if @content_node.children.present? %>
+    <%= render 'cms/content_nodes/list', content_nodes: @content_node.children.page %>
   <% end %>
 </div>
