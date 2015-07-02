@@ -33,6 +33,8 @@ module Cms
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
     scope :root_nodes, -> { where(parent_id: nil) }
 
+    scope :with_relations, -> { includes(content_components: [{content_attributes: :content_value}], content_attributes: [:content_value]) }
+
     content_property :child_nodes
     content_property :use_components
 
@@ -94,8 +96,7 @@ module Cms
 
       def resolve(path)
         path = path.split('/').reject {|item| item.blank? } if String === path
-
-        if path && node = find_by_name(path.first)
+        if path && node = root_nodes.find_by_name(path.first)
           node.resolve(path[1..-1])
         end
       end
@@ -152,9 +153,8 @@ module Cms
 
     def resolve(path)
       path = path.split('/') if String === path
-
       if path.empty?
-        self
+        self.class.with_relations.find(self.id)
       else
         if child = children.find_by_name(path.first)
           child.resolve(path[1..-1])
