@@ -89,5 +89,27 @@ module Cms
       opts[:array] ? ret + "[]" : ret
     end
 
+    def content_options_for_select(object, attribute, default)
+      options_for_select(cache_options(object, attribute), default)
+    end
+
+    protected
+
+    def cache_options(object, attribute)
+      value = attribute.content_options[:select_options]
+      name = "@#{object.class.name.underscore}_#{attribute.class.name.underscore}_#{attribute.key}_options"
+      unless ret = instance_variable_get(name)
+        options = if value.instance_of? Symbol
+                    object.send(value)
+                  elsif value.instance_of? Array
+                    value
+                  else
+                    raise "Only an array or a symbol is allowed"
+                  end
+        ret = instance_variable_set(name, options)
+      end
+      ret
+    end
+
   end
 end
