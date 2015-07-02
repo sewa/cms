@@ -26,13 +26,6 @@ ul.drop-zone.images, ul.drop-zone-single.images {
     li {
         width: 135px;
         height: 135px;
-        img {
-            border: solid 4px #FFFFFF;
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
-            display: inline-block;
-            line-height: 0;
-            max-width: 100%;
-        }
         .actions {
             top: 4px;
             right: 4px;

@@ -14,9 +14,9 @@
       <tr id="<%= dom_id node %>" data-sort-url="<%= sort_content_node_path(node) %>">
         <td>
           <% if node.children.count > 0 %>
-            <%= link_to node.title, content_node_path(node), class: 'button small radius secondary' %>
+            <%= link_to node.title, content_node_path(node) %>
           <% else %>
-            <%= link_to node.title, edit_content_node_path(node), class: 'button small radius secondary' %>
+            <%= link_to node.title, edit_content_node_path(node) %>
           <% end %>
         </td>
         <td><%= t("content_nodes.#{node.type.downcase}") %></td>

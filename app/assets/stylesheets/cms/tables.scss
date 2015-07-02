@@ -4,9 +4,14 @@ table .actions .button {
 }
 
 table.content-nodes {
+    border-collapse:collapse;
     tbody {
+        tr.odd, tr:nth-of-type(odd) {
+                    background-color: #fff;
+                }
         tr {
             cursor: move;
+            border-bottom: 1px solid #ddd;
         }
     }
     .button {

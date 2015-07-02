@@ -5,11 +5,15 @@ class DocumentListAttribute < Cms::ContentAttribute
   def value
     (fetch_value || '').split(',').reject(&:blank?).map do |id|
       Cms::ContentDocument.find(id)
-    end
+    end.compact
   end
 
   def value=(value)
-    assign_value(value.reject(&:blank?).join(','))
+    assign_value(if value.is_a? String
+                   value
+                 else
+                   ((value || []).reject(&:blank?).join(','))
+                 end)
   end
 
 end
