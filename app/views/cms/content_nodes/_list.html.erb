@@ -27,17 +27,17 @@
           <ul class="button-group radius center">
             <% if content_node_options(node).present? %>
               <li>
-                <%= link_to t(:new_child_node), '#', 'data-dropdown': "drop-#{dom_id node}", 'aria-controls': "drop-#{dom_id node}", 'aria-expanded': 'false', 'data-options': 'align:left' , class: 'button small '  %>
+                <%= link_to t(:new_child_node), '#', 'data-dropdown': "drop-#{dom_id node}", 'aria-controls': "drop-#{dom_id node}", 'aria-expanded': 'false', 'data-options': 'align:left' , class: 'button tiny'  %>
                 <ul id="drop-<%= dom_id node %>" class="small f-dropdown" data-dropdown-content>
                   <%= render 'cms/content_nodes/options', options: content_node_options(node), parent_id: node.id %>
                 </ul>
               </li>
             <% end %>
             <li>
-              <%= link_to t(:edit), edit_content_node_path(node), class: 'button small '  %>
+              <%= link_to t(:edit), edit_content_node_path(node), class: 'button tiny'  %>
             </li>
             <li>
-              <%= link_to t(:delete), content_node_path(node), 'data-confirm': t(:really_delete), method: :delete, class: 'button small ' %>
+              <%= link_to t(:delete), content_node_path(node), 'data-confirm': t(:really_delete), method: :delete, class: 'button tiny' %>
             </li>
           </ul>
         </td>
