@@ -14,6 +14,6 @@
 
 <div class="columns small-12">
   <% if @content_node.children.present? %>
-    <%= render 'cms/content_nodes/list', content_nodes: @content_node.children.page %>
+    <%= render 'cms/content_nodes/list', content_nodes: @content_node.children %>
   <% end %>
 </div>
