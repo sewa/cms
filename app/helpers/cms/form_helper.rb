@@ -46,7 +46,7 @@ module Cms
       when :text
         return text_area_tag name, opts[:value], class: opts[:class], type: opts[:as]
       when :select
-        return select_tag name, opts[:value], class: opts[:class], type: opts[:as]
+        return select_tag name, opts[:value], class: opts[:class], type: opts[:as], include_blank: opts[:include_blank]
       when :hidden
         type = opts[:as]
       else

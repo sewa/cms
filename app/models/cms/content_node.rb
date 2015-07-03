@@ -144,11 +144,7 @@ module Cms
     end
 
     def path
-      if self.url.present?
-        '/' + self.url
-      else
-        '/' + path_elements.join('/')
-      end
+      '/' + (self.url.present? ? self.url : path_elements.join('/'))
     end
 
     def resolve(path)
