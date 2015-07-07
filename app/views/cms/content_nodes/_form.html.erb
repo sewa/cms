@@ -16,6 +16,7 @@
       <li class="accordion-navigation <%= css_class %>">
           <a href="#metadata" class="accordion-link"><%= t(:metadata) %></a>
           <div id="metadata" class="content <%= css_class %>">
+            <%= f.input :path, disabled: true %>
             <%= f.input :title %>
             <%= f.input :name %>
             <% if template_options.present? %>

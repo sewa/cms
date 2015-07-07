@@ -150,7 +150,7 @@ module Cms
     def resolve(path)
       path = path.split('/') if String === path
       if path.empty?
-        self.class.with_relations.find(self.id)
+        self.class.public_nodes.with_relations.find(self.id)
       else
         if child = children.find_by_name(path.first)
           child.resolve(path[1..-1])

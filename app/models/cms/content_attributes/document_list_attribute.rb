@@ -2,18 +2,10 @@
 class DocumentListAttribute < Cms::ContentAttribute
   content_type :string
 
-  def value
-    (fetch_value || '').split(',').reject(&:blank?).map do |id|
-      Cms::ContentDocument.find(id)
-    end.compact
-  end
+  include Cms::ContentAttributes::Concerns::List
 
-  def value=(value)
-    assign_value(if value.is_a? String
-                   value
-                 else
-                   ((value || []).reject(&:blank?).join(','))
-                 end)
+  def reference_class
+    Cms::ContentDocument
   end
 
 end

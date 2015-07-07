@@ -3,8 +3,8 @@ class TimeAttribute < Cms::ContentAttribute
   content_type :datetime
 
   def value=(time)
-    if time.present?
-      assign_value(Time.zone.parse(time))
+    if time.present? && value = Time.zone.parse(time)
+      assign_value(value)
     end
   end
 

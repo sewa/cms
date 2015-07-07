@@ -81,11 +81,16 @@ module Cms
           content_attributes << options.merge(key: key.to_s, type: type.to_s)
           content_groups[@content_group || :default] ||= []
           content_groups[@content_group || :default] << content_attributes.last
-          define_method(key) do
-            content_attribute(key).value
+          unless method_defined? key
+            define_method(key) do
+              content_attribute(key).value
+            end
           end
-          define_method("#{key}=") do |value|
-            content_attribute(key).value = value
+          assign_key = "#{key}="
+          unless method_defined? assign_key
+            define_method(assign_key) do |value|
+              content_attribute(key).value = value
+            end
           end
         end
 
