@@ -94,7 +94,7 @@ module Cms
           end
         end
 
-        def permit_content_attributes
+        def sanitize_content_attributes
           self.content_attributes.map do |attr|
             if attr[:type].match(/list/)
               { attr[:key].to_sym => [] }

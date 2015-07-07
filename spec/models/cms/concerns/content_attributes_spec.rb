@@ -17,7 +17,7 @@ module Cms
       let(:node) { TestBase.new(position: 1, type: 'Cms::TestBase', template: 'test', title: 'test', name: 'test') }
 
       it "retruns the keys" do
-        expect(TestBase.permit_content_attributes).to eq [:firstname, :rotator => []]
+        expect(TestBase.sanitize_content_attributes).to eq [:firstname, :rotator => []]
       end
 
       it "responds to the methods" do

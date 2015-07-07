@@ -82,14 +82,14 @@ module Cms
         type = comp_attrs[:type]
         node_type = params[:content_node][:type]
         klass = safe_type(type, content_component_types(node_type)).classify.constantize
-        klass.permit_content_attributes + [:id, '_destroy', 'template']
+        klass.sanitize_content_attributes + [:id, '_destroy', 'template']
       end.flatten + [:type]
     end
 
     def node_attrs
       params.require(:content_node).permit(base_attrs)
       type = params[:content_node][:type]
-      safe_type(type, content_node_types(@parent)).classify.constantize.permit_content_attributes
+      safe_type(type, content_node_types(@parent)).classify.constantize.sanitize_content_attributes
     end
 
     def content_node_params

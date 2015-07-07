@@ -20,7 +20,7 @@ module Cms
           content_attribute :string, :string
           content_attribute :list, :image_list
         end
-        expect(TestComponent1.permit_content_attributes).to eq [:string, :list => []]
+        expect(TestComponent1.sanitize_content_attributes).to eq [:string, :list => []]
       end
 
       it "responds to the methods" do
