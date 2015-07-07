@@ -10,6 +10,8 @@ module Cms
 
     attr_accessor :content_options
 
+    default_scope -> { includes(:content_value) }
+
     def has_content_option?(key)
       (content_options || {}).has_key?(key)
     end

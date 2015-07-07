@@ -33,7 +33,7 @@ module Cms
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
     scope :root_nodes, -> { where(parent_id: nil) }
 
-    scope :with_relations, -> { includes(content_components: [{content_attributes: :content_value}], content_attributes: [:content_value]) }
+    scope :with_relations, -> { includes(:content_attributes, content_components: [:content_attributes]) }
 
     content_property :child_nodes
     content_property :use_components
