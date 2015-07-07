@@ -8,7 +8,11 @@ module Cms
         included do
 
           def value
-            object(to_arr(fetch_value))
+            if value = fetch_value
+              object(to_arr(value))
+            else
+              []
+            end
           end
 
           def value=(value)
