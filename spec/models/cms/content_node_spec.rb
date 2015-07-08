@@ -159,5 +159,69 @@ module Cms
 
     end
 
+    context "list" do
+
+      let!(:node1) { create(:test_node, :public, position: 1) }
+      let!(:node2) { create(:test_node, :public, position: 2) }
+      let!(:node3) { create(:test_node, :public, position: 3) }
+      let!(:node4) { create(:test_node, :public, position: 4) }
+      let!(:node5) { create(:test_node, :public, position: 5) }
+      let!(:node6) { create(:test_node, :public, position: 6) }
+
+      let!(:cat1) { create(:content_category) }
+      let!(:cat2) { create(:content_category) }
+
+      before do
+        node1.content_categories << cat1
+        node2.content_categories << cat2
+        node3.content_categories << cat1
+        node4.content_categories << cat2
+        node5.content_categories << cat2
+        node6.content_categories << cat1
+      end
+
+      context "#next_public_item" do
+
+        it "returns the next item" do
+          expect(node1.next_public_item).to eq node2
+        end
+
+        it "cycles through the list" do
+          expect(node3.next_public_item).to eq node1
+        end
+
+        it "uses the category ids" do
+          expect(node1.next_public_item([ cat1.id ])).to eq node3
+        end
+
+        it "cycles through the list using the category ids" do
+          expect(node5.next_public_item([ cat2.id ])).to eq node2
+        end
+
+      end
+
+      context "#prev_public_item" do
+
+        it "returns the prev item" do
+          expect(node3.prev_public_item).to eq node2
+        end
+
+        it "cycles through the list" do
+          expect(node1.prev_public_item).to eq node3
+        end
+
+        it "uses the category ids" do
+          expect(node6.prev_public_item([ cat1.id ])).to eq node3
+        end
+
+        it "cycles through the list using the category ids" do
+          expect(node2.prev_public_item([ cat2.id ])).to eq node5
+        end
+
+
+      end
+
+    end
+
   end
 end

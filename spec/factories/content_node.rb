@@ -55,6 +55,10 @@ FactoryGirl.define do
     float 12.1
     test1 'some text'
     test2 { create(:content_image).id }
+
+    trait :public do
+      access 'public'
+    end
   end
 
 end

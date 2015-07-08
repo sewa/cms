@@ -8,6 +8,7 @@ module Cms
     include Cms::Concerns::ContentCategories
     include Cms::Concerns::ContentProperties
     include Cms::Concerns::Template
+    include Cms::Concerns::List
 
     acts_as_tree
     acts_as_list scope: :parent_id
