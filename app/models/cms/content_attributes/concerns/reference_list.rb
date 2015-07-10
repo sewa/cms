@@ -1,7 +1,7 @@
 module Cms
   module ContentAttributes
     module Concerns
-      module List
+      module ReferenceList
 
         extend ActiveSupport::Concern
 

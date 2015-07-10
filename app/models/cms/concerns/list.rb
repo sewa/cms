@@ -8,7 +8,7 @@ module Cms
       included do
 
         def public_items
-          Cms::ContentNode.where(scope_condition).public_nodes
+          Cms::ContentNode.where(scope_condition)
         end
 
         def first_public_item

@@ -187,7 +187,7 @@ module Cms
         end
 
         it "cycles through the list" do
-          expect(node3.next_public_item).to eq node1
+          expect(node6.next_public_item).to eq node1
         end
 
         it "uses the category ids" do
@@ -207,7 +207,7 @@ module Cms
         end
 
         it "cycles through the list" do
-          expect(node1.prev_public_item).to eq node3
+          expect(node1.prev_public_item).to eq node6
         end
 
         it "uses the category ids" do

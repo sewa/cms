@@ -30,7 +30,7 @@ module Cms
       validates :reference_type, presence: true
 
       def value
-        reference_type.constantize.find_by_id(read_attribute(:value))
+        reference_type.constantize.unscoped.find_by_id(read_attribute(:value))
       end
     end
 

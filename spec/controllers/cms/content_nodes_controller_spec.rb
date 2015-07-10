@@ -37,7 +37,7 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
     end
 
     it "creates a new content_node" do
-      expect { valid_post }.to change{ Cms::ContentNode.count }.by(1)
+      expect { valid_post }.to change{ Cms::ContentNode.unscoped.count }.by(1)
     end
 
     it "creates a component" do

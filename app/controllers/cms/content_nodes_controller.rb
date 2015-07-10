@@ -9,11 +9,12 @@ module Cms
     helper_method :content_node_options
 
     before_filter :load_object, only: [:show, :edit, :update, :destroy, :sort, :toggle_access]
+    before_filter :load_children, only: [:show]
     before_filter :load_parent, only: [:new, :create, :update]
     before_filter :load_assets, only: [:new, :edit, :create, :update]
 
     def index
-      @content_nodes = ContentNode.where(:parent_id => nil)
+      @content_nodes = unscoped.where(parent_id: nil)
     end
 
     def new
@@ -113,6 +114,10 @@ module Cms
       @documents = ContentDocument.page(params[:page]).per(assets_per_page)
     end
 
+    def unscoped
+      ContentNode.unscoped.order(position: :asc)
+    end
+
     def load_components
       @components = content_components(@content_node)
     end
@@ -120,16 +125,20 @@ module Cms
     def load_parent
       parent_id = params[:parent_id] || (params[:content_node] || {})[:parent_id]
       if parent_id.present?
-        @parent = ContentNode.find(parent_id)
+        @parent = unscoped.find(parent_id)
       end
     end
 
     def load_object
-      @content_node = ContentNode.with_relations.find(params[:id])
+      @content_node = unscoped.with_relations.find(params[:id])
+    end
+
+    def load_children
+      @children ||= unscoped.where(parent_id: load_object.id)
     end
 
     def find_objects
-      query = ContentNode.where(parent_id: params[:parent_id])
+      query = unscoped.where(parent_id: params[:parent_id])
       if params[:q]
         queries = params[:q].gsub(' ', ',').split(',').map(&:strip).reject(&:blank?).map{|p| "%#{p}%" }
         queries.each do |q|

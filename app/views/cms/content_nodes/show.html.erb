@@ -16,7 +16,7 @@
 <% end %>
 
 <div id="content-nodes-table" class="columns small-12">
-  <% if @content_node.children.present? %>
-    <%= render 'cms/content_nodes/list', content_nodes: @content_node.children %>
+  <% if @children.present? %>
+    <%= render 'cms/content_nodes/list', content_nodes: @children %>
   <% end %>
 </div>

@@ -27,6 +27,7 @@ module Cms
     end
 
     class << self
+
       # specifies the type of the content_value
       def content_type(type, reference_type = nil)
         if type == :reference && reference_type.nil?

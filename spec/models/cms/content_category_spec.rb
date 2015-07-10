@@ -7,7 +7,7 @@ module Cms
       c = create(:content_category, :with_node)
       c.content_nodes << [create(:content_node)]
       c.save
-      expect(c.content_nodes.count).to eq 2
+      expect(c.content_nodes.unscoped.count).to eq 2
     end
 
   end

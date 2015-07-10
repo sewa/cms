@@ -27,7 +27,7 @@ module Cms
     validates :url, uniqueness: true, allow_blank: true
     validates :name, uniqueness: { scope: :parent_id }
 
-    default_scope -> { order(position: :asc) }
+    default_scope -> { order(position: :asc).where('access = ?', 'public') }
 
     # active record already defines a public method
     scope :public_nodes, -> { where('access = ?', 'public') }
@@ -151,7 +151,7 @@ module Cms
     def resolve(path)
       path = path.split('/') if String === path
       if path.empty?
-        self.class.public_nodes.with_relations.find(self.id)
+        self.class.with_relations.find(self.id)
       else
         if child = children.find_by_name(path.first)
           child.resolve(path[1..-1])
