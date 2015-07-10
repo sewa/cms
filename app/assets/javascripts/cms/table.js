@@ -3,10 +3,10 @@ $(document).ready(function() {
   var Table = {};
 
   Table.preserveCellWidth = function (event, ui) {
-	  ui.children().each(function() {
-		  $(this).width($(this).width());
-	  });
-	  return ui;
+    ui.children().each(function() {
+      $(this).width($(this).width());
+    });
+    return ui;
   };
 
   Table.bind_sortable = function () {
