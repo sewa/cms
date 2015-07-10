@@ -33,7 +33,7 @@ module Cms
         end
 
         # Hack to get around the reinitialization of content_attributes
-        # in the original destroy method.
+        # when using the original destroy method.
         # This also requires the dependent: :destroy method not to be set
         # when defining the relation.
         alias_method :orig_destroy, :destroy

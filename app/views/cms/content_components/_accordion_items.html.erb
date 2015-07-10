@@ -4,7 +4,11 @@
   <li class="accordion-navigation <%= css_class %>">
     <%= link_to "##{id}", class: 'accordion-link' do %>
       <%= image_tag component.icon %>
-      <%= component.class.localize_name %>
+      <% if component.respond_to?(:form_title) && !component.new_record? %>
+        <%= component.form_title  %>
+      <% else %>
+        <%= component.class.localize_name %>
+      <% end %>
     <% end %>
     <div class="actions">
       <%= link_to t(:remove_component), '#', id: "delete-#{id}", class: 'button tiny right radius remove-component' %>
