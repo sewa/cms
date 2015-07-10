@@ -4,6 +4,7 @@ Cms::Engine.routes.draw do
     collection do
       get 'new/:type' => 'content_nodes#new', as: :new
       get ':parent_id/new/:type' => 'content_nodes#new', as: :new_parent
+      get :index_search, defaults: { formats: [:js] }
     end
     member do
       post :sort

@@ -56,6 +56,13 @@ module Cms
       render json: { status: :success }
     end
 
+    def index_search
+      @content_nodes = find_objects
+      respond_to do |format|
+        format.js { render :index_search }
+      end
+    end
+
     def destroy
       @content_node.destroy
       flash.notice = I18n.t('cms.node_delete_success')
@@ -115,6 +122,17 @@ module Cms
 
     def load_object
       @content_node = ContentNode.with_relations.find(params[:id])
+    end
+
+    def find_objects
+      query = ContentNode.where(parent_id: params[:parent_id])
+      if params[:q]
+        queries = params[:q].gsub(' ', ',').split(',').map(&:strip).reject(&:blank?).map{|p| "%#{p}%" }
+        queries.each do |q|
+          query = query.where('title LIKE ? OR access LIKE ? OR name LIKE ?', q, q, q)
+        end
+      end
+      query
     end
 
   end

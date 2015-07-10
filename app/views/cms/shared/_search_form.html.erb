@@ -1,5 +1,5 @@
-<div class="assets-search-form">
-  <%= form_tag url, remote: true, method: :get do %>
+<div class="search-form">
+  <%= form_tag url, method: :get do %>
     <input name="q" type="text" value="", placeholder="<%= t("search_#{ type }") %>" />
   <% end %>
 </div>

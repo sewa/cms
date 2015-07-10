@@ -40,4 +40,7 @@ $(document).ready(function() {
   CmsComponents.bind_droppables('.sidebar', '.form-left');
   CmsComponents.bind_remove();
 
+  CmsSearch.init();
+
+  CmsTable.bind_sortable();
 });

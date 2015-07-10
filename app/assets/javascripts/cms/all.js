@@ -4,4 +4,6 @@
 //= require foundation
 //= require ckeditor-jquery
 //= require_directory ./vendor
+//= require ./search
+//= require ./table
 //= require_tree .

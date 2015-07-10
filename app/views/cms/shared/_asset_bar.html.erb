@@ -16,7 +16,7 @@
     <% end %>
     <div id="images-tab">
       <div class="columns small-12">
-        <%= render 'cms/shared/asset_search_form', type: :images, url: sidebar_search_content_images_path(format: :js) %>
+        <%= render 'cms/shared/search_form', type: :images, url: sidebar_search_content_images_path(format: :js) %>
       </div>
       <ul id="image-list" class="assets images small-block-grid-4">
         <%= render 'cms/shared/asset_list', objects: images, scope: :images %>
@@ -24,7 +24,7 @@
     </div>
     <div id="documents-tab">
       <div class="columns small-12">
-        <%= render 'cms/shared/asset_search_form', type: :documents, url: sidebar_search_content_documents_path(format: :js) %>
+        <%= render 'cms/shared/search_form', type: :documents, url: sidebar_search_content_documents_path(format: :js) %>
       </div>
       <ul id="document-list" class="assets documents small-block-grid-4">
         <%= render 'cms/shared/asset_list', objects: documents, scope: :documents %>

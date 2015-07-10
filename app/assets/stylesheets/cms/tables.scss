@@ -14,6 +14,14 @@ table.content-nodes {
     }
 }
 
+table.not-sortable {
+    tbody {
+        tr {
+            cursor: default;
+        }
+    }
+}
+
 table {
     border-collapse:collapse;
     margin-top: 15px;

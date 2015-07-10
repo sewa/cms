@@ -179,8 +179,7 @@ $(document).ready(function() {
     bind_draggables: Assets.bind_draggables,
     bind_draggable_images: Assets.bind_draggable_images,
     bind_draggable_documents: Assets.bind_draggable_documents,
-    bind_remove: Assets.bind_remove,
-    bind_search: Assets.bind_search
+    bind_remove: Assets.bind_remove
   };
 
 });

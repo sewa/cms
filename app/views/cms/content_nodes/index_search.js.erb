@@ -1,0 +1,8 @@
+var div = $('#content-nodes-table');
+div.html('<%= escape_javascript(render 'cms/content_nodes/list', content_nodes: @content_nodes) %>');
+<%# only allow sorting when all records are present %>
+<% unless params[:q].present? %>
+CmsTable.bind_sortable();
+<% else %>
+$('table', div).addClass('not-sortable');
+<% end %>
