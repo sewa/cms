@@ -8,7 +8,7 @@ module Cms
     helper_method :template_options
     helper_method :content_node_options
 
-    before_filter :load_object, only: [:show, :edit, :update, :destroy, :sort]
+    before_filter :load_object, only: [:show, :edit, :update, :destroy, :sort, :toggle_access]
     before_filter :load_parent, only: [:new, :create, :update]
     before_filter :load_assets, only: [:new, :edit, :create, :update]
 
@@ -49,6 +49,10 @@ module Cms
         load_components
         render action: :edit
       end
+    end
+
+    def toggle_access
+      @content_node.update_attribute(:access, @content_node.public? ? 'private' : 'public')
     end
 
     def sort

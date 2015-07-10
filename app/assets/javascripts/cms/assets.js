@@ -55,7 +55,7 @@ $(document).ready(function() {
         }
       },
       // the helper is not appended to the drop zone
-      // when you drag an asset on a dragged compoenent.
+      // when you drag an asset on a dragged component.
       // solution was to clone the helper append it to the drop zone
       // and remove the original helper.
       drop: function(event, ui) {

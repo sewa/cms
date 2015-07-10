@@ -21,7 +21,7 @@
         </td>
         <td><%= t("content_nodes.#{node.type.downcase}") %></td>
         <td><%= node.name %></td>
-        <td><%= t(node.access) %></td>
+        <td><%= link_to t(node.access), toggle_access_content_node_path(node), remote: true, class: "button toggle-access tiny radius #{node.public? ? 'success' : 'alert' }" %></td>
         <td><%= l node.updated_at, format: :full %></td>
         <td class="actions">
           <ul class="button-group radius center">

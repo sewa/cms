@@ -1,0 +1,1 @@
+$('.toggle-access', '#<%= dom_id @content_node %>').text('<%= t(@content_node.access) %>').removeClass('success alert').addClass('<%= @content_node.public? ? 'success' : 'alert' %>');
