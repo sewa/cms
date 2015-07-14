@@ -13,6 +13,9 @@ $(document).ready(function() {
   };
 
   Search.init = function() {
+    $(Search.field).parents('form').on( 'submit', function (event) {
+      event.preventDefault();
+    });
     $(document).on('keyup', Search.field, function() {
       var url = $(this).parents('form').attr('action'),
           val = $(this).val();
