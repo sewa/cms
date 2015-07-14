@@ -96,7 +96,7 @@ module Cms
     protected
 
     def cache_options(object, attribute)
-      value = attribute.content_options[:select_options]
+      value = attribute.content_options.present? ? attribute.content_options[:select_options] : nil
       name = "@#{object.class.name.underscore}_#{attribute.class.name.underscore}_#{attribute.key}_options"
       unless ret = instance_variable_get(name)
         options = if value.instance_of? Symbol
