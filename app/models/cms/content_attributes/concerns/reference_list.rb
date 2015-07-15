@@ -9,15 +9,15 @@ module Cms
 
           def value
             if value = fetch_value
-              object(to_arr(value))
+              objects(to_arr(value))
             else
               []
             end
           end
 
           def value=(value)
-            if object = object(to_arr(value))
-              assign_value(to_csv( object.pluck(:id) ))
+            if objs = objects(to_arr(value))
+              assign_value(to_csv( objs.map(&:id) ))
             end
           end
 
@@ -37,8 +37,10 @@ module Cms
             end
           end
 
-          def object(ids)
-            @object ||= reference_class.where(id: ids)
+          def objects(ids)
+            return @list_objects if @list_objects
+            records = reference_class.find(ids)
+            @list_objects = ids.map { |id| records.detect { |record| record.id == id.to_i }}
           end
 
         end
