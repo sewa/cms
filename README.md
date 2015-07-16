@@ -116,7 +116,7 @@ class ExampleComponent < Cms::ContentComponent
 end
 ```
 
-### Cms::ContentComponent
+### Cms::ContentAttribute
 
 ```ruby
 class ExampleAttribute < Cms::ContentComponent
