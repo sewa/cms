@@ -79,39 +79,30 @@ Other possible values are:
 
 ```ruby
 child_nodes except: ['ExampleNode', ...]
-```
-
-```ruby
 child_nodes only: ['ExampleNode', ...]
 ```
 
 If child_nodes is not defined the page can't have any childpages.
 
-The same thing with:
+The same options you have with use_components:
 
 ```ruby
 use_components :all
+use_components except: ['ExampleComponent', ...]
+use_components only: ['ExampleComponent', ...]
 ```
 
-```ruby
-child_nodes except: ['ExampleComponent', ...]
-```
-
-```ruby
-child_nodes only: ['ExampleComponent', ...]
-```
+To define a grouping of attributes use:
 
 ```ruby
 content_group :content
 ```
 
-is used to group a set of elements in the backend form.
+And finally the actual content is defined with:
 
 ```ruby
 content_attribute :name, :type
 ```
-
-adds the actual content to the page.
 
 ### Cms::ContentComponent
 
