@@ -6,20 +6,28 @@ A Rails engine which adds a simple cms to your rails project.
 
 Add the following to your Gemfile:
 
-> gem 'cms', git: 'git@github.com:sewa/cms.git', branch: 'master'
+```ruby
+gem 'cms', git: 'git@github.com:sewa/cms.git', branch: 'master'
+```
 
 Copy and run migrations:
 
-> rake cms:install:migrations
-> rake db:migrate
+```ruby
+rake cms:install:migrations
+rake db:migrate
+```
 
 Mount the engine:
 
-> mount Cms::Engine, at: '/cms'
+```ruby
+mount Cms::Engine, at: '/cms'
+```
 
 Start the rails server and access the cms with:
 
-> http://localhost:3000/cms
+```ruby
+http://localhost:3000/cms
+```
 
 ## Howto use
 
@@ -56,34 +64,52 @@ end
 
 Let's discuss the class methods:
 
-> template
+```ruby
+template
+```
 
 is used to tell the client which template should be rendered.
 
-> child_nodes :all
+```ruby
+child_nodes :all
+```
 
 tells the engine that this page can have all page types as subnodes.
 Other possible values are:
 
-> child_nodes except: ['ExampleNode', ...]
+```ruby
+child_nodes except: ['ExampleNode', ...]
+```
 
-> child_nodes only: ['ExampleNode', ...]
+```ruby
+child_nodes only: ['ExampleNode', ...]
+```
 
 If child_nodes is not defined the page can't have any childpages.
 
 The same thing with:
 
-> use_components :all
+```ruby
+use_components :all
+```
 
-> child_nodes except: ['ExampleComponent', ...]
+```ruby
+child_nodes except: ['ExampleComponent', ...]
+```
 
-> child_nodes only: ['ExampleComponent', ...]
+```ruby
+child_nodes only: ['ExampleComponent', ...]
+```
 
-> content_group :content
+```ruby
+content_group :content
+```
 
 is used to group a set of elements in the backend form.
 
-> content_attribute :name, :type
+```ruby
+content_attribute :name, :type
+```
 
 adds the actual content to the page.
 
