@@ -135,6 +135,7 @@ It uses cancan for authorization, the rest is up to you.
 To hook your user into the cms you have to create the initializer config/initializers/cms.rb
 and add the following code to it:
 
+```ruby
 Cms.user_class = 'Your user class'
-
 Cms.user_roles_attribute = 'your roles method on user'
+```
