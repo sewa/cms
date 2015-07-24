@@ -39,8 +39,8 @@ module Cms
 
           def objects(ids)
             return @list_objects if @list_objects
-            records = reference_class.find(ids)
-            @list_objects = ids.map { |id| records.detect { |record| record.id == id.to_i }}
+            records = reference_class.where(id: ids)
+            @list_objects = ids.map { |id| records.detect { |record| record.id == id.to_i }}.compact
           end
 
         end
