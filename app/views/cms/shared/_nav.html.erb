@@ -1,0 +1,25 @@
+<ul class="title-area">
+  <li class="name">
+    <h1>
+      <%= link_to t(:cms), content_nodes_path %>
+    </h1>
+  </li>
+</ul>
+<section class="top-bar-section">
+  <ul class="right">
+    <li class="has-form">
+      <%= link_to t(:logout), main_app.destroy_cms_user_session_path, method: :delete, class: 'button radius' %>
+    </li>
+  </ul>
+  <ul class="left">
+    <li class="divider"></li>
+    <%= nav_link_to t(:pages), content_nodes_path, object: :content_nodes %>
+    <li class="divider"></li>
+    <%= nav_link_to t(:images), content_images_path, object: :content_images %>
+    <li class="divider"></li>
+    <%= nav_link_to t(:documents), content_documents_path, object: :content_documents %>
+    <li class="divider"></li>
+    <%= nav_link_to t(:categories), content_categories_path, object: :content_categories %>
+    <li class="divider"></li>
+  </ul>
+</section>

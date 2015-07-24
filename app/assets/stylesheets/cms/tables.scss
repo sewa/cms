@@ -9,9 +9,6 @@ table.content-nodes {
             cursor: move;
         }
     }
-    .button {
-        margin-bottom: 4px !important;
-    }
 }
 
 table.not-sortable {
@@ -23,6 +20,9 @@ table.not-sortable {
 }
 
 table {
+    .button {
+        margin-bottom: 0px !important;
+    }
     border-collapse:collapse;
     margin-top: 15px;
     thead {
@@ -33,7 +33,6 @@ table {
                     background-color: #fff;
                 }
         tr {
-            cursor: move;
             border-bottom: 1px solid #ddd;
         }
     }
