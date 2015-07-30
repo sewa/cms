@@ -52,7 +52,7 @@ module Cms
       else
         type = :text
       end
-      text_field_tag name, opts[:value], class: opts[:class], type: type
+      text_field_tag name, opts[:value], class: opts[:class], type: type, placeholder: opts[:placeholder]
     end
 
     def asset_destroy_input(attribute, opts)
