@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150701070627) do
+ActiveRecord::Schema.define(version: 20150730124809) do
 
   create_table "content_attributes", force: :cascade do |t|
     t.integer  "attributable_id",   null: false
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20150701070627) do
     t.datetime "updated_at"
   end
 
+  add_index "content_nodes", ["access"], name: "index_content_nodes_on_access"
   add_index "content_nodes", ["name"], name: "index_content_nodes_on_name"
   add_index "content_nodes", ["parent_id"], name: "index_content_nodes_on_parent_id"
   add_index "content_nodes", ["position"], name: "index_content_nodes_on_position"
