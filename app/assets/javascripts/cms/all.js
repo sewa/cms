@@ -3,6 +3,7 @@
 //= require jquery-ui
 //= require foundation
 //= require ckeditor-jquery
+//= require select2
 //= require_directory ./vendor
 //= require ./search
 //= require ./table

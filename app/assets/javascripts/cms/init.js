@@ -43,4 +43,6 @@ $(document).ready(function() {
   CmsSearch.init();
 
   CmsTable.bind_sortable();
+
+  $('.select2').select2();
 });
