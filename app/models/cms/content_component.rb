@@ -8,6 +8,8 @@ module Cms
     include Cms::Concerns::ContentProperties
     include Cms::Concerns::Template
 
+    scope :with_relations, -> { includes(content_attributes: [:content_value]) }
+
     belongs_to :componentable, polymorphic: true
 
     acts_as_list scope: :componentable

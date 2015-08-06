@@ -45,6 +45,7 @@ module Cms
         protected
 
         def load_attributes
+          # return unless new_record?
           self.class.content_groups.each do |group, attrs|
             attrs.each do |attr|
               unless content_attr = content_attribute(attr[:key])

@@ -8,7 +8,6 @@ require 'ckeditor_rails'
 require 'select2-rails'
 require 'simple_form'
 require 'dragonfly'
-require 'paperclip'
 require 'kaminari'
 
 require "cms/engine"
