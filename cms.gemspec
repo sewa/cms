@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "acts_as_tree", "~> 2.2.0"
   s.add_dependency "acts_as_list", "~> 0.7.2"
   s.add_dependency "dragonfly", "~> 1.0.10"
+  s.add_dependency "paperclip"
   s.add_dependency "simple_form", "~> 3.1"
   s.add_dependency "kaminari", "~> 0.16.3"
   s.add_dependency "jquery-rails", "~> 4.0"

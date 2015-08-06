@@ -63,6 +63,7 @@ module Cms
         type = attributes.delete(:type)
         if attributes[:id].blank?
           component = content_components.build(type: type)
+          component.load_attributes
         elsif component = existing_records.detect { |record| record.id.to_s == attributes['id'].to_s }
           target_record = content_components.target.detect { |record| record.id.to_s == attributes['id'].to_s }
           if target_record

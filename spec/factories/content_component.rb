@@ -4,6 +4,7 @@ class TestComponent < Cms::ContentComponent
   content_attribute :text, :text
   content_attribute :float, :float
   template 'page'
+  after_initialize :load_attributes
 end
 
 class TestComponent1 < Cms::ContentComponent
@@ -11,12 +12,14 @@ class TestComponent1 < Cms::ContentComponent
   content_attribute :test1, :text
   content_attribute :test2, :string
   template 'page'
+  after_initialize :load_attributes
 end
 
 class ValidateComponent < Cms::ContentComponent
   template 'page'
   content_attribute :test, :text
   validates :test, presence: true
+  after_initialize :load_attributes
 end
 
 FactoryGirl.define do

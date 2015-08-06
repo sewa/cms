@@ -9,8 +9,6 @@ module Cms
 
         has_many :content_attributes, autosave: true, as: :attributable
 
-        after_initialize :load_attributes
-
         def destroy_content_attributes(attrs)
           attrs.reject {|key, value| value.blank? }.each do |key, value|
             if attribute = content_attribute(key)
@@ -42,10 +40,7 @@ module Cms
           content_attributes.destroy_all
         end
 
-        protected
-
         def load_attributes
-          # return unless new_record?
           self.class.content_groups.each do |group, attrs|
             attrs.each do |attr|
               unless content_attr = content_attribute(attr[:key])

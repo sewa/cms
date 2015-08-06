@@ -12,6 +12,7 @@ module Cms
         content_attribute :firstname, :string
         validates :firstname, presence: true
         content_attribute :rotator, :image_list
+        after_initialize :load_attributes
       end
 
       let(:node) { TestBase.new(position: 1, type: 'Cms::TestBase', template: 'test', title: 'test', name: 'test') }
@@ -56,6 +57,7 @@ module Cms
           self.table_name = :content_nodes
           include Cms::Concerns::ContentAttributes
           content_attribute :select, :select, select_options: ['test', 'test2']
+          after_initialize :load_attributes
         end
 
         expect(TestSelect.new.content_attributes.first.content_options).to eq({ select_options: ['test', 'test2'] })

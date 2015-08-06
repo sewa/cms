@@ -1,7 +1,5 @@
 # encoding: UTF-8
-
 class TestNode < Cms::ContentNode
-
   content_attribute :test1, :text
   content_attribute :test2, :image
 
@@ -9,17 +7,17 @@ class TestNode < Cms::ContentNode
   validates :float, presence: true
   validates :float, numericality: true
 
+  after_initialize :load_attributes
 end
 
 class TestGroupNode < Cms::ContentNode
-
   content_group :test do
 
     content_attribute :test1, :text
     content_attribute :test2, :image
 
+    after_initialize :load_attributes
   end
-
 end
 
 FactoryGirl.define do

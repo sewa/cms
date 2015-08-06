@@ -27,6 +27,7 @@ module Cms
       create_params = content_node_params
       type = create_params.delete('type')
       @content_node = safe_new(type, content_node_types(@parent))
+      load_attributes(@content_node)
       if @content_node.update_attributes(create_params)
         redirect_to_parent_or_index
       else
@@ -36,10 +37,12 @@ module Cms
     end
 
     def edit
+      load_attributes(@content_node)
       load_components
     end
 
     def update
+      load_attributes(@content_node)
       if destroy_params = params[:destroy]
         @content_node.destroy_content_attributes_including_components(destroy_params[:content_node])
       end
@@ -120,6 +123,7 @@ module Cms
 
     def load_components
       @components = content_components(@content_node)
+      @components.map(&:load_attributes)
     end
 
     def load_parent
@@ -131,6 +135,11 @@ module Cms
 
     def load_object
       @content_node = unscoped.with_relations.find(params[:id])
+    end
+
+    def load_attributes(node)
+      node.load_attributes
+      node.content_components.map(&:load_attributes)
     end
 
     def load_children
