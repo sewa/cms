@@ -19,12 +19,16 @@ $(document).ready(function() {
     toolbarGroups: CkEditor.toolbargroups
   };
 
+  // do not use the class name .ckeditor for richtext textareas.
+  // some magic initialization will take place by default.
   CkEditor.init = function(scope) {
-    $('.ckeditor', scope).ckeditor(opts);
+    $('.richtext', scope).each(function(idx, textarea) {
+      $(textarea).ckeditor(opts);
+    });
   };
 
   CkEditor.destroy = function(scope) {
-    $('.ckeditor', scope).each(function(idx, textarea){
+    $('.richtext', scope).each(function(idx, textarea){
       var id = $(textarea).attr('id'),
           editor = CKEDITOR.instances[id];
       if (typeof editor !== 'undefined') {

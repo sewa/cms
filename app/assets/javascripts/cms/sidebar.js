@@ -15,11 +15,11 @@ $(document).ready(function() {
     };
 
     $(document).scroll(function() {
-      var scroll_top = $(document).scrollTop();
+      var scroll_top = $(document).scrollTop() + $('.top-bar').outerHeight();
       if (scroll_top >= sidebar_top) {
         $('.sidebar').css('position', 'fixed');
         $('.sidebar').css('right', '0px');
-        $('.sidebar').css('top', '0px');
+        $('.sidebar').css('top', $('.top-bar').outerHeight());
         set_height(document_height);
       } else if (scroll_top < sidebar_top){
         $('.sidebar').css('position', 'static');
