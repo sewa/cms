@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Cms::VERSION
   s.author     = "Severin Schwanck"
   s.email       = "s@schwanck.com"
-  s.homepage    = "TODO"
+  s.homepage    = "https://github.com/sewa/cms"
   s.summary     = "A simple rails cms engine"
   s.description = "A simple rails cms engine"
   s.license     = "MIT"
