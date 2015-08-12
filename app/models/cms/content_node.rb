@@ -63,7 +63,6 @@ module Cms
         type = attributes.delete(:type)
         if attributes[:id].blank?
           component = content_components.build(type: type)
-          component.load_attributes
         elsif component = existing_records.detect { |record| record.id.to_s == attributes['id'].to_s }
           target_record = content_components.target.detect { |record| record.id.to_s == attributes['id'].to_s }
           if target_record
@@ -72,6 +71,7 @@ module Cms
             association.add_to_target(component, :skip_callbacks)
           end
         end
+        component.load_attributes
         attributes[:position] = idx + 1
         assign_to_or_mark_for_destruction(component, attributes, true)
       end
