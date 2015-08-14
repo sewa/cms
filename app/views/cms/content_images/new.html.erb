@@ -5,7 +5,7 @@
 <div class="columns small-6 form-left">
   <%= simple_form_for @object, wrapper: :horizontal_form do |f| %>
     <h2><%= t(:new_image) %></h2>
-    <div class="content">
+    <div class="content form-left">
       <%= render 'cms/content_images/form', f: f %>
     </div>
     <div class="form-buttons">

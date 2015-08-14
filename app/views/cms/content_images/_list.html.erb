@@ -13,7 +13,7 @@
         <td class="center">
           <%= image_tag image.image.thumb('134x74#').url, class: 'th' %>
         </td>
-        <td><%= image.caption %></td>
+        <td><%= (image.caption || '').html_safe %></td>
         <td><%= image.tags %></td>
         <td class="actions">
           <ul class="button-group right radius">
