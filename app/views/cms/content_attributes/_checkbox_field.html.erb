@@ -1,0 +1,9 @@
+<div class="columns small-2">
+  <%= content_label attribute, component_idx: component_idx %>
+</div>
+
+<div class="columns small-10">
+  <%= content_attribute_input attribute, as: :hidden, value: false, component_idx: component_idx %>
+  <%= content_attribute_input attribute, as: :checkbox, component_idx: component_idx %>
+  <%= attribute_errors(object, attribute) %>
+</div>

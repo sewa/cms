@@ -47,6 +47,8 @@ module Cms
         return text_area_tag name, opts[:value], class: opts[:class], type: opts[:as]
       when :select
         return select_tag name, opts[:value], class: opts[:class], type: opts[:as], include_blank: opts[:include_blank]
+      when :checkbox
+        return check_box_tag name, true, opts[:value], class: opts[:class], type: opts[:as]
       when :hidden
         type = opts[:as]
       else

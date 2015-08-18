@@ -20,6 +20,12 @@ module Cms
       validates :value, length: { maximum: 256 }
     end
 
+    class Boolean < ActiveRecord::Base
+      belongs_to :content_attribute
+      self.table_name = 'content_value_boolean'
+      validates :value, inclusion: { in: [true, false] }
+    end
+
     class Text < ActiveRecord::Base
       belongs_to :content_attribute
       self.table_name = 'content_value_text'
