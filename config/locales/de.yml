@@ -58,6 +58,7 @@ de:
   search_components: Komponenten durchsuchen
   search_nodes: Seiten durchsuchen
 
+  children_count: "%{count} Unterseiten"
   really_delete: Wirklich löschen?
 
   abort: Abbrechen

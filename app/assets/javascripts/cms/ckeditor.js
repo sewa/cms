@@ -1,22 +1,21 @@
 $(document).ready(function() {
 
+  // TOOD: limit headings to h3 .... hx
   var CkEditor = {
-    toolbargroups: [
-	    { name: 'document', groups: [ 'mode' ] },
-	    { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
-	    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-	    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-	    { name: 'links' },
+    toolbar: [
+      { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+      { name: 'tools', items: [ 'Maximize' ] },
 	    '/',
-	    { name: 'styles' },
-	    { name: 'colors' },
-	    { name: 'tools' },
-	    { name: 'others' }
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
+      { name: 'paragraph', groups: [ 'list', 'indent' ], items: [ 'NumberedList', 'BulletedList' ] },
+      { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+	    { name: 'styles', items: ['Format'] },
     ]
   };
 
   var opts = {
-    toolbarGroups: CkEditor.toolbargroups
+    toolbar: CkEditor.toolbar,
+    format_tags: 'p;h3;h4'
   };
 
   // do not use the class name .ckeditor for richtext textareas.

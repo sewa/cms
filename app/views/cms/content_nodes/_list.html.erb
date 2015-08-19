@@ -13,8 +13,9 @@
     <% content_nodes.each do |node| %>
       <tr id="<%= dom_id node %>" data-sort-url="<%= sort_content_node_path(node) %>">
         <td>
-          <% if node.children.count > 0 %>
-            <%= link_to node.title, content_node_path(node) %>
+          <% if node.unscoped_children.count > 0 %>
+            <%= link_to node.title, edit_content_node_path(node), class: 'lh-33' %>
+            <%= link_to "#{t(:children_count, count: node.unscoped_children.count)}", content_node_path(node), class: 'button tiny radius right' %>
           <% else %>
             <%= link_to node.title, edit_content_node_path(node) %>
           <% end %>

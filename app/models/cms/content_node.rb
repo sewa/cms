@@ -13,7 +13,6 @@ module Cms
     acts_as_tree
     acts_as_list scope: :parent_id
 
-    has_many :public_children, -> { order('position ASC').where("content_nodes.access = 'public'") }, class_name: 'ContentNode', foreign_key: 'parent_id', dependent: :destroy
     has_many :content_components, -> { order :position }, autosave: true, dependent: :destroy, as: :componentable
 
     has_and_belongs_to_many :content_nodes, join_table: "content_node_connections", foreign_key: "content_node_id_1", association_foreign_key: "content_node_id_2"
@@ -28,6 +27,10 @@ module Cms
     validates :name, uniqueness: { scope: :parent_id }
 
     default_scope -> { order(position: :asc).where('access = ?', 'public') }
+
+    def unscoped_children
+      self.class.unscoped.where(parent_id: id)
+    end
 
     # active record already defines a public method
     scope :public_nodes, -> { where('access = ?', 'public') }
