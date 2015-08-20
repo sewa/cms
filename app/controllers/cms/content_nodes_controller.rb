@@ -20,6 +20,7 @@ module Cms
     def new
       type = params.delete(:type)
       @content_node = safe_new(type, content_node_types(@parent), parent_id: params[:parent_id])
+      @content_node.load_attributes
       load_components
     end
 
