@@ -44,5 +44,5 @@ $(document).ready(function() {
 
   CmsTable.bind_sortable();
 
-  $('.select2').select2();
+  $('.select2', '.form-left').select2();
 });
