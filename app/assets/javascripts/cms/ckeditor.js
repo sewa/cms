@@ -5,6 +5,7 @@ $(document).ready(function() {
     toolbar: [
       { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
       { name: 'tools', items: [ 'Maximize' ] },
+      { name: 'document', items: [ 'Source' ] },
 	    '/',
       { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
       { name: 'paragraph', groups: [ 'list', 'indent' ], items: [ 'NumberedList', 'BulletedList' ] },

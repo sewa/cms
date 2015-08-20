@@ -29,7 +29,7 @@ module Cms
     default_scope -> { order(position: :asc).where('access = ?', 'public') }
 
     def unscoped_children
-      self.class.unscoped.where(parent_id: id)
+      Cms::ContentNode.unscoped.where(parent_id: id)
     end
 
     # active record already defines a public method
