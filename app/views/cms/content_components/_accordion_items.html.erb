@@ -1,4 +1,3 @@
-
 <% components.each_with_index do |component, idx| %>
   <% id = "#{component.class.name.underscore}-#{idx}-#{component.id || 'new'}" %>
   <% css_class = attributes_errors?(component, component.content_attributes) ? 'active accordion-error' : '' %>

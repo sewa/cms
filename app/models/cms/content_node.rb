@@ -65,7 +65,9 @@ module Cms
         attributes = attributes.with_indifferent_access
         type = attributes.delete(:type)
         if attributes[:id].blank?
-          component = content_components.build(type: type)
+          unless reject_new_record?(:content_components, attributes)
+            component = content_components.build(type: type)
+          end
         elsif component = existing_records.detect { |record| record.id.to_s == attributes['id'].to_s }
           target_record = content_components.target.detect { |record| record.id.to_s == attributes['id'].to_s }
           if target_record
@@ -74,10 +76,22 @@ module Cms
             association.add_to_target(component, :skip_callbacks)
           end
         end
-        component.load_attributes
-        attributes[:position] = idx + 1
-        assign_to_or_mark_for_destruction(component, attributes, true)
+        if component.present?
+          attributes[:position] = idx + 1
+          component.load_attributes
+          assign_to_or_mark_for_destruction(component, attributes, true)
+        end
       end
+    end
+
+    def nested_attributes_options
+      {
+        content_components: {}
+      }
+    end
+
+    def content_components_sorted_by_position
+      self.content_components.sort_by { |comp| comp.position }
     end
 
     def destroy_content_attributes_including_components(attributes_collection)

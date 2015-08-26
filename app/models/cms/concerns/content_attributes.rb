@@ -79,7 +79,9 @@ module Cms
           content_groups[@content_group || :default] << content_attributes.last
           unless method_defined? key
             define_method(key) do
-              content_attribute(key).value
+              if attr = content_attribute(key)
+                attr.value
+              end
             end
           end
           assign_key = "#{key}="
