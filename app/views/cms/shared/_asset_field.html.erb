@@ -2,6 +2,9 @@
   <div class="relative">
     <div class="actions">
       <%= link_to "x", "#", class: 'delete' %>
+      <% if image?(asset) %>
+        <%= link_to "edit", edit_content_image_path(asset) %>
+      <% end %>
     </div>
     <% if defined?(name) && name.present? %>
       <%= hidden_field_tag name, asset.id %>
