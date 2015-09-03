@@ -17,19 +17,19 @@ module Cms
 
           def value=(value)
             if objs = objects(to_arr(value))
-              assign_value(to_csv( objs.map(&:id) ))
+              assign_value(serialize( objs.map(&:id) ))
             end
           end
 
           protected
 
-          def to_csv(arr)
-            arr.join(',')
+          def serialize(arr)
+            "|#{arr.join('|')}|" if arr.present?
           end
 
           def to_arr(value)
             if value.instance_of? String
-              value.split(',')
+              value.split('|').reject(&:blank?)
             elsif value.instance_of? Array
               value.compact
             else
