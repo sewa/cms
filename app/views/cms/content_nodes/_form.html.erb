@@ -16,7 +16,14 @@
       <li class="accordion-navigation <%= css_class %>">
           <a href="#metadata" class="accordion-link"><%= t(:metadata) %></a>
           <div id="metadata" class="content <%= css_class %>">
-            <%= f.input :path, disabled: true %>
+            <div class="row">
+              <div class="small-2 columns">
+                <label class="right inline"><%= t(:path) %></label>
+              </div>
+              <div class="small-10 columns path">
+                <%= @content_node.path %>
+              </div>
+            </div>
             <%= f.input :title %>
             <%= f.input :name %>
             <% if template_options.present? %>
