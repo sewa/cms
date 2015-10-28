@@ -3,9 +3,12 @@ module Cms
 
     def nav_link_to(title, url, opts = {})
       if can? :manage, opts[:object]
-        content_tag 'li', class: ('active' if request.path.match(/#{url.split('/')[2]}/)) do
-          concat link_to title, url, opts
-        end.html_safe
+        [
+          content_tag('li', '', class: 'divider'),
+          content_tag('li', class: ('active' if request.path.match(/#{url.split('/')[2]}/))) do
+            concat link_to title, url, opts
+          end
+        ].join('').html_safe
       end
     end
 
