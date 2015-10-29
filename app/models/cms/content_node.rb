@@ -41,6 +41,7 @@ module Cms
     scope :public_nodes, -> { where('access = ?', 'public') }
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
     scope :root_nodes, -> { where(parent_id: nil) }
+    scope :unscoped_root_nodes, -> { unscoped.where(parent_id: nil) }
 
     scope :with_relations, -> { includes(:content_components, content_attributes: [:content_value]).merge(Cms::ContentComponent.with_relations) }
 
@@ -120,7 +121,7 @@ module Cms
 
       def resolve(path)
         path = path.split('/').reject {|item| item.blank? } if String === path
-        if path && node = root_nodes.find_by_name(path.first)
+        if path && node = unscoped_root_nodes.find_by_name(path.first)
           node.resolve(path[1..-1])
         end
       end
@@ -160,8 +161,8 @@ module Cms
     end
 
     def path_elements
-      if parent
-        parent.path_elements + [name]
+      if unscoped_parent
+        unscoped_parent.path_elements + [name]
       else
         [name]
       end
