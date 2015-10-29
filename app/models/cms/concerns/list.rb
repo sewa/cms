@@ -46,7 +46,5 @@ module Cms
       end
 
     end
-
   end
-
 end

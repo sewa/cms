@@ -9,6 +9,7 @@ module Cms
     include Cms::Concerns::ContentProperties
     include Cms::Concerns::Template
     include Cms::Concerns::List
+    include Cms::Concerns::Tree
 
     acts_as_tree
     acts_as_list scope: :parent_id
@@ -30,6 +31,10 @@ module Cms
 
     def unscoped_children
       Cms::ContentNode.unscoped.where(parent_id: id)
+    end
+
+    def unscoped_parent
+      Cms::ContentNode.unscoped.find_by(id: parent_id)
     end
 
     # active record already defines a public method

@@ -2,8 +2,8 @@
   <div class="right">
     <% if @content_node.children.present? %>
       <% path = content_node_path(@content_node) %>
-    <% elsif @content_node.parent.present? %>
-      <% path = content_node_path(@content_node.parent) %>
+    <% elsif @content_node.unscoped_parent.present? %>
+      <% path = content_node_path(@content_node.unscoped_parent) %>
     <% else %>
       <% path = content_nodes_path %>
     <% end %>
