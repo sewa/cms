@@ -10,7 +10,7 @@ class FloatAttribute < Cms::ContentAttribute
   # do not return 0.0 values
   def value
     val = fetch_value
-    val if val > 0
+    val if val.present? && val > 0
   end
 
 end
