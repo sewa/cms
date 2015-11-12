@@ -9,8 +9,11 @@ $(document).ready(function() {
 
     function set_height(height) {
       sidebar.height(height);
+    };
+
+    function set_image_width(width) {
       $('.image img', '.sidebar').css({
-        'max-height': (height / 100) * 80
+        'max-width': width
       }).fadeIn();
     };
 
@@ -28,6 +31,11 @@ $(document).ready(function() {
     });
 
     set_height(document_height - nav_height);
+    set_image_width($('.sidebar').width());
+
+    $(window).resize(function() {
+      set_image_width($('.sidebar').width());
+    });
 
   }
 
