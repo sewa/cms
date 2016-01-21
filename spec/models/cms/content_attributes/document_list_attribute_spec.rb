@@ -21,7 +21,7 @@ module Cms
 
     it "assigns a string" do
       attr = DocumentListAttribute.new
-      attr.value = document_ids.join(',')
+      attr.value = document_ids.join('|')
       expect(attr.value).to eq document_arr
     end
 

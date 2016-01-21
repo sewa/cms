@@ -1,39 +1,36 @@
 # encoding: UTF-8
-class TestNode < Cms::ContentNode
-  content_attribute :test1, :text
-  content_attribute :test2, :image
 
-  content_attribute :float, :float
-  validates :float, presence: true
-  validates :float, numericality: true
+module TestNodes
 
-  after_initialize :load_attributes
-end
+  class Page < Cms::Page
 
-class TestGroupNode < Cms::ContentNode
-  content_group :test do
+    content_group :content do
+      content_attribute :test_text, :text
+      content_attribute :test_image, :image
+      content_attribute :test_document, :document
+      content_attribute :test_float, :float
 
-    content_attribute :test1, :text
-    content_attribute :test2, :image
+      validates :test_float, presence: true, numericality: true
+    end
 
     after_initialize :load_attributes
+
   end
+
 end
 
 FactoryGirl.define do
-  sequence(:title) { |n| "node-#{n}" }
+  sequence(:title) { |n| "name-#{n}" }
+
   factory :content_node, class: Cms::ContentNode do
-    type TestNode.to_s
+    type Cms::ContentNode.to_s
     title
     template 'template'
 
-    trait :with_attrs do
-      test1 'some text'
-      float 12.1
-    end
-
     trait :with_component do
-      content_components { [create(:content_component)] }
+      after :create do |node|
+        create(:text_component, componentable: node)
+      end
     end
 
     trait :nil_type do
@@ -44,19 +41,31 @@ FactoryGirl.define do
       type 'SomeType'
     end
 
-  end
-
-  factory :test_node, class: TestNode do
-    type TestNode.to_s
-    title
-    template 'template'
-    float 12.1
-    test1 'some text'
-    test2 { create(:content_image).id }
-
     trait :public do
       access 'public'
     end
+
+    factory :page, class: TestNodes::Page do
+      type TestNodes::Page.to_s
+      trait :valid do
+        test_float 12.1
+      end
+      trait :test_document do
+        test_document { create(:content_document).id }
+      end
+      trait :test_image do
+        test_image { create(:content_image).id }
+      end
+      trait :test_text do
+        test_text Faker::Lorem.paragraph
+      end
+      trait :contact do
+        after :create do |node|
+          create(:contact_component, componentable: node)
+        end
+      end
+    end
+
   end
 
 end

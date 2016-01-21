@@ -4,50 +4,55 @@ require "rails_helper"
 module Cms
   RSpec.describe ContentAttribute do
 
-    let(:content_node) { create(:content_node) }
-
-    class TestText < Cms::ContentAttribute
-      content_type :text
-    end
-
-    class Test < Cms::ContentAttribute
-      content_type :integer
-    end
-
-    class TestImage < Cms::ContentAttribute
-      content_type :reference, 'Cms::ContentImage'
-    end
-
-    it { validate_presence_of :content_node }
-    it { validate_presence_of :content_value }
-    it { validate_presence_of :key }
-    it { validate_uniqueness_of(:key).scoped_to(:content_node_id) }
-
-    it 'sets the correct value type' do
-      expect(Test.new.build_content_value.class.name).to eq 'Cms::ContentValue::Integer'
-    end
-
-    def setup_attribute(value = nil)
-      attr = Test.new
-      attr.key = :number
-      attr.value = value
+    def setup(klass)
+      attr = klass.new
+      attr.key = :key
       attr.attributable = content_node
       attr
     end
 
-    it 'assigns and returns a value' do
-      attr = setup_attribute(123)
-      attr.save!
-      expect(attr.reload.value).to eq 123
+    let(:content_node) { create(:content_node) }
+    let(:subject) { setup(TestAttributes::Integer) }
+
+    module TestAttributes
+      class Text < Cms::ContentAttribute
+        content_type :text
+      end
+      class Integer < Cms::ContentAttribute
+        content_type :integer
+      end
+      class Image < Cms::ContentAttribute
+        content_type :reference, 'Cms::ContentImage'
+      end
     end
 
-    it 'checks for nil values' do
-      attr = setup_attribute
-      expect(attr.value).to eq nil
-    end
+    it { should belong_to :attributable }
+    # it { should validate_presence_of :attributable }
+    it { should validate_presence_of :key }
+    it { should validate_uniqueness_of(:key).scoped_to([:attributable_id, :attributable_type]) }
+
+    context '#content_value' do
+
+      it 'sets the correct type' do
+        expect(TestAttributes::Text.new.build_content_value.class.name).to eq 'Cms::ContentValue::Text'
+        expect(TestAttributes::Integer.new.build_content_value.class.name).to eq 'Cms::ContentValue::Integer'
+        expect(TestAttributes::Image.new.build_content_value.class.name).to eq 'Cms::ContentValue::Reference'
+      end
+
+      it 'creates a value' do
+        attr = setup(TestAttributes::Integer)
+        attr.value = 123
+        expect{ attr.save }.to change{ Cms::ContentValue::Integer.count }.by(1)
+      end
+
+      it 'checks for nil values' do
+        attr = setup(TestAttributes::Text)
+        expect(attr.content_value).to eq nil
+      end
 
       it 'has an error' do
-        attr = Test.new
+        attr = TestAttributes::Integer.new
+        attr.attributable = content_node
         attr.value = 1
         attr.valid?
         expect(attr.errors.count).to eq 1
@@ -56,13 +61,15 @@ module Cms
         expect(attr.errors.count).to eq 2
       end
 
+    end
+
     context "reference type" do
 
       it 'sets the type' do
         img = create(:content_image)
-        attr = TestImage.new
-        attr.key = :image
+        attr = setup(TestAttributes::Image)
         attr.value = img.id
+        attr.save
         expect(attr.value).to eq img
       end
 
@@ -70,12 +77,21 @@ module Cms
 
     context "destroy" do
 
-      it "does not destroy related assets" do
-        node = create(:test_node)
-        expect{ node.content_attribute(:test2).destroy }.to change{ ContentAttribute.count }.by(-1)
-        expect{ node.test2.destroy }.to change{ ContentImage.count }.by(-1)
+      it "removes the content_values" do
+        node = create(:page, :valid, :test_image, :test_text)
+
+        expect{ node.content_attribute(:test_float).destroy }.to change{ ContentValue::Float.count }.by(-1)
+        expect{ node.content_attribute(:test_image).destroy }.to change{ ContentValue::Reference.count }.by(-1)
+        expect{ node.content_attribute(:test_text).destroy }.to change{ ContentValue::Text.count }.by(-1)
+      end
+
+      it "does not destroy referenced records" do
+        node = create(:page, :valid, :test_image)
+        expect{ node.content_attribute(:test_image).destroy }.to change{ ContentImage.count }.by(0)
       end
 
     end
+
   end
+
 end

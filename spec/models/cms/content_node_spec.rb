@@ -4,27 +4,35 @@ require "rails_helper"
 module Cms
   RSpec.describe ContentNode, type: :model do
 
-    let(:node) { create(:content_node) }
+    let(:subject) { create(:content_node) }
 
-    it { validate_presence_of :title }
-    it { validate_presence_of :template }
-    it { have_many :content_attributes }
+    it { should have_many :content_attributes }
+    it { should have_many :content_components }
+    it { should have_and_belong_to_many :content_categories }
+    it { should have_and_belong_to_many :content_nodes }
+    it { should have_and_belong_to_many :content_nodes_inversed }
+
+    it { should validate_presence_of :title }
+    it { should validate_presence_of :template }
+    it { should validate_uniqueness_of(:url) }
+    it { should validate_uniqueness_of(:name).scoped_to( :parent_id ) }
 
     it "can be created" do
-      expect(node).to be_persisted
+      expect(subject).to be_persisted
     end
 
-    it "can have many content_components" do
-      node.content_components << [create(:test_comp, :with_node)]
-      expect(node.content_components.count).to eq 1
+    it 'is not valid with an invalid component' do
+      expect(subject.valid?).to eq true
+      subject.content_components << build(:text_component, componentable: subject)
+      expect(subject.valid?).to eq false
     end
 
     context "content_categories" do
 
       it "saves the categories" do
         c1 = build(:content_category)
-        node.content_categories = [c1]
-        expect(node.content_categories.count).to eq 1
+        subject.content_categories = [c1]
+        expect(subject.content_categories.count).to eq 1
       end
 
     end
@@ -32,13 +40,13 @@ module Cms
     context "#path" do
 
       it "returns path" do
-        expect(node.path).to match /node-\d/
+        expect(subject.path).to match(/name-\d/)
       end
 
       it "returns url if url is present" do
         url = 'test/url'
-        node.url = url
-        expect(node.path).to eq '/' + url
+        subject.url = url
+        expect(subject.path).to eq '/' + url
       end
 
     end
@@ -46,19 +54,19 @@ module Cms
     context "#correct_redirect" do
 
       it "does nothing if redirect doesn't start with a slash" do
-        node.redirect = 'test/test'
-        node.valid?
-        expect(node.redirect).to eq 'test/test'
+        subject.redirect = 'test/test'
+        subject.valid?
+        expect(subject.redirect).to eq 'test/test'
       end
 
       it "removes slash before validation" do
-        node.redirect = '/test/test'
-        node.valid?
-        expect(node.redirect).to eq 'test/test'
+        subject.redirect = '/test/test'
+        subject.valid?
+        expect(subject.redirect).to eq 'test/test'
       end
 
       it "not raise an error if redirect is blank" do
-        expect{node.valid?}.not_to raise_error
+        expect{subject.valid?}.not_to raise_error
       end
 
     end
@@ -66,19 +74,19 @@ module Cms
     context "#correct_url" do
 
       it "does nothing if url doesn't start with a slash" do
-        node.url = 'test/test'
-        node.valid?
-        expect(node.url).to eq 'test/test'
+        subject.url = 'test/test'
+        subject.valid?
+        expect(subject.url).to eq 'test/test'
       end
 
       it "removes slash before validation" do
-        node.url = '/test/test'
-        node.valid?
-        expect(node.url).to eq 'test/test'
+        subject.url = '/test/test'
+        subject.valid?
+        expect(subject.url).to eq 'test/test'
       end
 
       it "not raises an error if url is blank" do
-        expect{node.valid?}.not_to raise_error
+        expect{subject.valid?}.not_to raise_error
       end
 
     end
@@ -93,59 +101,56 @@ module Cms
         h
       end
 
-      let(:comp1) { attributes_for(:test_comp).reject{ |k,v| k == :content_node } }
-      let(:comp2) { attributes_for(:test_comp).reject{ |k,v| k == :content_node } }
-      let(:comp3) { attributes_for(:test_comp_1).reject{ |k,v| k == :content_node } }
+      let(:contact_attrs) { attributes_for(:contact_component) }
+      let(:text_attrs) { attributes_for(:text_component, :valid) }
 
       it "builds the new components" do
-        node.content_components_attributes = hash([comp1, comp2])
-        node.save
-        expect(node.content_components.count).to eq 2
-        expect(node.content_components.last.float).to eq 12.1
-        expect(node.content_components.last.text).to eq 'some text'
+        subject.content_components_attributes = hash([contact_attrs, text_attrs])
+        subject.save
+        expect(subject.content_components.count).to eq 2
+        expect(subject.content_components.first.first_name).to eq contact_attrs[ :first_name ]
+        expect(subject.content_components.first.last_name).to eq contact_attrs[ :last_name ]
+        expect(subject.content_components.first.size).to eq contact_attrs[ :size ]
+        expect(subject.content_components.last.test_text).to eq text_attrs[ :test_text ]
       end
 
       it "updates the existing" do
-        comp = create(:test_comp, :with_node, float: 1.1)
-        comp_a = create(:test_comp, float: 99.99, componentable: comp.componentable)
+        contact = create(:contact_component, componentable: subject, size: 1.1)
+        text = create(:text_component, test_text: 'test text', componentable: subject)
 
-        expect(comp.float).to eq 1.1
-        expect(comp.position).to eq 1
+        expect(contact.size).to eq 1.1
+        expect(contact.position).to eq 1
 
-        expect(comp_a.float).to eq 99.99
-        expect(comp_a.position).to eq 2
+        expect(text.test_text).to eq 'test text'
+        expect(text.position).to eq 2
 
-        node = comp.componentable
-        expect(node.content_components.size).to eq 2
-        node.content_components_attributes = hash([comp2.merge(float: 11.11), comp1.merge(id: comp.id), comp1.merge(id: comp_a.id, float: 99.99)])
-        node.save
+        expect(subject.content_components.size).to eq 2
 
-        expect(node.content_components.first.float).to eq 11.11
-        expect(node.content_components.first.position).to eq 1
+        subject.content_components_attributes = hash(
+          [
+            text_attrs.merge(test_text: 'abc'),
+            contact_attrs.merge(id: contact.id, size: 11.11),
+            text_attrs.merge(id: text.id, test_text: 'cde')
+          ]
+         )
+        subject.save!
 
-        expect(comp.reload.float).to eq 12.1
-        expect(comp.position).to eq 2
+        expect(subject.content_components.first.test_text).to eq 'abc'
+        expect(subject.content_components.first.position).to eq 1
 
-        expect(comp_a.reload.float).to eq 99.99
-        expect(comp_a.position).to eq 3
-      end
+        expect(contact.reload.size).to eq 11.11
+        expect(contact.position).to eq 2
 
-      it 'is not valid when components are invalid' do
-        comp = create(:validate_comp, :with_node, test: '123')
-        node = comp.componentable
-        expect(node.content_components.size).to eq 1
-        expect(node.valid?).to eq true
-        comp.test = nil
-        node.content_components = [comp]
-        expect(node.valid?).to eq false
+        expect(text.reload.test_text).to eq 'cde'
+        expect(text.position).to eq 3
       end
 
       it "removes the unused" do
-        comp = create(:test_comp, :with_node, float: 1.1)
-        node = comp.componentable
-        node.content_components_attributes = hash([comp1.merge(id: comp.id, _destroy: '1')])
-        node.save
-        expect(node.reload.content_components.count).to eq 0
+        comp = create(:contact_component, componentable: subject, size: 1.1)
+        subject.content_components_attributes = hash(
+          [contact_attrs.merge(id: comp.id, _destroy: '1')]
+        )
+        expect{ subject.save }.to change{ subject.content_components.count }.by(-1)
       end
 
     end
@@ -153,20 +158,20 @@ module Cms
     context "#destroy_content_attributes" do
 
       it 'destroys the attributes' do
-        node = create(:test_node)
-        expect{ node.destroy_content_attributes(test2: 1) }.to change{ ContentAttribute.count }.by(-1)
+        node = create(:page, :valid)
+        expect{ node.destroy_content_attributes(test_image: 1) }.to change{ ContentAttribute.count }.by(-1)
       end
 
     end
 
     context "list" do
 
-      let!(:node1) { create(:test_node, :public, position: 1) }
-      let!(:node2) { create(:test_node, :public, position: 2) }
-      let!(:node3) { create(:test_node, :public, position: 3) }
-      let!(:node4) { create(:test_node, :public, position: 4) }
-      let!(:node5) { create(:test_node, :public, position: 5) }
-      let!(:node6) { create(:test_node, :public, position: 6) }
+      let!(:node1) { create(:page, :public, :valid, position: 1) }
+      let!(:node2) { create(:page, :public, :valid, position: 2) }
+      let!(:node3) { create(:page, :public, :valid, position: 3) }
+      let!(:node4) { create(:page, :public, :valid, position: 4) }
+      let!(:node5) { create(:page, :public, :valid, position: 5) }
+      let!(:node6) { create(:page, :public, :valid, position: 6) }
 
       let!(:cat1) { create(:content_category) }
       let!(:cat2) { create(:content_category) }

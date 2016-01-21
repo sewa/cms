@@ -1,49 +1,52 @@
+module TestComponents
 
-class TestComponent < Cms::ContentComponent
-  icon '/some/path/icon.png'
-  content_attribute :text, :text
-  content_attribute :float, :float
-  template 'page'
-  after_initialize :load_attributes
-end
+  class Contact < Cms::ContentComponent
+    icon '/some/path/contact.png'
 
-class TestComponent1 < Cms::ContentComponent
-  icon '/some/path/icon.png'
-  content_attribute :test1, :text
-  content_attribute :test2, :string
-  template 'page'
-  after_initialize :load_attributes
-end
+    template 'contact'
 
-class ValidateComponent < Cms::ContentComponent
-  template 'page'
-  content_attribute :test, :text
-  validates :test, presence: true
-  after_initialize :load_attributes
+    content_attribute :first_name, :string
+    content_attribute :last_name, :string
+    content_attribute :size, :float
+
+    after_initialize :load_attributes
+  end
+
+  class Text < Cms::ContentComponent
+    icon '/some/path/text.png'
+
+    template 'text'
+
+    content_attribute :test_text, :text
+
+    validates :test_text, presence: true
+
+    after_initialize :load_attributes
+  end
+
 end
 
 FactoryGirl.define do
-  factory :content_component, class: 'Cms::ContentComponent' do
-    template 'page'
+  factory :content_component, class: Cms::ContentComponent do
+
+    template 'default'
+
     trait :with_node do
       componentable { create(:content_node) }
     end
-  end
 
-  factory :test_comp, class: TestComponent, parent: :content_component do |u|
-    type 'TestComponent'
-    text 'some text'
-    float 12.1
-  end
+    factory :contact_component, class: TestComponents::Contact, parent: :content_component do
+      type TestComponents::Contact.to_s
+      first_name Faker::Name.first_name
+      last_name Faker::Name.last_name
+      size 12.1
+    end
 
-  factory :test_comp_1, class: TestComponent1, parent: :content_component do |u|
-    type 'TestComponent1'
-    test1 'test1'
-    test2 'test2'
+    factory :text_component, class: TestComponents::Text, parent: :content_component do
+      type TestComponents::Text.to_s
+      trait :valid do
+        test_text Faker::Lorem.paragraph
+      end
+    end
   end
-
-  factory :validate_comp, class: ValidateComponent, parent: :content_component do |u|
-    type 'ValidateComponent'
-  end
-
 end
