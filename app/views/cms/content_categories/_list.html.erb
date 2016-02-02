@@ -19,7 +19,7 @@
               <%= link_to t(:edit), edit_content_category_path(category), class: 'button small'  %>
             </li>
             <li>
-              <%= link_to t(:delete), content_category_path(category), 'data-confirm': t(:really_delete), method: :delete, class: 'button small' %>
+              <%= link_to t(:delete), content_category_path(category), 'data-confirm': t(:really_delete), method: :delete, class: 'button small alert' %>
             </li>
           </ul>
         </td>

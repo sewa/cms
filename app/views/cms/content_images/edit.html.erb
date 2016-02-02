@@ -1,7 +1,7 @@
 <%= actions do %>
   <div class="right">
     <%= link_to t(:back_to_index), content_images_path, class: 'button radius small secondary' %>
-    <%= link_to t(:delete_content_image), content_image_path(@object), method: :delete, class: 'button radius small', data: { confirm: t(:really_delete) } %>
+    <%= link_to t(:delete_content_image), content_image_path(@object), method: :delete, class: 'button radius small alert', data: { confirm: t(:really_delete) } %>
     <%= link_to t(:new_content_image), new_content_image_path, class: 'button radius small' %>
   </div>
 <% end %>

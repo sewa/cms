@@ -23,7 +23,7 @@
               <%= link_to t(:edit), edit_content_document_path(object), class: 'button small'  %>
             </li>
             <li>
-              <%= link_to t(:delete), content_document_path(object), 'data-confirm': t(:really_delete), method: :delete, class: 'button small' %>
+              <%= link_to t(:delete), content_document_path(object), 'data-confirm': t(:really_delete), method: :delete, class: 'button small alert' %>
             </li>
           </ul>
         </td>
