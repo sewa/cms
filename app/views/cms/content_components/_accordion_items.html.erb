@@ -11,7 +11,7 @@
       <% end %>
     <% end %>
     <div class="actions">
-      <%= link_to t(:remove_component), '#', id: "delete-#{id}", class: 'button tiny right radius remove-component' %>
+      <%= link_to t(:remove_component), '#', id: "delete-#{id}", class: 'button tiny alert right radius remove-component' %>
     </div>
     <%= render 'cms/content_components/component_fields', component: component, component_idx: idx %>
     <% if component.content_attributes.present? %>
