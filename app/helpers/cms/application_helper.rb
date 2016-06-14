@@ -2,7 +2,7 @@ module Cms
   module ApplicationHelper
 
     def nav_link_to(title, url, opts = {})
-      if can? :manage, opts[:object]
+      if can? opts[:can], opts[:object]
         [
           content_tag('li', '', class: 'divider'),
           content_tag('li', class: ('active' if request.path.match(/#{url.split('/')[2]}/))) do

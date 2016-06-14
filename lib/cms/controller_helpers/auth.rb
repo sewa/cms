@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Cms
   module ControllerHelpers
     module Auth
@@ -5,6 +6,8 @@ module Cms
       extend ActiveSupport::Concern
 
       included do
+
+        before_action :authorize_user
 
         helper_method :try_current_user
 
@@ -19,12 +22,12 @@ module Cms
         end
 
         def authorize_user
+          return if action == :unauthorized
           if respond_to?(:model_class, true) && model_class
             record = model_class
           else
             record = controller_name.to_sym
           end
-          authorize! :admin, record
           authorize! action, record
         end
 
@@ -40,37 +43,25 @@ module Cms
           end
         end
 
-        def store_location
-          # disallow return to login, logout, signup pages
-          authentication_routes = [:signup_path, :login_path, :logout_path]
-          disallowed_urls = []
-          authentication_routes.each do |route|
-            if respond_to?(route)
-              disallowed_urls << send(route)
-            end
-          end
-
-          disallowed_urls.map!{ |url| url[/\/\w+$/] }
-          unless disallowed_urls.include?(request.fullpath)
-            session['user_return_to'] = request.fullpath.gsub('//', '/')
-          end
-        end
-
         def redirect_unauthorized_access
           if try_current_user
             flash[:error] = I18n.t(:authorization_failure)
-            redirect_to cms.unauthorized_path
-          else
-            store_location
-            if respond_to?(:cms_login_path)
-              redirect_to cms_login_path
+            if methods.include?(:unauthorized_path)
+              redirect_to unauthorized_path
             else
-              redirect_to main_app.new_cms_user_session_path
+              raise "unauthorized_path must be specified in the controller."
+            end
+          else
+            if methods.include?(:sign_in_path)
+              redirect_to sign_in_path
+            else
+              raise "sign_in_path must be specified in the controller."
             end
           end
         end
 
       end
+
     end
   end
 end
