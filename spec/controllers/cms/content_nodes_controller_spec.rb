@@ -19,28 +19,26 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
   end
 
   context "#create" do
-
     before do
-      expect(controller).to receive(:content_node_types).at_most(:twice).and_return ['TestNodes::Page']
-      expect(controller).to receive(:content_component_types).at_most(:twice).and_return ['TestComponents::Contact', 'TestComponents::Text']
+      allow(controller).to receive(:content_node_types).and_return ['TestNodes::Page']
+      allow(controller).to receive(:content_component_types).and_return ['TestComponents::Contact', 'TestComponents::Text']
     end
 
     context "raises an error" do
-
       it "if no content node params are present" do
         expect{post :create }.to raise_error(ActionController::ParameterMissing)
         expect{post :create, content_node: attributes_for(:content_node, :invalid_type) }.to raise_error(Cms::SaferExecution::ClassNotAllowed)
       end
-
     end
 
     context "valid" do
-
       def valid_post
-        params = attributes_for(:page, :valid).merge({
-                                                       title: 'test',
-                                                       content_components_attributes: {'0': contact_attrs, '1': text_attrs}
-                                                     })
+        params = attributes_for(:page, :valid).merge(
+          {
+            title: 'test',
+            content_components_attributes: {'0': contact_attrs, '1': text_attrs}
+          }
+        )
         post(:create, content_node: params)
       end
 
@@ -56,13 +54,10 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
         valid_post
         expect(response).to redirect_to content_nodes_path
       end
-
     end
-
   end
 
   context "#update" do
-
     let(:content_node) { create(:page, :valid) }
     let(:contact) { create(:contact_component, size: 1.1, componentable: content_node) }
     let(:text) { create(:text_component, :valid, componentable: content_node) }
@@ -109,6 +104,5 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
       valid_put
       expect(response).to redirect_to content_nodes_path
     end
-
   end
 end

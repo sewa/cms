@@ -1,7 +1,6 @@
 # encoding: utf-8
 module Cms
   class ContentNode < ActiveRecord::Base
-
     self.table_name = :content_nodes
 
     include Cms::Concerns::ContentAttributes
@@ -16,8 +15,15 @@ module Cms
 
     has_many :content_components, -> { order :position }, autosave: true, dependent: :destroy, as: :componentable
 
-    has_and_belongs_to_many :content_nodes, join_table: "content_node_connections", foreign_key: "content_node_id_1", association_foreign_key: "content_node_id_2"
-    has_and_belongs_to_many :content_nodes_inversed, class_name: "ContentNode", join_table: "content_node_connections", foreign_key: "content_node_id_2", association_foreign_key: "content_node_id_1"
+    has_and_belongs_to_many :content_nodes,
+                            join_table: "content_node_connections",
+                            foreign_key: "content_node_id_1",
+                            association_foreign_key: "content_node_id_2"
+    has_and_belongs_to_many :content_nodes_inversed,
+                            class_name: "ContentNode",
+                            join_table: "content_node_connections",
+                            foreign_key: "content_node_id_2",
+                            association_foreign_key: "content_node_id_1"
 
     before_validation :slugalize_name
     before_validation :correct_url
@@ -118,7 +124,6 @@ module Cms
     end
 
     class << self
-
       def resolve(path)
         path = path.split('/').reject {|item| item.blank? } if String === path
         if path && node = unscoped_root_nodes.find_by_name(path.first)
@@ -129,7 +134,6 @@ module Cms
       def [](path)
         resolve(path)
       end
-
     end
 
     def slugalize_name
@@ -186,6 +190,5 @@ module Cms
     def public?
       self.access == 'public'
     end
-
   end
 end

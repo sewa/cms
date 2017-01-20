@@ -1,7 +1,6 @@
 # encoding: utf-8
 module Cms
   class ContentNodesController < ApplicationController
-
     include Cms::ControllerHelpers::ContentNodes
     include Cms::ControllerHelpers::Paginate
 
@@ -154,7 +153,5 @@ module Cms
       end
       query
     end
-
   end
-
 end

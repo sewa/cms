@@ -4,7 +4,6 @@ module Cms
       extend ActiveSupport::Concern
 
       included do
-
         validates :template, presence: true, if: -> (n) { n.class.template.nil? && n.class.template != false }
 
         def template
@@ -14,11 +13,9 @@ module Cms
             read_attribute(:template)
           end
         end
-
       end
 
       class_methods do
-
         def template(template = nil)
           unless template.nil?
             @template = template

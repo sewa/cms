@@ -1,11 +1,9 @@
 # encoding: utf-8
 module Cms
   module Filesystem
-
     extend ActiveSupport::Concern
 
     included do
-
       def content_components(node)
         content_component_types(node).map do |type|
           type.constantize.new
@@ -91,8 +89,6 @@ module Cms
         end
         []
       end
-
     end
-
   end
 end

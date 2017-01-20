@@ -28,7 +28,6 @@ end
 
 FactoryGirl.define do
   factory :content_component, class: Cms::ContentComponent do
-
     template 'default'
 
     trait :with_node do
