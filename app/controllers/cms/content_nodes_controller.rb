@@ -7,10 +7,10 @@ module Cms
     helper_method :template_options
     helper_method :content_node_options
 
-    before_filter :load_object, only: [:show, :edit, :update, :destroy, :sort, :toggle_access]
-    before_filter :load_children, only: [:show]
-    before_filter :load_parent, only: [:new, :create, :update]
-    before_filter :load_assets, only: [:new, :edit, :create, :update]
+    before_action :load_object, only: [:show, :edit, :update, :destroy, :sort, :toggle_access]
+    before_action :load_children, only: [:show]
+    before_action :load_parent, only: [:new, :create, :update]
+    before_action :load_assets, only: [:new, :edit, :create, :update]
 
     def index
       @content_nodes = unscoped.where(parent_id: nil)

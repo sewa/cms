@@ -2,7 +2,7 @@
 module Cms
   class ContentCategoriesController < ApplicationController
 
-    before_filter :load_object, only: [:edit, :update, :destroy]
+    before_action :load_object, only: [:edit, :update, :destroy]
 
     def index
       @objects = ContentCategory.page(params[:page]).per(20)

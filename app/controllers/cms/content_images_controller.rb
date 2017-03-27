@@ -6,8 +6,8 @@ module Cms
 
     include Cms::ControllerHelpers::Paginate
 
-    before_filter :find_objects, only: [:index, :sidebar_search, :index_search]
-    before_filter :load_object, only: [:edit, :update, :destroy]
+    before_action :find_objects, only: [:index, :sidebar_search, :index_search]
+    before_action :load_object, only: [:edit, :update, :destroy]
 
     def index
       @objects = @query.page(params[:page]).per(assets_per_page)
