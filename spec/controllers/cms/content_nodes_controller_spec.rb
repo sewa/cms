@@ -32,33 +32,35 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
     end
 
     context "valid" do
-      def valid_post
-        params = attributes_for(:page, :valid).merge(
-          {
-            title: 'test',
-            content_components_attributes: {'0': contact_attrs, '1': text_attrs}
-          }
-        )
-        post(:create, content_node: params)
-      end
+      context 'without parent' do
+        def valid_post
+          params = attributes_for(:page, :valid).merge(
+            {
+              title: 'test',
+              content_components_attributes: {'0': contact_attrs, '1': text_attrs}
+            }
+          )
+          post(:create, content_node: params)
+        end
 
-      it "creates a new content_node" do
-        expect { valid_post }.to change{ Cms::ContentNode.unscoped.count }.by(1)
-      end
+        it "creates a new content_node" do
+          expect { valid_post }.to change{ Cms::ContentNode.unscoped.count }.by(1)
+        end
 
-      it "creates a component" do
-        expect { valid_post }.to change{ Cms::ContentComponent.count }.by(2)
-      end
+        it "creates a component" do
+          expect { valid_post }.to change{ Cms::ContentComponent.count }.by(2)
+        end
 
-      it "redirects to index" do
-        valid_post
-        expect(response).to redirect_to content_nodes_path
+        it "redirects to index" do
+          valid_post
+          expect(response).to redirect_to content_nodes_path
+        end
       end
     end
   end
 
   context "#update" do
-    let(:content_node) { create(:page, :valid) }
+    let(:content_node) { create(:page, :valid, parent: create(:page, :valid, parent_id: nil)) }
     let(:contact) { create(:contact_component, size: 1.1, componentable: content_node) }
     let(:text) { create(:text_component, :valid, componentable: content_node) }
 

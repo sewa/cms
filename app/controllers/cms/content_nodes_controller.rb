@@ -29,6 +29,9 @@ module Cms
       @content_node = safe_new(type, content_node_types(@parent))
       @content_node.load_attributes
       if @content_node.update_attributes(create_params)
+        if @parent.present?
+          @parent.touch
+        end
         redirect_to_parent_or_index
       else
         load_components
@@ -48,6 +51,10 @@ module Cms
         @content_node.destroy_content_attributes_including_components(destroy_params[:content_node])
       end
       if @content_node.update_attributes(content_node_params)
+        parent = Cms::ContentNode.unscoped.find_by(id: @content_node.parent_id)
+        if parent.present?
+          parent.touch
+        end
         @content_node.touch
         @content_node.save
         redirect_to_parent_or_index
