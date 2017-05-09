@@ -29,9 +29,7 @@ module Cms
       @content_node = safe_new(type, content_node_types(@parent))
       @content_node.load_attributes
       if @content_node.update_attributes(create_params)
-        if @parent.present?
-          @parent.touch
-        end
+        touch_parent_node
         redirect_to_parent_or_index
       else
         load_components
@@ -51,10 +49,7 @@ module Cms
         @content_node.destroy_content_attributes_including_components(destroy_params[:content_node])
       end
       if @content_node.update_attributes(content_node_params)
-        parent = Cms::ContentNode.unscoped.find_by(id: @content_node.parent_id)
-        if parent.present?
-          parent.touch
-        end
+        touch_parent_node
         @content_node.touch
         @content_node.save
         redirect_to_parent_or_index
@@ -65,10 +60,12 @@ module Cms
     end
 
     def toggle_access
+      touch_parent_node
       @content_node.update_attribute(:access, @content_node.public? ? 'private' : 'public')
     end
 
     def sort
+      touch_parent_node
       @content_node.set_list_position(params[:position])
       render json: { status: :success }
     end
@@ -81,12 +78,20 @@ module Cms
     end
 
     def destroy
+      touch_parent_node
       @content_node.destroy
       flash.notice = I18n.t('cms.node_delete_success')
       redirect_to content_nodes_path
     end
 
     protected
+
+    def touch_parent_node
+      parent = Cms::ContentNode.unscoped.find_by(id: @content_node.parent_id)
+      if parent.present?
+        parent.touch
+      end
+    end
 
     def redirect_to_parent_or_index
       if @parent.present?
