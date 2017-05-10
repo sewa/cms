@@ -6,7 +6,9 @@ class TimeAttribute < Cms::ContentAttribute
     if time.present? && value = Time.zone.parse(time)
       assign_value(value)
     else
-      destroy
+      if content_value.present?
+        content_value.destroy
+      end
     end
   end
 end
