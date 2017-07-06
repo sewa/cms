@@ -18,7 +18,7 @@ module Cms
     end
 
     def cms_paginate(collection, params)
-      paginate collection, remote: true, params: params, views_prefix: :cms, window: 2
+      paginate collection, params: params, views_prefix: :cms, window: 2
     end
 
   end
