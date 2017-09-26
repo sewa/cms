@@ -24,7 +24,7 @@ $(document).ready(function() {
     oneLine: true,
     showButtonPanel: false,
     controlType: 'select',
-    hourMin: 7,
+    hourMin: 6,
 	  hourMax: 20,
     stepMinute: 10
   });
