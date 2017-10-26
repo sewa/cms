@@ -107,7 +107,7 @@ module Cms
 
     def component_attrs
       return [] unless params[:content_node][:content_components_attributes].present?
-      params[:content_node][:content_components_attributes].clone.map do |key, comp_attrs|
+      params[:content_node][:content_components_attributes].to_unsafe_h.clone.map do |key, comp_attrs|
         type = comp_attrs[:type]
         node_type = params[:content_node][:type]
         klass = safe_type(type, content_component_types(node_type)).classify.constantize
