@@ -7,7 +7,7 @@ module Cms
 
       included do
 
-        has_many :content_attributes, autosave: true, as: :attributable
+        has_many :content_attributes, autosave: true, dependent: :destroy, as: :attributable
 
         def destroy_content_attributes(attrs)
           attrs.reject {|key, value| value.blank? }.each do |key, value|
