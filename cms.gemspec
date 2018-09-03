@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency "jquery-rails", ">= 4.0"
   s.add_dependency "jquery-ui-rails", ">= 5.0"
   s.add_dependency "select2-rails", ">= 3.5.9"
-  s.add_dependency "foundation-rails", ">= 5.5.2.1"
+  s.add_dependency "foundation-rails", "~> 5.5.3.2"
   s.add_dependency "ckeditor_rails", ">= 4.5.1"
 
   s.add_development_dependency "sqlite3"
