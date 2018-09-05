@@ -29,7 +29,7 @@ module Cms
       node_or_component.errors[attr.key].each do |value|
         values << value
       end
-      attr.errors.map do |key, value|
+      attr.errors.map do |_, value|
         values << value
       end
       content_tag(:small, values.join('<br />').html_safe, class: 'error')
@@ -81,13 +81,13 @@ module Cms
               else
                 "destroy[content_node][#{key}]"
               end
-      else
+            else
               if opts[:for_destroy].nil?
                 "content_node[content_components_attributes][#{opts[:component_idx]}][#{key}]"
               else
                 "destroy[content_node][content_components_attributes][#{opts[:component_idx]}][#{key}]"
               end
-      end
+            end
       opts[:array] ? ret + "[]" : ret
     end
 

@@ -18,9 +18,9 @@ module Cms
       def content_node_types(node = nil)
         node = node.instance_of?(String) ? node.constantize : node
         if node.present?
-          limit(node.child_nodes, all_node_types)
+          limit(node.child_nodes, all_node_types).sort
         else
-          all_node_types
+          all_node_types.sort
         end
       end
 
@@ -52,7 +52,7 @@ module Cms
         @all_node_types = collect_models('content_nodes')
       end
 
-      def collect_models(folder, &block)
+      def collect_models(folder)
         collect('models/' + folder) do
           Dir.glob("*.rb").map do |file|
             file.chomp(".rb").classify
@@ -60,7 +60,7 @@ module Cms
         end
       end
 
-      def collect(folder, &block)
+      def collect(folder)
         path = Rails.root.join("app/#{folder}")
         if File.exist?(path)
           Dir.chdir(path) do

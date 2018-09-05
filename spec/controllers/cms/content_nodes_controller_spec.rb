@@ -27,7 +27,7 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
     context "raises an error" do
       it "if no content node params are present" do
         expect{post :create }.to raise_error(ActionController::ParameterMissing)
-        expect{post :create, content_node: attributes_for(:content_node, :invalid_type) }.to raise_error(Cms::SaferExecution::ClassNotAllowed)
+        expect{post :create, params: { content_node: attributes_for(:content_node, :invalid_type) } }.to raise_error(Cms::SaferExecution::ClassNotAllowed)
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
               content_components_attributes: {'0': contact_attrs, '1': text_attrs}
             }
           )
-          post(:create, content_node: params)
+          post(:create, params: { content_node: params })
         end
 
         it "creates a new content_node" do
@@ -77,7 +77,7 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
           '1': text_attrs.merge(id: text.id)
         }
       }
-      put( :update, id: content_node.id, content_node: params )
+      put(:update, params: { id: content_node.id, content_node: params })
     end
 
     it "updates the components" do
@@ -99,7 +99,7 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
           '1': text_attrs.merge(id: text.id, '_destroy': '1')
         }
       }
-      expect{put :update, id: content_node.id, content_node: params}.to change{ Cms::ContentComponent.count }.by(-2)
+      expect{put :update, params: { id: content_node.id, content_node: params }}.to change{ Cms::ContentComponent.count }.by(-2)
     end
 
     it "redirects to index" do

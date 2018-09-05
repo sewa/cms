@@ -2,13 +2,13 @@
 require "rails_helper"
 
 module Cms
-  RSpec.describe ContentAttribute do
+  RSpec.describe ContentAttribute, type: :model do
 
     def setup(klass)
-      attr = klass.new
-      attr.key = :key
-      attr.attributable = content_node
-      attr
+      attrib = klass.new
+      attrib.key = :key
+      attrib.attributable = content_node
+      attrib
     end
 
     let(:content_node) { create(:content_node) }
@@ -26,10 +26,10 @@ module Cms
       end
     end
 
-    it { should belong_to :attributable }
+    it { is_expected.to belong_to :attributable }
     # it { should validate_presence_of :attributable }
-    it { should validate_presence_of :key }
-    it { should validate_uniqueness_of(:key).scoped_to([:attributable_id, :attributable_type]) }
+    it { is_expected.to validate_presence_of :key }
+    it { is_expected.to validate_uniqueness_of(:key).scoped_to([:attributable_id, :attributable_type]) }
 
     context '#content_value' do
 

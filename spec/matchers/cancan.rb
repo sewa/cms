@@ -31,13 +31,10 @@ RSpec::Matchers.define :have_abilities do |actions, obj|
     "have abilities #{@expected_hash.keys.join(', ')} on #{obj_name}"
   end
 
-  failure_message do |ability|
+  failure_message do
     obj_name = @obj.class.name
     obj_name = @obj.to_s.capitalize if [Class, Module, Symbol].include?(@obj.class)
-    message = (
-      "expected user to have abilities: #{@expected_hash} for " +
-      "#{obj_name}, but got #{@actual_hash}"
-    )
+    "expected user to have abilities: #{@expected_hash} for #{obj_name}, but got #{@actual_hash}"
   end
 end
 
@@ -65,13 +62,10 @@ RSpec::Matchers.define :not_have_abilities do |actions, obj|
     "not have abilities #{@expected_hash.keys.join(', ')} on #{obj_name}" if @expected_hash.present?
   end
 
-  failure_message_for_should do |ability|
+  failure_message_for_should do
     obj_name = @obj.class.name
     obj_name = @obj.to_s.capitalize if [Class, Module, Symbol].include?(@obj.class)
-    message = (
-      "expected user NOT to have abilities #{@expected_hash.keys.join(', ')} for " +
-      "#{obj_name}, but got #{@actual_hash}"
-    )
+    "expected user NOT to have abilities #{@expected_hash.keys.join(', ')} for #{obj_name}, but got #{@actual_hash}"
   end
 end
 

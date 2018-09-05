@@ -11,7 +11,7 @@ module Cms
 
         helper_method :try_current_user
 
-        rescue_from CanCan::AccessDenied do |exception|
+        rescue_from CanCan::AccessDenied do |_exception|
           redirect_unauthorized_access
         end
 

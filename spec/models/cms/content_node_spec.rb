@@ -6,16 +6,16 @@ module Cms
 
     let(:subject) { create(:content_node) }
 
-    it { should have_many :content_attributes }
-    it { should have_many :content_components }
-    it { should have_and_belong_to_many :content_categories }
-    it { should have_and_belong_to_many :content_nodes }
-    it { should have_and_belong_to_many :content_nodes_inversed }
+    it { is_expected.to have_many :content_attributes }
+    it { is_expected.to have_many :content_components }
+    it { is_expected.to have_and_belong_to_many :content_categories }
+    it { is_expected.to have_and_belong_to_many :content_nodes }
+    it { is_expected.to have_and_belong_to_many :content_nodes_inversed }
 
-    it { should validate_presence_of :title }
-    it { should validate_presence_of :template }
-    it { should validate_uniqueness_of(:url) }
-    it { should validate_uniqueness_of(:name).scoped_to( :parent_id ) }
+    it { is_expected.to validate_presence_of :title }
+    it { is_expected.to validate_presence_of :template }
+    it { is_expected.to validate_uniqueness_of(:url) }
+    it { is_expected.to validate_uniqueness_of(:name).case_insensitive.scoped_to( :parent_id ) }
 
     it "can be created" do
       expect(subject).to be_persisted

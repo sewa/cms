@@ -10,7 +10,7 @@ module Cms
         has_many :content_attributes, autosave: true, dependent: :destroy, as: :attributable
 
         def destroy_content_attributes(attrs)
-          attrs.reject {|key, value| value.blank? }.each do |key, value|
+          attrs.reject {|_, value| value.blank? }.each do |key, _|
             if attribute = content_attribute(key)
               attribute.destroy
             end
@@ -48,7 +48,7 @@ module Cms
                 content_attr = type.new(type: type.to_s, key: attr[:key])
                 content_attributes << content_attr
               end
-              content_attr.content_options = attr.reject { |k,v| [:type, :key].include?(k) }
+              content_attr.content_options = attr.reject { |k,_| [:type, :key].include?(k) }
               content_groups[group] ||= []
               content_groups[group] << content_attr
             end
@@ -67,7 +67,7 @@ module Cms
           @content_groups ||= {}
         end
 
-        def content_group(key, &block)
+        def content_group(key)
           @content_group = key
           yield
           @content_group = :default
