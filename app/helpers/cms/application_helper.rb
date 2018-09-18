@@ -2,10 +2,11 @@ module Cms
   module ApplicationHelper
 
     def nav_link_to(title, url, opts = {})
+      css_class = params[:controller].split('/').last == opts[:object].to_s ? 'active' : ''
       if can? opts[:can], opts[:object]
         [
           content_tag('li', '', class: 'divider'),
-          content_tag('li', class: ('active' if request.path.match(/#{url.split('/')[2]}/))) do
+          content_tag('li', class: css_class) do
             concat link_to title, url, opts
           end
         ].join('').html_safe
