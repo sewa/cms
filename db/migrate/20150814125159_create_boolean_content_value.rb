@@ -1,4 +1,4 @@
-class CreateBooleanContentValue < ActiveRecord::Migration
+class CreateBooleanContentValue < ActiveRecord::Migration[5.2]
   def change
     create_table :content_value_boolean do |t|
       t.integer :content_attribute_id, null: false

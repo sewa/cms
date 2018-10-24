@@ -1,4 +1,4 @@
-class UseDragonFlyInsteadOfPaperclip < ActiveRecord::Migration
+class UseDragonFlyInsteadOfPaperclip < ActiveRecord::Migration[5.2]
   def up
     remove_column :content_images, :image_file_name
     remove_column :content_images, :image_content_type

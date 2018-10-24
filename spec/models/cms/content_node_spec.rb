@@ -228,5 +228,22 @@ module Cms
 
     end
 
+    describe "#meta_robots" do
+      let(:meta_noindex) { nil }
+      let(:subject) { create(:content_node, meta_noindex: meta_noindex).meta_robots }
+
+      it { is_expected.to eql('') }
+
+      context do
+        let(:meta_noindex) { false }
+        it { is_expected.to eql('') }
+      end
+
+      context do
+        let(:meta_noindex) { true }
+        it { is_expected.to eql('noindex') }
+      end
+    end
+
   end
 end

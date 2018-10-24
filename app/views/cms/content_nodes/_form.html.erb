@@ -41,6 +41,7 @@
             <%= f.input :access do %>
               <%= f.select :access, [[t('public'), 'public'], [t('private'), 'private']] %>
             <% end %>
+            <%= f.input :meta_noindex, as: :boolean %>
           </div>
       </li>
 

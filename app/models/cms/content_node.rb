@@ -190,5 +190,11 @@ module Cms
     def public?
       self.access == 'public'
     end
+
+    def meta_robots
+      robots = []
+      robots << 'noindex' if meta_noindex == true
+      robots.join(',')
+    end
   end
 end
