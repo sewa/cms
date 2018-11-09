@@ -2,15 +2,19 @@ module Cms
   module ApplicationHelper
 
     def nav_link_to(title, url, opts = {})
-      css_class = params[:controller].split('/').last == opts[:object].to_s ? 'active' : ''
       if can? opts[:can], opts[:object]
-        [
-          content_tag('li', '', class: 'divider'),
-          content_tag('li', class: css_class) do
-            concat link_to title, url, opts
-          end
-        ].join('').html_safe
+        css_class = params[:controller].split('/').last == opts[:object].to_s ? 'active' : ''
+        content_tag('li', class: css_class) do
+          concat link_to title, url
+        end
       end
+    end
+
+    def nav_item_visible?(items)
+      items.each do |item|
+        return true if can? :index, item
+      end
+      false
     end
 
     def actions(options = {}, &block)

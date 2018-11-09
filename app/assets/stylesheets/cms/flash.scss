@@ -1,0 +1,15 @@
+#flash {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  color: white;
+  font-size: 14px;
+  z-index: 99;
+  opacity: 0.8;
+}
+.alert {
+  background-color: red;
+}
+.notice {
+  background-color: darkgreen;
+}
