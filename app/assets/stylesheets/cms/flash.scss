@@ -1,4 +1,4 @@
-#flash {
+.flash {
   width: 100%;
   text-align: center;
   padding: 10px 0;
@@ -7,9 +7,11 @@
   z-index: 99;
   opacity: 0.8;
 }
+
 .alert {
-  background-color: red;
+  background-color: red !important;
 }
+
 .notice {
-  background-color: darkgreen;
+  background-color: darkgreen !important;
 }
