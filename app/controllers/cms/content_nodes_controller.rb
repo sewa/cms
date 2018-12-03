@@ -52,7 +52,11 @@ module Cms
         touch_parent_node
         @content_node.touch
         @content_node.save
-        redirect_to_parent_or_index
+        if params[:preview].present?
+          redirect_to "#{@content_node.path}?preview=#{@content_node.id}"
+        else
+          redirect_to_parent_or_index
+        end
       else
         load_components
         render action: :edit
