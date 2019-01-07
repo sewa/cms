@@ -245,5 +245,21 @@ module Cms
       end
     end
 
+    describe "#meta_canonical" do
+      let(:meta_canonical) { nil }
+      let(:subject) { create(:content_node, meta_canonical: meta_canonical).meta_canonical }
+
+      it { is_expected.to be_nil }
+
+      context do
+        let(:meta_canonical) { '' }
+        it { is_expected.to eql('') }
+      end
+
+      context do
+        let(:meta_canonical) { 'https://cms.org/' }
+        it { is_expected.to eql('https://cms.org/') }
+      end
+    end
   end
 end
