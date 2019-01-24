@@ -20,5 +20,9 @@ module Cms
         I18n.t('content_components.'+self.name.underscore.sub('_component', ''))
       end
     end
+
+    def anchor
+      "##{id}"
+    end
   end
 end

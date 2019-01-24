@@ -74,6 +74,8 @@ de:
   public: Öffentlich
   private: Privat
 
+  anchor: Anker
+
   views:
     pagination:
       truncate: ...
