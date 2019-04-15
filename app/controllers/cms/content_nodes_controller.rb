@@ -30,7 +30,8 @@ module Cms
       @content_node.load_attributes
       if @content_node.update_attributes(create_params)
         touch_parent_node
-        redirect_to_parent_or_index
+        load_components
+        render action: :edit
       else
         load_components
         render action: :new
@@ -52,11 +53,8 @@ module Cms
         touch_parent_node
         @content_node.touch
         @content_node.save
-        if params[:preview].present?
-          redirect_to "#{@content_node.path}?preview=#{@content_node.id}"
-        else
-          redirect_to_parent_or_index
-        end
+        load_components
+        render action: :edit
       else
         load_components
         render action: :edit

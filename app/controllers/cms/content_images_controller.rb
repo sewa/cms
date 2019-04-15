@@ -42,7 +42,7 @@ module Cms
 
     def update
       if @object.update_attributes(object_params)
-        redirect_to content_images_path
+        render 'edit'
       else
         render 'edit'
       end
