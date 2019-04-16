@@ -41,11 +41,8 @@ module Cms
     end
 
     def update
-      if @object.update_attributes(object_params)
-        render 'edit'
-      else
-        render 'edit'
-      end
+      @object.update_attributes(object_params)
+      render 'edit'
     end
 
     def destroy

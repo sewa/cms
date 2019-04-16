@@ -1,6 +1,6 @@
 <div class="right">
   <% if @content_node&.persisted? %>
-    <%= link_to 'Vorschau', "#{@content_node.path}?preview=#{@content_node.id}", :target => '_blank', :class => "button small radius" %>
+    <%= link_to 'Vorschau', "#{@content_node.path}?preview=#{@content_node.id}", target: '_blank', class: 'button small radius' %>
   <% end%>
   <%= f.submit class: 'button small radius' %>
 </div>

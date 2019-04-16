@@ -53,12 +53,10 @@ module Cms
         touch_parent_node
         @content_node.touch
         @content_node.save
-        load_components
-        render action: :edit
-      else
-        load_components
-        render action: :edit
       end
+
+      load_components
+      render action: :edit
     end
 
     def toggle_access
