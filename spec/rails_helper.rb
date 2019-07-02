@@ -3,7 +3,7 @@ require 'spec_helper'
 require File.expand_path('../dummy/config/environment', __FILE__)
 require 'rspec/rails'
 require 'faker'
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'shoulda-matchers'
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
@@ -19,7 +19,7 @@ Shoulda::Matchers.configure do |config|
 end
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = true
