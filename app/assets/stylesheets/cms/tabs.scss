@@ -5,11 +5,16 @@
     .ui-state-active {
         .button {
             background-color: #cdcdcd;
+            color: #333333 !important;
         }
     }
     .button {
         margin: 0;
         outline: none;
+    }
+    .ui-tabs-active, .ui-tabs-tab {
+        border: none !important;
+        background: #cdcdcd !important;
     }
     margin: 20px 0 20px 0 !important;
 }
@@ -18,4 +23,9 @@
     .ui-tabs-nav {
         margin-left: 20px !important;
     }
+}
+
+div.tabs {
+    border: 0px !important;
+    border-radius: 0px !important;
 }
