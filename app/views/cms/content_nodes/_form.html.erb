@@ -1,5 +1,9 @@
 <%= f.hidden_field :parent_id %>
 <%= f.hidden_field :type %>
+<%= hidden_field_tag :dom_id %>
+<script text="type/javascript">
+  var dom_id = '<%= params[:dom_id] %>';
+</script>
 
 <div class="tabs">
   <ul class="button-group radius">
