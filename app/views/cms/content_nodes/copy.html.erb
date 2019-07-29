@@ -1,0 +1,19 @@
+<%= actions do %>
+  <div class="right">
+    <% path = @parent.present? ? content_node_path(@parent) : content_nodes_path %>
+    <%= link_to t(:back_to_index), path, class: 'button radius small secondary' %>
+  </div>
+<% end %>
+
+<div class="columns small-6 form-left">
+  <%= simple_form_for @content_node, as: :content_node, url: content_nodes_url, wrapper: :horizontal_form do |f| %>
+    <%= render 'cms/content_nodes/form', f: f %>
+    <div class="form-buttons">
+      <div class="right">
+        <%= f.submit "Erstellen", class: 'button small radius' %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= render 'cms/shared/asset_bar', images: @images, documents: @documents, components: @components %>

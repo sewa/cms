@@ -196,5 +196,9 @@ module Cms
       robots << 'noindex' if meta_noindex == true
       robots.join(',')
     end
+
+    def copyable?
+      unscoped_children.count == 0
+    end
   end
 end

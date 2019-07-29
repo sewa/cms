@@ -6,7 +6,7 @@
       <th><%= t("name") %></th>
       <th><%= t("access") %></th>
       <th><%= t("updated_at") %></th>
-      <th width="394"></th>
+      <th width="450"></th>
     </tr>
   </thead>
   <tbody>
@@ -33,6 +33,11 @@
                   <%= render 'cms/content_nodes/options', options: content_node_options(node), parent_id: node.id %>
                 </ul>
               </li>
+            <% end %>
+            <% if node.copyable? %>
+            <li>
+              <%= link_to t(:copy), copy_content_node_path(node), class: 'button tiny'  %>
+            </li>
             <% end %>
             <li>
               <%= link_to t(:edit), edit_content_node_path(node), class: 'button tiny'  %>
