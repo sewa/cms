@@ -7,10 +7,10 @@ module Cms
     helper_method :template_options
     helper_method :content_node_options
 
-    before_action :load_object, only: [:show, :edit, :update, :destroy, :sort, :toggle_access]
+    before_action :load_object, only: [:show, :edit, :update, :destroy, :sort, :toggle_access, :copy]
     before_action :load_children, only: [:show]
     before_action :load_parent, only: [:new, :create, :update]
-    before_action :load_assets, only: [:new, :edit, :create, :update]
+    before_action :load_assets, only: [:new, :edit, :create, :update, :copy]
 
     def index
       @content_nodes = unscoped.where(parent_id: nil)
@@ -82,6 +82,20 @@ module Cms
       @content_node.destroy
       flash.notice = I18n.t('cms.node_delete_success')
       redirect_to content_nodes_path
+    end
+
+    def copy
+      @content_node.title = "#{@content_node.title} (Kopie)"
+      @content_node.name = @content_node.title.parameterize
+      @content_node.access = "private"
+      @content_node.id = nil
+      @content_node.instance_variable_set("@new_record", true)
+      @content_node.load_attributes
+      @content_node.content_components.each do |comp|
+        comp.load_attributes
+        comp.id = nil
+      end
+      load_components
     end
 
     protected

@@ -7,7 +7,7 @@ module Cms
     end
 
     def new?
-      request[:action] == 'new' || request[:action] == 'create'
+      request[:action] == 'new' || request[:action] == 'create' || request[:action] == 'copy'
     end
 
     def edit?
