@@ -28,5 +28,13 @@ module Cms
       paginate collection, remote: remote, params: params, views_prefix: :cms, window: 2
     end
 
+    def image_title(image)
+      parts = []
+      parts << "Caption: #{image.caption.present? ? image.caption : image.image_name}"
+      parts << "Tags: #{image.tags}" if image.tags.present?
+      parts << "Alt: #{image.alt}" if image.alt.present?
+      parts.join("\n")
+    end
+
   end
 end
