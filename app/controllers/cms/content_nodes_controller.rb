@@ -1,17 +1,16 @@
 # encoding: utf-8
 module Cms
   class ContentNodesController < ApplicationController
-
     include Cms::ControllerHelpers::ContentNodes
     include Cms::ControllerHelpers::Paginate
 
     helper_method :template_options
     helper_method :content_node_options
 
-    before_filter :load_object, only: [:show, :edit, :update, :destroy, :sort, :toggle_access]
-    before_filter :load_children, only: [:show]
-    before_filter :load_parent, only: [:new, :create, :update]
-    before_filter :load_assets, only: [:new, :edit, :create, :update]
+    before_action :load_object, only: [:show, :edit, :update, :destroy, :sort, :toggle_access, :copy]
+    before_action :load_children, only: [:show]
+    before_action :load_parent, only: [:new, :create, :update]
+    before_action :load_assets, only: [:new, :edit, :create, :update, :copy]
 
     def index
       @content_nodes = unscoped.where(parent_id: nil)
@@ -30,7 +29,9 @@ module Cms
       @content_node = safe_new(type, content_node_types(@parent))
       @content_node.load_attributes
       if @content_node.update_attributes(create_params)
-        redirect_to_parent_or_index
+        touch_parent_node
+        load_components
+        render action: :edit
       else
         load_components
         render action: :new
@@ -49,19 +50,22 @@ module Cms
         @content_node.destroy_content_attributes_including_components(destroy_params[:content_node])
       end
       if @content_node.update_attributes(content_node_params)
+        touch_parent_node
+        @content_node.touch
         @content_node.save
-        redirect_to_parent_or_index
-      else
-        load_components
-        render action: :edit
       end
+
+      load_components
+      render action: :edit
     end
 
     def toggle_access
+      touch_parent_node
       @content_node.update_attribute(:access, @content_node.public? ? 'private' : 'public')
     end
 
     def sort
+      touch_parent_node
       @content_node.set_list_position(params[:position])
       render json: { status: :success }
     end
@@ -74,12 +78,34 @@ module Cms
     end
 
     def destroy
+      touch_parent_node
       @content_node.destroy
       flash.notice = I18n.t('cms.node_delete_success')
       redirect_to content_nodes_path
     end
 
+    def copy
+      @content_node.title = "#{@content_node.title} (Kopie)"
+      @content_node.name = @content_node.title.parameterize
+      @content_node.access = "private"
+      @content_node.id = nil
+      @content_node.instance_variable_set("@new_record", true)
+      @content_node.load_attributes
+      @content_node.content_components.each do |comp|
+        comp.load_attributes
+        comp.id = nil
+      end
+      load_components
+    end
+
     protected
+
+    def touch_parent_node
+      parent = Cms::ContentNode.unscoped.find_by(id: @content_node.parent_id)
+      if parent.present?
+        parent.touch
+      end
+    end
 
     def redirect_to_parent_or_index
       if @parent.present?
@@ -90,12 +116,12 @@ module Cms
     end
 
     def base_attrs
-      [:title, :type, :parent_id, :name, :template, :meta_title, :meta_keywords, :meta_description, :url, :redirect, :access, content_category_ids: []]
+      [:title, :type, :parent_id, :name, :template, :meta_title, :meta_keywords, :meta_description, :meta_noindex, :meta_canonical, :url, :redirect, :access, content_category_ids: []]
     end
 
     def component_attrs
       return [] unless params[:content_node][:content_components_attributes].present?
-      params[:content_node][:content_components_attributes].clone.map do |key, comp_attrs|
+      params[:content_node][:content_components_attributes].to_unsafe_h.clone.map do |_, comp_attrs|
         type = comp_attrs[:type]
         node_type = params[:content_node][:type]
         klass = safe_type(type, content_component_types(node_type)).classify.constantize
@@ -153,7 +179,5 @@ module Cms
       end
       query
     end
-
   end
-
 end

@@ -5,12 +5,12 @@
     <%= breadcrumb_item(t(:nodes), content_nodes_path, li_class: ('current' if index?)) %>
     <% if @content_node.present? %>
       <% if new? %>
-        <% (@content_node.ancestors.reverse).each do |node| %>
+        <% (@content_node.unscoped_ancestors.reverse).each do |node| %>
           <%= breadcrumb_item(node.title, content_node_path(node), li_class: ('current' if node.id == @content_node.id && !edit?)) %>
         <% end %>
         <%= breadcrumb_item(t(:new_node), '#', li_class: 'current') %>
       <% else %>
-        <% (@content_node.ancestors.reverse + [@content_node]).each do |node| %>
+        <% (@content_node.unscoped_ancestors.reverse + [@content_node]).each do |node| %>
           <% if node.children.present? %>
             <%= breadcrumb_item(node.title, content_node_path(node), li_class: ('current' if node.id == @content_node.id && !edit?)) %>
           <% end %>

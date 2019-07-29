@@ -1,0 +1,13 @@
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, class: "flash #{name}", id: "flash-#{name}" %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+    <% if name.to_sym == :alert %>
+      $('#flash-<%= name %>').on('click', function() { $(this).fadeOut(1000); });
+    <% else %>
+      setTimeout(function() { $('#flash-<%= name %>').fadeOut(1000); }, 2000);
+    <% end %>
+    })
+  </script>
+<% end %>
+

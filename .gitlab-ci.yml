@@ -1,0 +1,21 @@
+image: git.promptus-partners.de:8778/promptus/docker:ruby-2.5.1
+
+rspec:
+  before_script:
+    - bundle install
+    - bundle exec rake db:create
+    - bundle exec rake db:schema:load
+  variables:
+    RAILS_ENV: test
+  script:
+    - bundle exec rspec
+  only:
+    - master
+
+rubocop:
+  variables:
+    RAILS_ENV: test
+  before_script:
+    - bundle install
+  script:
+    - bundle exec rubocop -l

@@ -1,4 +1,4 @@
-## About 
+## About
 
 A Rails engine which adds a simple cms to your rails project.
 
@@ -128,7 +128,7 @@ end
 
 ## Authentication
 
-The cms has no build in authentication.
+The cms has no built in authentication.
 
 It uses cancan for authorization, the rest is up to you.
 

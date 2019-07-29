@@ -6,7 +6,5 @@ module Cms
 
     include SaferExecution
 
-    before_action :authorize_user
-
   end
 end

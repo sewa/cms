@@ -2,13 +2,13 @@
   <div class="right">
     <% if @content_node.children.present? %>
       <% path = content_node_path(@content_node) %>
-    <% elsif @content_node.parent.present? %>
-      <% path = content_node_path(@content_node.parent) %>
+    <% elsif @content_node.unscoped_parent.present? %>
+      <% path = content_node_path(@content_node.unscoped_parent) %>
     <% else %>
       <% path = content_nodes_path %>
     <% end %>
     <%= link_to t(:back_to_index), path, class: 'button radius small secondary' %>
-    <%= link_to t(:delete_content_node), content_node_path(@content_node), method: :delete, class: 'button radius small', data: { confirm: t(:really_delete) } %>
+    <%= link_to t(:delete_content_node), content_node_path(@content_node), method: :delete, class: 'button radius small alert', data: { confirm: t(:really_delete) } %>
     <% if content_node_options(@content_node).present? %>
       <button href="#" data-dropdown="content-nodes-drop" aria-controls="content-nodes-drop" aria-expanded="false" class="button dropdown radius small" data-options='align:left'>
         <%= t(:new_child_node) %>

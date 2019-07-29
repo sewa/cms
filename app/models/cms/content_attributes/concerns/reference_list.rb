@@ -17,7 +17,11 @@ module Cms
 
           def value=(value)
             if objs = objects(to_arr(value))
-              assign_value(serialize( objs.map(&:id) ))
+              if objs.present?
+                assign_value(serialize( objs.map(&:id) ))
+              else
+                content_value.destroy if content_value
+              end
             end
           end
 

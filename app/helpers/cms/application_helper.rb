@@ -2,11 +2,19 @@ module Cms
   module ApplicationHelper
 
     def nav_link_to(title, url, opts = {})
-      if can? :manage, opts[:object]
-        content_tag 'li', class: ('active' if request.path.match(/#{url.split('/')[2]}/)) do
-          concat link_to title, url, opts
-        end.html_safe
+      if can? opts[:can], opts[:object]
+        css_class = params[:controller].split('/').last == opts[:object].to_s ? 'active' : ''
+        content_tag('li', class: css_class) do
+          concat link_to title, url
+        end
       end
+    end
+
+    def nav_item_visible?(items)
+      items.each do |item|
+        return true if can? :index, item
+      end
+      false
     end
 
     def actions(options = {}, &block)
@@ -15,7 +23,9 @@ module Cms
     end
 
     def cms_paginate(collection, params)
-      paginate collection, remote: true, params: params, views_prefix: :cms, window: 2
+      remote = params.delete(:remote)
+      remote = remote.nil? ? true : remote
+      paginate collection, remote: remote, params: params, views_prefix: :cms, window: 2
     end
 
   end

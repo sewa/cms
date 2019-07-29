@@ -8,7 +8,7 @@ $(document).ready(function() {
       { name: 'document', items: [ 'Source' ] },
 	    '/',
       { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
-      { name: 'paragraph', groups: [ 'list', 'indent' ], items: [ 'NumberedList', 'BulletedList' ] },
+      { name: 'paragraph', groups: [ 'list', 'indent' ], items: [ 'NumberedList', 'BulletedList', 'CreateDiv' ] },
       { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
 	    { name: 'styles', items: ['Format'] },
     ]
@@ -16,7 +16,7 @@ $(document).ready(function() {
 
   var opts = {
     toolbar: CkEditor.toolbar,
-    format_tags: 'p;h3;h4'
+    format_tags: 'p;h1;h2;h3;h4'
   };
 
   // do not use the class name .ckeditor for richtext textareas.

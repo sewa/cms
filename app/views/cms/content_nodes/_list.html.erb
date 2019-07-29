@@ -6,7 +6,7 @@
       <th><%= t("name") %></th>
       <th><%= t("access") %></th>
       <th><%= t("updated_at") %></th>
-      <th width="394"></th>
+      <th width="450"></th>
     </tr>
   </thead>
   <tbody>
@@ -34,11 +34,16 @@
                 </ul>
               </li>
             <% end %>
+            <% if node.copyable? %>
+            <li>
+              <%= link_to t(:copy), copy_content_node_path(node), class: 'button tiny'  %>
+            </li>
+            <% end %>
             <li>
               <%= link_to t(:edit), edit_content_node_path(node), class: 'button tiny'  %>
             </li>
             <li>
-              <%= link_to t(:delete), content_node_path(node), 'data-confirm': t(:really_delete), method: :delete, class: 'button tiny' %>
+              <%= link_to t(:delete), content_node_path(node), 'data-confirm': t(:really_delete), method: :delete, class: 'button tiny alert' %>
             </li>
           </ul>
         </td>

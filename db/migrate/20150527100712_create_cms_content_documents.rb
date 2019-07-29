@@ -1,4 +1,4 @@
-class CreateCmsContentDocuments < ActiveRecord::Migration
+class CreateCmsContentDocuments < ActiveRecord::Migration[5.2]
   def change
     create_table :content_documents do |t|
       t.string :name, null: false

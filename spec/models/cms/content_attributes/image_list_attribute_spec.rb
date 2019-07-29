@@ -23,7 +23,7 @@ module Cms
       attr = ImageListAttribute.new
       attr.attributable = create(:content_node)
       attr.key = :images
-      attr.value = image_ids.join(',')
+      attr.value = image_ids.join('|')
       attr.save
       expect(attr.reload.value).to eq image_arr
     end

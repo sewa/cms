@@ -1,3 +1,13 @@
+<div class="row">
+  <div class="columns small-2">
+    <%= label_tag "anchor-#{component.id}", I18n.t('anchor'), class: 'right inline' %>
+  </div>
+
+  <div class="columns small-10">
+    <%= text_field_tag "anchor-#{component.id}", component.anchor, type: :text, disabled: :disabled %>
+  </div>
+</div>
+
 <% component.content_attributes.each do |attribute| %>
   <% css_class = !attribute_errors(component, attribute).nil? ? 'error' : '' %>
   <div class="row <%= css_class %>">

@@ -3,6 +3,6 @@
 </div>
 
 <div class="columns small-10">
-  <%= content_attribute_input attribute, value: content_options_for_select(object, attribute, attribute.value), as: :select, component_idx: component_idx %>
+  <%= content_attribute_input attribute, value: content_options_for_select(object, attribute, attribute.value), as: :select, component_idx: component_idx, include_blank: attribute.content_options[:include_blank] || false %>
   <%= attribute_errors(object, attribute) %>
 </div>

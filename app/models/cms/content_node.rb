@@ -1,7 +1,6 @@
 # encoding: utf-8
 module Cms
   class ContentNode < ActiveRecord::Base
-
     self.table_name = :content_nodes
 
     include Cms::Concerns::ContentAttributes
@@ -9,14 +8,22 @@ module Cms
     include Cms::Concerns::ContentProperties
     include Cms::Concerns::Template
     include Cms::Concerns::List
+    include Cms::Concerns::Tree
 
     acts_as_tree
     acts_as_list scope: :parent_id
 
     has_many :content_components, -> { order :position }, autosave: true, dependent: :destroy, as: :componentable
 
-    has_and_belongs_to_many :content_nodes, join_table: "content_node_connections", foreign_key: "content_node_id_1", association_foreign_key: "content_node_id_2"
-    has_and_belongs_to_many :content_nodes_inversed, class_name: "ContentNode", join_table: "content_node_connections", foreign_key: "content_node_id_2", association_foreign_key: "content_node_id_1"
+    has_and_belongs_to_many :content_nodes,
+                            join_table: "content_node_connections",
+                            foreign_key: "content_node_id_1",
+                            association_foreign_key: "content_node_id_2"
+    has_and_belongs_to_many :content_nodes_inversed,
+                            class_name: "ContentNode",
+                            join_table: "content_node_connections",
+                            foreign_key: "content_node_id_2",
+                            association_foreign_key: "content_node_id_1"
 
     before_validation :slugalize_name
     before_validation :correct_url
@@ -32,10 +39,15 @@ module Cms
       Cms::ContentNode.unscoped.where(parent_id: id)
     end
 
+    def unscoped_parent
+      Cms::ContentNode.unscoped.find_by(id: parent_id)
+    end
+
     # active record already defines a public method
     scope :public_nodes, -> { where('access = ?', 'public') }
     scope :without_node, -> (node_id) { where('content_nodes.id != ?', node_id) }
     scope :root_nodes, -> { where(parent_id: nil) }
+    scope :unscoped_root_nodes, -> { unscoped.where(parent_id: nil) }
 
     scope :with_relations, -> { includes(:content_components, content_attributes: [:content_value]).merge(Cms::ContentComponent.with_relations) }
 
@@ -112,10 +124,9 @@ module Cms
     end
 
     class << self
-
       def resolve(path)
         path = path.split('/').reject {|item| item.blank? } if String === path
-        if path && node = root_nodes.find_by_name(path.first)
+        if path && node = unscoped_root_nodes.find_by_name(path.first)
           node.resolve(path[1..-1])
         end
       end
@@ -123,7 +134,6 @@ module Cms
       def [](path)
         resolve(path)
       end
-
     end
 
     def slugalize_name
@@ -155,8 +165,8 @@ module Cms
     end
 
     def path_elements
-      if parent
-        parent.path_elements + [name]
+      if unscoped_parent
+        unscoped_parent.path_elements + [name]
       else
         [name]
       end
@@ -181,5 +191,14 @@ module Cms
       self.access == 'public'
     end
 
+    def meta_robots
+      robots = []
+      robots << 'noindex' if meta_noindex == true
+      robots.join(',')
+    end
+
+    def copyable?
+      unscoped_children.count == 0
+    end
   end
 end

@@ -1,5 +1,9 @@
 <%= f.hidden_field :parent_id %>
 <%= f.hidden_field :type %>
+<%= hidden_field_tag :dom_id %>
+<script text="type/javascript">
+  var dom_id = '<%= params[:dom_id] %>';
+</script>
 
 <div class="tabs">
   <ul class="button-group radius">
@@ -36,11 +40,13 @@
             <%= f.input :meta_title %>
             <%= f.input :meta_keywords %>
             <%= f.input :meta_description, as: :text %>
+            <%= f.input :meta_canonical %>
             <%= f.input :url %>
             <%= f.input :redirect %>
             <%= f.input :access do %>
               <%= f.select :access, [[t('public'), 'public'], [t('private'), 'private']] %>
             <% end %>
+            <%= f.input :meta_noindex, as: :boolean %>
           </div>
       </li>
 
