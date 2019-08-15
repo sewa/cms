@@ -20,7 +20,7 @@ $(document).ready(function() {
     $(window.location.hash).addClass('active');
     $('input#dom_id').val(window.location.hash);
   }
-  if (typeof variable !== 'undefined' && dom_id) {
+  if (typeof dom_id !== 'undefined' && dom_id) {
     $(dom_id).addClass('active');
     history.replaceState(null, null, dom_id);
   }
