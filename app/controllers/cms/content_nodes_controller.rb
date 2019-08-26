@@ -66,7 +66,9 @@ module Cms
 
     def sort
       touch_parent_node
+      current_updated_at = @content_node.updated_at
       @content_node.set_list_position(params[:position])
+      @content_node.update_column('updated_at', current_updated_at)
       render json: { status: :success }
     end
 
