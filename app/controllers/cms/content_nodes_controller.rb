@@ -68,6 +68,10 @@ module Cms
       touch_parent_node
       current_updated_at = @content_node.updated_at
       @content_node.set_list_position(params[:position])
+      # 'touch_on_update: false' should do the trick here but it does not
+      # so this is used to preserve timestamps for the content_node
+      # which position has been changed
+      # see 'acts_as_list' statement in ContentNode model for additional info
       @content_node.update_column('updated_at', current_updated_at)
       render json: { status: :success }
     end
