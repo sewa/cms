@@ -107,4 +107,40 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
       expect(response).to redirect_to content_nodes_path
     end
   end
+
+  context '#sort' do
+    let(:parent_node) { create :content_node, :public }
+    let(:first_node) { create :content_node, parent_id: parent_node.id }
+    let(:second_node) { create :content_node, parent_id: parent_node.id }
+    let(:third_node) { create :content_node, parent_id: parent_node.id }
+
+    context 'if there is parent node' do
+      it 'touches parent node' do
+        allow(controller).to receive_message_chain(:unscoped, :with_relations, :find).and_return second_node
+        allow(second_node).to receive(:set_list_position).with('1')
+        allow(Cms::ContentNode).to receive_message_chain(:unscoped, :find_by).and_return parent_node
+        expect(parent_node).to receive :touch
+        post(:sort, params: { id: second_node.id, position: 1 })
+      end
+    end
+
+    it 'changes content_nodes positions' do
+      allow(controller).to receive_message_chain(:unscoped, :with_relations, :find).and_return second_node
+      expect(second_node).to receive(:set_list_position).with('1')
+      post(:sort, params: { id: second_node.id, position: 1 })
+    end
+
+    it 'does not change timestamps' do
+      first_current_updated_at = first_node.updated_at
+      second_current_updated_at = second_node.updated_at
+      third_current_updated_at = third_node.updated_at
+      allow(controller).to receive_message_chain(:unscoped, :with_relations, :find).and_return second_node
+      # expect(second_node).to receive(:set_list_position).with('1')
+      sleep(1)
+      post(:sort, params: { id: second_node.id, position: 1 })
+      expect(Cms::ContentNode.unscoped.find(second_node.id).updated_at).to eq second_current_updated_at
+      expect(Cms::ContentNode.unscoped.find(first_node.id).updated_at).to eq first_current_updated_at
+      expect(Cms::ContentNode.unscoped.find(third_node.id).updated_at).to eq third_current_updated_at
+    end
+  end
 end
