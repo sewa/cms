@@ -107,4 +107,38 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
       expect(response).to redirect_to content_nodes_path
     end
   end
+
+  context '#sort' do
+    let(:parent_node) { create :content_node, :public }
+    let(:first_node) { create :content_node, parent_id: parent_node.id, position: 1 }
+    let(:second_node) { create :content_node, parent_id: parent_node.id, position: 2 }
+    let(:third_node) { create :content_node, parent_id: parent_node.id, position: 3 }
+
+    context 'if there is parent node' do
+      it 'touches parent node' do
+        allow(controller).to receive_message_chain(:unscoped, :with_relations, :find).and_return third_node
+        allow(third_node).to receive(:set_list_position).with('1')
+        allow(Cms::ContentNode).to receive_message_chain(:unscoped, :find_by).and_return parent_node
+        expect(parent_node).to receive :touch
+        post(:sort, params: { id: third_node.id, position: 1 })
+      end
+    end
+
+    it 'changes content_node position' do
+      allow(controller).to receive_message_chain(:unscoped, :with_relations, :find).and_return third_node
+      expect(third_node).to receive(:set_list_position).with('1')
+      post(:sort, params: { id: third_node.id, position: 1 })
+    end
+
+    it 'does not change timestamps' do
+      first_current_updated_at = first_node.updated_at
+      second_current_updated_at = second_node.updated_at
+      third_current_updated_at = third_node.updated_at
+      allow(controller).to receive_message_chain(:unscoped, :with_relations, :find).and_return third_node
+      post(:sort, params: { id: third_node.id, position: 1 })
+      expect(second_node.updated_at).to eq second_current_updated_at
+      expect(first_node.updated_at).to eq first_current_updated_at
+      expect(third_node.updated_at).to eq third_current_updated_at
+    end
+  end
 end

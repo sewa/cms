@@ -11,7 +11,10 @@ module Cms
     include Cms::Concerns::Tree
 
     acts_as_tree
-    acts_as_list scope: :parent_id
+    # 'touch_on_update: false' here somehow works only for the content_nodes
+    # which had higher position comparing to the node you're moving
+    # see ContentNodesController#sort for additional info
+    acts_as_list scope: :parent_id, touch_on_update: false
 
     has_many :content_components, -> { order :position }, autosave: true, dependent: :destroy, as: :componentable
 
