@@ -1,1 +1,5 @@
-$('.toggle-access', '#<%= dom_id @content_node %>').text('<%= t(@content_node.access) %>').removeClass('success alert').addClass('<%= @content_node.public? ? 'success' : 'alert' %>');
+$('.toggle-access', '#<%= dom_id @content_node %>')
+  .text('<%= t(@content_node.access) %>')
+  .removeClass('success alert')
+  .addClass('<%= @content_node.public? ? 'success' : 'alert' %>')
+  .data('confirm', '<%= t(:toggle_node_access_prompt, name: @content_node.title, access: t(@content_node.public? ? 'private' : 'public')) %>');
