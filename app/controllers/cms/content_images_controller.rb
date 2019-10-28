@@ -6,8 +6,8 @@ module Cms
 
     include Cms::ControllerHelpers::Paginate
 
-    before_filter :find_objects, only: [:index, :sidebar_search, :index_search]
-    before_filter :load_object, only: [:edit, :update, :destroy]
+    before_action :find_objects, only: [:index, :sidebar_search, :index_search]
+    before_action :load_object, only: [:edit, :update, :destroy]
 
     def index
       @objects = @query.page(params[:page]).per(assets_per_page)
@@ -41,11 +41,8 @@ module Cms
     end
 
     def update
-      if @object.update_attributes(object_params)
-        redirect_to content_images_path
-      else
-        render 'edit'
-      end
+      @object.update_attributes(object_params)
+      render 'edit'
     end
 
     def destroy

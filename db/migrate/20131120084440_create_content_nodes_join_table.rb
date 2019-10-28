@@ -1,4 +1,4 @@
-class CreateContentNodesJoinTable < ActiveRecord::Migration
+class CreateContentNodesJoinTable < ActiveRecord::Migration[5.2]
   def change
     create_table :content_node_connections, :id => false, :force => true do |t|
       t.integer :content_node_id_1, :null => false

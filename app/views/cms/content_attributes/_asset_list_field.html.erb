@@ -6,6 +6,7 @@
 
 <div class="columns small-10">
   <ul class="drop-zone <%= scope %>" data-name="<%= content_field_name(attribute.key, array: true, component_idx: component_idx) %>">
+    <%= hidden_field_tag content_field_name(attribute.key, array: true, component_idx: component_idx), '' %>
     <% attribute.value.each do |asset| %>
       <%= render 'cms/shared/asset_field', asset: asset, name: content_field_name(attribute.key, array: true, component_idx: component_idx) %>
     <% end %>

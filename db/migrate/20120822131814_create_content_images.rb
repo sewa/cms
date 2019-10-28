@@ -1,4 +1,4 @@
-class CreateContentImages < ActiveRecord::Migration
+class CreateContentImages < ActiveRecord::Migration[5.2]
   def change
     # baustoffe renamed href to url and removed the imageable relations
     # fliesen removed underline attr -> this has to be inserted in caption

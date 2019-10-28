@@ -26,6 +26,8 @@ de:
   back_to_index: Zurück zur Übersicht
   show: Anzeigen
   edit: Bearbeiten
+  copy: Kopieren
+  more: Mehr
   delete: Löschen
   create: Erstellen
   new_child_node: Neue Unterseite
@@ -74,6 +76,10 @@ de:
   public: Öffentlich
   private: Privat
 
+  anchor: Anker
+
+  toggle_node_access_prompt: Soll die Sichtbarkeit der Seite %{name} wirklich auf %{access} gesetzt werden?
+
   views:
     pagination:
       truncate: ...
@@ -85,3 +91,12 @@ de:
   errors:
     url_attribute:
       invalid: "Format der URL ist falsch.<br/>Für externe URL's bitte http://externe_url oder https://externe_url verwenden.<br>Für URL's aus dieser Seite bitte einen slash / voranstellen. z.B. /link/zu/seite"
+  
+  simple_form:
+    labels:
+      content_node:
+        meta_title: Meta-Titel
+        meta_keywords: Meta-Keywords
+        meta_description: Meta-Beschreibung
+        meta_noindex: Noindex
+        

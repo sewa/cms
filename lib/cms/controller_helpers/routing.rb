@@ -15,7 +15,7 @@ module Cms
 
         protected
 
-        def render_not_found(e)
+        def render_not_found(_e)
           respond_to do |f|
             f.html { render template: "errors/404", layout: 'shared', status: 404 }
             f.json { render template: "errors/404", status: 404 }

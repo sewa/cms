@@ -5,37 +5,37 @@ module Cms
   RSpec.describe ContentComponent do
 
     it "has a valid factory" do
-      expect{ create(:test_comp, :with_node) }.to change{ContentComponent.count}.by 1
+      expect{ create(:contact_component, :with_node) }.to change{ContentComponent.count}.by 1
     end
 
     it "has a component name and icon" do
-      expect(TestComponent.icon).to eq "/some/path/icon.png"
-      expect(TestComponent.new.icon).to eq "/some/path/icon.png"
+      expect(TestComponents::Contact.icon).to eq "/some/path/contact.png"
+      expect(TestComponents::Contact.new.icon).to eq "/some/path/contact.png"
     end
 
     context "content_attributes" do
 
       it "retruns the keys" do
-        class TestComponent1 < ContentComponent
+        class Test < ContentComponent
           content_attribute :string, :string
           content_attribute :list, :image_list
         end
-        expect(TestComponent1.sanitize_content_attributes).to eq [:string, :list => []]
+        expect(Test.sanitize_content_attributes).to eq [:string, :list => []]
       end
 
       it "responds to the methods" do
-        node = TestComponent.new
-        expect(node.respond_to?(:text=)).to eq true
-        expect(node.respond_to?(:float=)).to eq true
+        node = TestComponents::Contact.new
+        expect(node.respond_to?(:first_name=)).to eq true
+        expect(node.respond_to?(:last_name=)).to eq true
       end
 
       it "assigns the values" do
-        component = TestComponent.new(attributes_for(:content_component, :with_node))
-        component.text = 'bla bal'
-        component.float = 12.2
+        component = TestComponents::Contact.new(attributes_for(:content_component, :with_node))
+        component.first_name = 'first'
+        component.last_name = 'last'
         expect(component.save).to eq true
-        expect(component.reload.text).to eq 'bla bal'
-        expect(component.reload.float).to eq 12.2
+        expect(component.reload.first_name).to eq 'first'
+        expect(component.reload.last_name).to eq 'last'
       end
 
     end
