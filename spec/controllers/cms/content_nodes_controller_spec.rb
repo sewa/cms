@@ -53,7 +53,7 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
 
         it "redirects to index" do
           valid_post
-          expect(response).to redirect_to content_nodes_path
+          expect(response).to redirect_to edit_content_node_path(Cms::ContentNode.unscoped.last.id)
         end
       end
     end
@@ -104,7 +104,7 @@ RSpec.describe Cms::ContentNodesController, :type => :controller do
 
     it "redirects to index" do
       valid_put
-      expect(response).to redirect_to content_nodes_path
+      expect(response).to redirect_to edit_content_node_path(content_node.id)
     end
   end
 

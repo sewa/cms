@@ -30,8 +30,7 @@ module Cms
       @content_node.load_attributes
       if @content_node.update_attributes(create_params)
         touch_parent_node
-        load_components
-        render action: :edit
+        redirect_to edit_content_node_path(@content_node)
       else
         load_components
         render action: :new
@@ -53,10 +52,11 @@ module Cms
         touch_parent_node
         @content_node.touch
         @content_node.save
+        redirect_to edit_content_node_path(@content_node)
+      else
+        load_components
+        render action: :edit
       end
-
-      load_components
-      render action: :edit
     end
 
     def toggle_access
